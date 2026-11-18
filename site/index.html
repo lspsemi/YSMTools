@@ -80,8 +80,13 @@ img{display:block;max-width:100%}
 .nav{display:none;margin-left:auto;gap:4px}
 .nav a{padding:10px 16px;border-radius:var(--r-full);text-decoration:none;color:var(--on-surface-variant);font-weight:500;font-size:15px;transition:background-color .2s,color .2s}
 .nav a:hover{background:var(--surface-container-high);color:var(--on-surface)}
-.appbar .btn{margin-left:auto;--h:40px;padding:0 18px;font-size:14px}
-@media (min-width:880px){.nav{display:flex}.appbar .btn{margin-left:8px}}
+.appbar .btn{margin-left:8px;--h:40px;padding:0 18px;font-size:14px}
+.appbar .lang-btn{margin-left:auto;padding:0 14px 0 12px;gap:6px;min-width:84px}
+.lang-btn .icon{transition:transform .5s var(--spring-fast)}
+.lang-btn:hover .icon{transform:rotate(-12deg) scale(1.08)}
+@media (min-width:880px){.nav{display:flex}.appbar .lang-btn{margin-left:8px}}
+.brand{white-space:nowrap}
+@media (max-width:479px){.appbar .btn.filled{width:40px;padding:0}.appbar .btn.filled>span:not(.icon){display:none}.appbar .lang-btn{min-width:0}}
 
 /* ---------- Expressive shapes ---------- */
 .shape{position:relative;display:grid;place-items:center;isolation:isolate}
@@ -95,6 +100,7 @@ img{display:block;max-width:100%}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px 0 8px;border-radius:var(--r-full);background:var(--surface-container-high);color:var(--on-surface-variant);font-size:14px;font-weight:500}
 .eyebrow b{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:var(--r-full);background:var(--primary);color:var(--on-primary);font-weight:600;font-size:13px}
 h1{margin:20px 0 16px;font-size:clamp(44px,8.4vw,92px);line-height:1.02;letter-spacing:-.02em;font-weight:800;font-variation-settings:"wdth" 120,"opsz" 144}
+html[lang=en] h1{font-size:clamp(40px,6.4vw,74px);letter-spacing:-.025em}
 h1 .accent{display:inline-block;background:linear-gradient(100deg,var(--primary) 10%,#c1589a 55%,var(--tertiary) 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lead{margin:0 0 32px;max-width:34em;font-size:clamp(17px,2vw,20px);color:var(--on-surface-variant)}
 .cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
@@ -282,14 +288,15 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 
 <header class="appbar" id="appbar">
   <div class="wrap">
-    <a class="brand" href="#top"><img src="assets/app-logo.svg" alt="" width="36" height="36">YSM模型工具</a>
-    <nav class="nav" aria-label="页面导航">
-      <a href="#features">特性</a>
-      <a href="#play">操控模式</a>
-      <a href="#start">上手</a>
-      <a href="#faq">常见问题</a>
+    <a class="brand" href="#top"><img src="assets/app-logo.svg" alt="" width="36" height="36"><span data-en="YSM Model Tool">YSM模型工具</span></a>
+    <nav class="nav" aria-label="页面导航" data-en-aria-label="Page navigation">
+      <a href="#features"><span data-en="Features">特性</span></a>
+      <a href="#play"><span data-en="Play mode">操控模式</span></a>
+      <a href="#start"><span data-en="Get started">上手</span></a>
+      <a href="#faq"><span data-en="FAQ">常见问题</span></a>
     </nav>
-    <a class="btn filled" href="#download"><span class="icon">download</span>下载</a>
+    <button class="btn tonal lang-btn" id="lang" type="button" aria-label="Switch to English" lang="en"><span class="icon">translate</span><span id="lang-label">EN</span></button>
+    <a class="btn filled" href="#download" aria-label="下载" data-en-aria-label="Download"><span class="icon">download</span><span data-en="Download">下载</span></a>
   </div>
 </header>
 
@@ -299,17 +306,17 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <section class="hero">
   <div class="wrap">
     <div>
-      <span class="eyebrow"><b data-version>V1.1.13</b>Windows 桌面版 · 开源免费</span>
-      <h1>看清每一帧<br><span class="accent">YSM 模型</span></h1>
-      <p class="lead">YSM模型工具，一个让你更好查看和调试模型的助手。在电脑上打开 Yes Steve Model 模型包，按游戏里的表现预览模型、动画、轮盘动作、声音与封面，还能管理本地模型库。</p>
+      <span class="eyebrow"><b data-version>V1.1.13</b><span data-en="Windows desktop · Free &amp;amp; open source">Windows 桌面版 · 开源免费</span></span>
+      <h1><span data-en="See every frame&lt;br&gt;&lt;span class=&quot;accent&quot;&gt;of your YSM model&lt;/span&gt;">看清每一帧<br><span class="accent">YSM 模型</span></span></h1>
+      <p class="lead"><span data-en="YSM Model Tool helps you view and debug models. Open Yes Steve Model packs on your PC and preview the model, animations, action-wheel actions, sounds and cover exactly as they appear in the game — and manage your local model library.">YSM模型工具，一个让你更好查看和调试模型的助手。在电脑上打开 Yes Steve Model 模型包，按游戏里的表现预览模型、动画、轮盘动作、声音与封面，还能管理本地模型库。</span></p>
       <div class="cta">
-        <a class="btn filled lg" href="#download"><span class="icon">download</span>下载 Windows 版</a>
-        <a class="btn outlined lg" href="https://github.com/lspsemi/YSMTools" target="_blank" rel="noopener"><span class="icon outlined">code</span>源代码</a>
+        <a class="btn filled lg" href="#download"><span class="icon">download</span><span data-en="Download for Windows">下载 Windows 版</span></a>
+        <a class="btn outlined lg" href="https://github.com/lspsemi/YSMTools" target="_blank" rel="noopener"><span class="icon outlined">code</span><span data-en="Source code">源代码</span></a>
       </div>
       <div class="cta-meta">
         <span><span class="icon">desktop_windows</span>Windows 10 / 11</span>
-        <span><span class="icon">admin_panel_settings</span>无需管理员权限</span>
-        <span><span class="icon">gavel</span>GPL-3.0 开源</span>
+        <span><span class="icon">admin_panel_settings</span><span data-en="No admin rights needed">无需管理员权限</span></span>
+        <span><span class="icon">gavel</span><span data-en="GPL-3.0 open source">GPL-3.0 开源</span></span>
       </div>
     </div>
 
@@ -329,10 +336,10 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <!-- ================= HIGHLIGHTS ================= -->
 <div class="strip">
   <div class="wrap">
-    <div class="hl"><div class="shape" data-shape="cookie9"><span class="icon">verified</span></div><div><strong>与游戏一致</strong><small>动画与 Molang 行为对齐 ModernYSM</small></div></div>
-    <div class="hl"><div class="shape" data-shape="flower8" style="--shape-fill:var(--mint-container)"><span class="icon" style="color:var(--on-mint-container)">lock</span></div><div><strong>加密 .ysm 不落盘</strong><small>原文件与解密结果都不写入磁盘</small></div></div>
-    <div class="hl"><div class="shape" data-shape="clover4" style="--shape-fill:var(--sky-container)"><span class="icon" style="color:var(--on-sky-container)">bolt</span></div><div><strong>流畅播放</strong><small>关键帧很多的模型也不卡顿</small></div></div>
-    <div class="hl"><div class="shape" data-shape="sunny" style="--shape-fill:var(--sun-container)"><span class="icon" style="color:var(--on-sun-container)">translate</span></div><div><strong>多语言界面</strong><small>内置简体中文与英文，可外挂语言文件</small></div></div>
+    <div class="hl"><div class="shape" data-shape="cookie9"><span class="icon">verified</span></div><div><strong><span data-en="Matches the game">与游戏一致</span></strong><small><span data-en="Animation and Molang behave like ModernYSM">动画与 Molang 行为对齐 ModernYSM</span></small></div></div>
+    <div class="hl"><div class="shape" data-shape="flower8" style="--shape-fill:var(--mint-container)"><span class="icon" style="color:var(--on-mint-container)">lock</span></div><div><strong><span data-en="Encrypted .ysm stays in memory">加密 .ysm 不落盘</span></strong><small><span data-en="Neither the file nor the decrypted data is written to disk">原文件与解密结果都不写入磁盘</span></small></div></div>
+    <div class="hl"><div class="shape" data-shape="clover4" style="--shape-fill:var(--sky-container)"><span class="icon" style="color:var(--on-sky-container)">bolt</span></div><div><strong><span data-en="Smooth playback">流畅播放</span></strong><small><span data-en="Even models with many keyframes play smoothly">关键帧很多的模型也不卡顿</span></small></div></div>
+    <div class="hl"><div class="shape" data-shape="sunny" style="--shape-fill:var(--sun-container)"><span class="icon" style="color:var(--on-sun-container)">translate</span></div><div><strong><span data-en="Multilingual UI">多语言界面</span></strong><small><span data-en="Chinese and English built in, more via language files">内置简体中文与英文，可外挂语言文件</span></small></div></div>
   </div>
 </div>
 
@@ -340,83 +347,83 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <section class="block" id="features">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="sec-label"><span class="icon">auto_awesome</span>功能特性</span>
-      <h2>从导入到调试，<br>一个工具就够了</h2>
-      <p>看模型、试动作、听声音、做封面、管模型库、查 Molang——都在同一个窗口里完成。</p>
+      <span class="sec-label"><span class="icon">auto_awesome</span><span data-en="Features">功能特性</span></span>
+      <h2><span data-en="From import to debugging,&lt;br&gt;one tool does it all">从导入到调试，<br>一个工具就够了</span></h2>
+      <p><span data-en="View models, try actions, hear sounds, make covers, manage your library and inspect Molang — all in one window.">看模型、试动作、听声音、做封面、管模型库、查 Molang——都在同一个窗口里完成。</span></p>
     </div>
 
     <div class="bento">
       <article class="card c-primary span4 reveal">
         <div class="shape ic" data-shape="cookie9"><span class="icon">file_open</span></div>
-        <h3>拖进来就能看</h3>
-        <p>支持按钮导入或直接拖放。双击 <code>.ysm</code> 文件即可打开；软件已在运行时，会在原窗口里打开，不会再开一份。</p>
+        <h3><span data-en="Just drag it in">拖进来就能看</span></h3>
+        <p><span data-en="Import with the buttons or drag and drop. Double-click a &lt;code&gt;.ysm&lt;/code&gt; file to open it; if the app is already running, it opens in the existing window instead of starting a second copy.">支持按钮导入或直接拖放。双击 <code>.ysm</code> 文件即可打开；软件已在运行时，会在原窗口里打开，不会再开一份。</span></p>
         <div class="chips">
-          <span class="chip"><span class="icon">folder</span>模型文件夹</span>
-          <span class="chip"><span class="icon">folder_zip</span>ZIP（含 GBK 文件名）</span>
-          <span class="chip"><span class="icon">enhanced_encryption</span>加密 .ysm</span>
-          <span class="chip"><span class="icon">deployed_code</span>原始面渲染模式</span>
+          <span class="chip"><span class="icon">folder</span><span data-en="Model folders">模型文件夹</span></span>
+          <span class="chip"><span class="icon">folder_zip</span><span data-en="ZIP (incl. GBK file names)">ZIP（含 GBK 文件名）</span></span>
+          <span class="chip"><span class="icon">enhanced_encryption</span><span data-en="Encrypted .ysm">加密 .ysm</span></span>
+          <span class="chip"><span class="icon">deployed_code</span><span data-en="Raw-face rendering">原始面渲染模式</span></span>
         </div>
       </article>
 
       <article class="card c-sky span2 reveal">
         <div class="shape ic" data-shape="clover4"><span class="icon">view_in_ar</span></div>
-        <h3>渲染与动画对齐游戏</h3>
+        <h3><span data-en="Rendering &amp;amp; animation true to the game">渲染与动画对齐游戏</span></h3>
         <ul>
-          <li>基岩版几何、箱型 UV、多贴图、发光图层</li>
-          <li>动画控制器、parallel 槽位、状态过渡混合</li>
-          <li>Molang：<code>??</code>、<code>bone_rot</code>、<code>perlin_noise</code>、眨眼、头部转动</li>
+          <li><span data-en="Bedrock geometry, box UV, multiple textures, glow layer">基岩版几何、箱型 UV、多贴图、发光图层</span></li>
+          <li><span data-en="Animation controllers, parallel slots, state transition blending">动画控制器、parallel 槽位、状态过渡混合</span></li>
+          <li><span data-en="Molang: &lt;code&gt;??&lt;/code&gt;, &lt;code&gt;bone_rot&lt;/code&gt;, &lt;code&gt;perlin_noise&lt;/code&gt;, blinking, head turning">Molang：<code>??</code>、<code>bone_rot</code>、<code>perlin_noise</code>、眨眼、头部转动</span></li>
         </ul>
       </article>
 
       <article class="card c-tertiary span2 reveal">
         <div class="shape ic" data-shape="flower8"><span class="icon">donut_large</span></div>
-        <h3>轮盘、动作与声音</h3>
+        <h3><span data-en="Wheel, actions &amp;amp; sounds">轮盘、动作与声音</span></h3>
         <ul>
-          <li>分类轮盘，滚轮翻页；模型设置以表单呈现</li>
-          <li>轮盘可导出为图片或多页 PDF</li>
-          <li>按声道播放声音，支持 <code>play_sound</code> 参数</li>
-          <li>手持物品菜单（含 TaCZ 枪械）</li>
+          <li><span data-en="Categorized action wheel paged with the mouse wheel; model settings as forms">分类轮盘，滚轮翻页；模型设置以表单呈现</span></li>
+          <li><span data-en="Export the wheel as an image or a multi-page PDF">轮盘可导出为图片或多页 PDF</span></li>
+          <li><span data-en="Sound channels and &lt;code&gt;play_sound&lt;/code&gt; parameters">按声道播放声音，支持 <code>play_sound</code> 参数</span></li>
+          <li><span data-en="Held-item menu (incl. TaCZ guns)">手持物品菜单（含 TaCZ 枪械）</span></li>
         </ul>
       </article>
 
       <article class="card c-mint span2 reveal">
         <div class="shape ic" data-shape="sunny"><span class="icon">settings_backup_restore</span></div>
-        <h3>配置一键保存</h3>
-        <p>保存模型的全部设置，下次加载自动恢复；也能导出为 <code>.json</code> 分享给别人导入。</p>
+        <h3><span data-en="One-click config saving">配置一键保存</span></h3>
+        <p><span data-en="Save every setting of a model and restore it on the next load; export it as &lt;code&gt;.json&lt;/code&gt; for others to import.">保存模型的全部设置，下次加载自动恢复；也能导出为 <code>.json</code> 分享给别人导入。</span></p>
       </article>
 
       <article class="card c-sun span2 reveal">
         <div class="shape ic" data-shape="cookie6"><span class="icon">add_photo_alternate</span></div>
-        <h3>封面与导出</h3>
+        <h3><span data-en="Covers &amp;amp; export">封面与导出</span></h3>
         <ul>
-          <li>独立渲染封面，在“调整封面”中实时挑选帧</li>
-          <li>支持 <code>gui_hover</code> / <code>gui_focus</code> 与选中音效</li>
-          <li>截图保存 PNG，封面导出 GIF、APNG、MP4</li>
+          <li><span data-en="Covers get their own renderer; pick the frame live in “Adjust cover”">独立渲染封面，在“调整封面”中实时挑选帧</span></li>
+          <li><span data-en="&lt;code&gt;gui_hover&lt;/code&gt; / &lt;code&gt;gui_focus&lt;/code&gt; and the selection sound">支持 <code>gui_hover</code> / <code>gui_focus</code> 与选中音效</span></li>
+          <li><span data-en="Save screenshots as PNG; export covers as GIF, APNG or MP4">截图保存 PNG，封面导出 GIF、APNG、MP4</span></li>
         </ul>
       </article>
 
       <article class="card c-secondary span3 reveal">
         <div class="shape ic" data-shape="cookie12"><span class="icon">checkroom</span></div>
-        <h3>YSM 衣橱 · 模型库</h3>
+        <h3><span data-en="YSM Wardrobe · model library">YSM 衣橱 · 模型库</span></h3>
         <ul>
-          <li>网格 / 详细信息视图、分页与记住位置、拖放导入</li>
-          <li>改名、设置图标，一键挂载到游戏；支持多个游戏目录、批量挂载与删除</li>
-          <li>3D 视图里按 <code>L</code> 快速切换模型</li>
-          <li>资源管理器中把封面显示为 <code>.ysm</code> 文件缩略图</li>
+          <li><span data-en="Grid / details views, paging that remembers your place, drag-and-drop import">网格 / 详细信息视图、分页与记住位置、拖放导入</span></li>
+          <li><span data-en="Rename, set icons and mount into the game in one click; multiple game folders, batch mount and delete">改名、设置图标，一键挂载到游戏；支持多个游戏目录、批量挂载与删除</span></li>
+          <li><span data-en="Press &lt;code&gt;L&lt;/code&gt; in the 3D view to switch models">3D 视图里按 <code>L</code> 快速切换模型</span></li>
+          <li><span data-en="Windows Explorer shows covers as &lt;code&gt;.ysm&lt;/code&gt; thumbnails">资源管理器中把封面显示为 <code>.ysm</code> 文件缩略图</span></li>
         </ul>
       </article>
 
       <article class="card c-plain span3 reveal">
         <div class="shape ic" data-shape="flower8"><span class="icon">palette</span></div>
-        <h3>Material 3 界面，随模型取色</h3>
-        <p>从模型贴图自动取色生成主题，支持浅色 / 深色；Logo 也会跟着变色。光照、曝光、色调映射与泛光都能调。</p>
+        <h3><span data-en="Material 3, colored by your model">Material 3 界面，随模型取色</span></h3>
+        <p><span data-en="The theme is picked from the model texture, in light or dark mode — even the logo follows. Adjust lighting, exposure, tone mapping and bloom.">从模型贴图自动取色生成主题，支持浅色 / 深色；Logo 也会跟着变色。光照、曝光、色调映射与泛光都能调。</span></p>
         <div class="swatches" aria-hidden="true">
           <i style="background:#874c8a"></i><i style="background:#ffd6fb"></i><i style="background:#2f6b4f"></i><i style="background:#d4f3e2"></i><i style="background:#3a5ba9"></i><i style="background:#dbe5ff"></i><i style="background:#8a4f45"></i><i style="background:#ffdad3"></i>
         </div>
         <ul style="margin-top:18px">
-          <li>工具栏和封面可移到独立窗口，并可置顶</li>
-          <li>整个应用全屏（F11）或只全屏 3D 视图</li>
-          <li>Benchmark 叠加层：帧率曲线与渲染统计</li>
+          <li><span data-en="Move the toolbar and cover into their own windows and pin them on top">工具栏和封面可移到独立窗口，并可置顶</span></li>
+          <li><span data-en="Full screen for the whole app (F11) or just the 3D view">整个应用全屏（F11）或只全屏 3D 视图</span></li>
+          <li><span data-en="Benchmark overlay: frame-rate graph and render statistics">Benchmark 叠加层：帧率曲线与渲染统计</span></li>
         </ul>
       </article>
     </div>
@@ -427,9 +434,9 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <section class="block" id="play">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="sec-label"><span class="icon">sports_esports</span>操控模式与模型调试</span>
-      <h2>像在游戏里一样<br>跑、跳、飞、游泳</h2>
-      <p>不用进游戏，就能检查模型在各种状态下的动画；主动作按游戏的状态优先级切换。</p>
+      <span class="sec-label"><span class="icon">sports_esports</span><span data-en="Play mode &amp;amp; debugging">操控模式与模型调试</span></span>
+      <h2><span data-en="Run, jump, fly and swim&lt;br&gt;just like in the game">像在游戏里一样<br>跑、跳、飞、游泳</span></h2>
+      <p><span data-en="Check the animations for every state without launching the game; the main animation follows the game’s state priority.">不用进游戏，就能检查模型在各种状态下的动画；主动作按游戏的状态优先级切换。</span></p>
     </div>
 
     <div class="bento">
@@ -437,20 +444,20 @@ footer nav .icon{font-size:20px;color:var(--primary)}
         <div class="play">
           <div>
             <div class="shape ic" data-shape="cookie9"><span class="icon">directions_run</span></div>
-            <h3>第一 / 第三人称游玩</h3>
+            <h3><span data-en="First- / third-person play">第一 / 第三人称游玩</span></h3>
             <ul>
-              <li>WASD 移动，跳跃、潜行、疾跑、飞行</li>
-              <li>鞘翅滑翔、按 X 进出水中游泳</li>
-              <li>F5 切换人称，第一人称显示手臂</li>
-              <li>Alt + 左 / 右键攻击与使用，K 打开物品面板</li>
-              <li>角色状态菜单：生命、盔甲、效果、天气、生物群系</li>
+              <li><span data-en="Move with WASD; jump, sneak, sprint and fly">WASD 移动，跳跃、潜行、疾跑、飞行</span></li>
+              <li><span data-en="Elytra gliding; press X to enter or leave water and swim">鞘翅滑翔、按 X 进出水中游泳</span></li>
+              <li><span data-en="F5 switches perspective; first person shows the arms">F5 切换人称，第一人称显示手臂</span></li>
+              <li><span data-en="Alt + left / right click to attack and use; K opens the item panel">Alt + 左 / 右键攻击与使用，K 打开物品面板</span></li>
+              <li><span data-en="Player status menu: health, armor, effects, weather, biome">角色状态菜单：生命、盔甲、效果、天气、生物群系</span></li>
             </ul>
           </div>
         </div>
       </article>
 
       <article class="card c-plain span3 reveal" style="display:grid;align-content:center">
-        <div class="keys" id="keys" aria-label="键位示意">
+        <div class="keys" id="keys" aria-label="键位示意" data-en-aria-label="Key layout">
           <div class="krow">
             <span class="key" data-k="F1">F1</span><span class="key ghost"></span><span class="key" data-k="F5">F5</span><span class="key ghost"></span><span class="key" data-k="H">H</span><span class="key" data-k="K">K</span>
           </div>
@@ -461,20 +468,20 @@ footer nav .icon{font-size:20px;color:var(--primary)}
             <span class="key" data-k="A">A</span><span class="key" data-k="S">S</span><span class="key" data-k="D">D</span><span class="key ghost"></span><span class="key" data-k="X">X</span><span class="key ghost"></span>
           </div>
           <div class="krow">
-            <span class="key" style="--w:1.8" data-k="Shift"><span>Shift<br><small>潜行</small></span></span><span class="key" style="--w:3.3" data-k="Space"><span>Space<br><small>跳跃 / 飞行</small></span></span><span class="key" style="--w:1.6" data-k="Ctrl"><span>Ctrl<br><small>疾跑</small></span></span>
+            <span class="key" style="--w:1.8" data-k="Shift"><span>Shift<br><span data-en="&lt;small&gt;Sneak&lt;/small&gt;"><small>潜行</small></span></span></span><span class="key" style="--w:3.3" data-k="Space"><span>Space<br><span data-en="&lt;small&gt;Jump / fly&lt;/small&gt;"><small>跳跃 / 飞行</small></span></span></span><span class="key" style="--w:1.6" data-k="Ctrl"><span>Ctrl<br><span data-en="&lt;small&gt;Sprint&lt;/small&gt;"><small>疾跑</small></span></span></span>
           </div>
         </div>
         <div class="keylegend">
-          <span><kbd>F5</kbd>切换人称</span><span><kbd>X</kbd>进出水中</span><span><kbd>K</kbd>物品面板</span><span><kbd>H</kbd>键位提示</span><span><kbd>F1</kbd>隐藏界面</span><span><kbd>L</kbd>切换模型</span>
+          <span><kbd>F5</kbd><span data-en="Perspective">切换人称</span></span><span><kbd>X</kbd><span data-en="Water">进出水中</span></span><span><kbd>K</kbd><span data-en="Items">物品面板</span></span><span><kbd>H</kbd><span data-en="Key hints">键位提示</span></span><span><kbd>F1</kbd><span data-en="Hide UI">隐藏界面</span></span><span><kbd>L</kbd><span data-en="Switch model">切换模型</span></span>
         </div>
       </article>
 
       <article class="card c-inverse span4 reveal">
         <div class="shape ic" data-shape="flower8"><span class="icon">data_object</span></div>
-        <h3>Molang 监视器</h3>
-        <p>在独立窗口里实时查看 <code>v.</code> / <code>ctrl.</code> / <code>ysm.</code> / <code>q.</code> 变量和自定义表达式，执行赋值，查看每个控制器的状态与过渡条件，绘制每帧曲线，并锁定变量不让脚本修改。</p>
+        <h3><span data-en="Molang inspector">Molang 监视器</span></h3>
+        <p><span data-en="A separate window with live values of &lt;code&gt;v.&lt;/code&gt; / &lt;code&gt;ctrl.&lt;/code&gt; / &lt;code&gt;ysm.&lt;/code&gt; / &lt;code&gt;q.&lt;/code&gt; variables and your own expressions. Run assignments, see every controller’s state and transition conditions, graph values per frame, and lock variables so no script can change them.">在独立窗口里实时查看 <code>v.</code> / <code>ctrl.</code> / <code>ysm.</code> / <code>q.</code> 变量和自定义表达式，执行赋值，查看每个控制器的状态与过渡条件，绘制每帧曲线，并锁定变量不让脚本修改。</span></p>
         <div class="inspector" aria-hidden="true">
-          <div class="bar"><span class="icon">monitoring</span>监视表达式<span class="icon pin">push_pin</span></div>
+          <div class="bar"><span class="icon">monitoring</span><span data-en="Watch">监视表达式</span><span class="icon pin">push_pin</span></div>
           <div class="vars" id="vars">
             <span class="k">q.ground_speed</span><span class="v" data-v="speed">0.00</span><span class="icon lock outlined">lock_open</span>
             <span class="k">v.roaming</span><span class="v">1</span><span class="icon lock">lock</span>
@@ -487,8 +494,8 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 
       <article class="card c-sky span2 reveal">
         <div class="shape ic" data-shape="cookie6"><span class="icon">translate</span></div>
-        <h3>多语言</h3>
-        <p>内置简体中文，英文随软件附带。其他语言是外置的 <code>.lang</code> 文件：复制 <code>lang/en.lang</code>，翻译后放进程序目录的 <code>lang</code> 文件夹即可。</p>
+        <h3><span data-en="Languages">多语言</span></h3>
+        <p><span data-en="Simplified Chinese is built in and English ships with the app. Other languages are external &lt;code&gt;.lang&lt;/code&gt; files: copy &lt;code&gt;lang/en.lang&lt;/code&gt;, translate it and put it in the &lt;code&gt;lang&lt;/code&gt; folder next to the program.">内置简体中文，英文随软件附带。其他语言是外置的 <code>.lang</code> 文件：复制 <code>lang/en.lang</code>，翻译后放进程序目录的 <code>lang</code> 文件夹即可。</span></p>
       </article>
     </div>
   </div>
@@ -498,13 +505,13 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <section class="block" id="start">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="sec-label"><span class="icon">rocket_launch</span>三步上手</span>
-      <h2>下载、打开、开玩</h2>
+      <span class="sec-label"><span class="icon">rocket_launch</span><span data-en="Three steps">三步上手</span></span>
+      <h2><span data-en="Download, open, play">下载、打开、开玩</span></h2>
     </div>
     <div class="steps">
-      <div class="step reveal"><div class="shape num" data-shape="cookie9">1</div><h3>安装</h3><p>下载安装包运行即可，安装到当前用户，不需要管理员权限。</p></div>
-      <div class="step reveal"><div class="shape num" data-shape="flower8">2</div><h3>打开模型</h3><p>把模型文件夹、ZIP 或 <code>.ysm</code> 拖进窗口，或者直接双击 <code>.ysm</code> 文件。</p></div>
-      <div class="step reveal"><div class="shape num" data-shape="clover4">3</div><h3>查看与调试</h3><p>点轮盘试动作、进操控模式游玩、调封面、打开 Molang 监视器排查问题。</p></div>
+      <div class="step reveal"><div class="shape num" data-shape="cookie9">1</div><h3><span data-en="Install">安装</span></h3><p><span data-en="Run the installer. It installs for the current user — no administrator rights needed.">下载安装包运行即可，安装到当前用户，不需要管理员权限。</span></p></div>
+      <div class="step reveal"><div class="shape num" data-shape="flower8">2</div><h3><span data-en="Open a model">打开模型</span></h3><p><span data-en="Drag a model folder, ZIP or &lt;code&gt;.ysm&lt;/code&gt; into the window, or just double-click a &lt;code&gt;.ysm&lt;/code&gt; file.">把模型文件夹、ZIP 或 <code>.ysm</code> 拖进窗口，或者直接双击 <code>.ysm</code> 文件。</span></p></div>
+      <div class="step reveal"><div class="shape num" data-shape="clover4">3</div><h3><span data-en="View &amp;amp; debug">查看与调试</span></h3><p><span data-en="Try actions on the wheel, play in play mode, tune the cover, and track down issues with the Molang inspector.">点轮盘试动作、进操控模式游玩、调封面、打开 Molang 监视器排查问题。</span></p></div>
     </div>
   </div>
 </section>
@@ -515,24 +522,24 @@ footer nav .icon{font-size:20px;color:var(--primary)}
     <div class="dl reveal">
       <div class="shape deco" data-shape="cookie12" aria-hidden="true"></div>
       <div style="position:relative">
-        <span class="sec-label"><span class="icon">download</span>下载</span>
-        <h2 style="margin-top:10px">获取 YSM模型工具</h2>
+        <span class="sec-label"><span class="icon">download</span><span data-en="Download">下载</span></span>
+        <h2 style="margin-top:10px"><span data-en="Get YSM Model Tool">获取 YSM模型工具</span></h2>
         <svg class="wavy" viewBox="0 0 360 14" preserveAspectRatio="none" aria-hidden="true"><path class="track" d="M250 7 H356"/><path class="wave" id="wave"/></svg>
-        <p class="lead">当前版本 <strong data-version>V1.1.13</strong>。安装包与历次版本发布在 GitHub 上，下载后运行 <code>YSMModelTool_&lt;版本&gt;_x64-setup.exe</code>。</p>
+        <p class="lead"><span data-en="Current version &lt;strong data-version&gt;V1.1.13&lt;/strong&gt;. The installer and all past releases are on GitHub; download and run &lt;code&gt;YSMModelTool_&amp;lt;version&amp;gt;_x64-setup.exe&lt;/code&gt;.">当前版本 <strong data-version>V1.1.13</strong>。安装包与历次版本发布在 GitHub 上，下载后运行 <code>YSMModelTool_&lt;版本&gt;_x64-setup.exe</code>。</span></p>
         <div class="cta">
-          <a class="btn filled lg" href="https://github.com/lspsemi/YSMTools/releases/latest" target="_blank" rel="noopener"><span class="icon">install_desktop</span>下载安装包</a>
-          <a class="btn text" href="https://github.com/lspsemi/YSMTools/releases" target="_blank" rel="noopener"><span class="icon">history</span>全部版本</a>
+          <a class="btn filled lg" href="https://github.com/lspsemi/YSMTools/releases/latest" target="_blank" rel="noopener"><span class="icon">install_desktop</span><span data-en="Download installer">下载安装包</span></a>
+          <a class="btn text" href="https://github.com/lspsemi/YSMTools/releases" target="_blank" rel="noopener"><span class="icon">history</span><span data-en="All releases">全部版本</span></a>
         </div>
         <div class="src">
-          <small>也可以从源码在浏览器中运行（需要 Node.js 20.19+）：</small>
-          <div class="cmd"><ol id="cmd"><li><code>git clone https://github.com/lspsemi/YSMTools.git</code></li><li><code>cd YSMTools</code></li><li><code>npm ci</code></li><li><code>npm run browser</code></li></ol><button class="btn icon-btn" id="copy" type="button" aria-label="复制命令"><span class="icon outlined">content_copy</span></button></div>
+          <small><span data-en="Or run it from source in your browser (Node.js 20.19+):">也可以从源码在浏览器中运行（需要 Node.js 20.19+）：</span></small>
+          <div class="cmd"><ol id="cmd"><li><code>git clone https://github.com/lspsemi/YSMTools.git</code></li><li><code>cd YSMTools</code></li><li><code>npm ci</code></li><li><code>npm run browser</code></li></ol><button class="btn icon-btn" id="copy" type="button" aria-label="复制命令" data-en-aria-label="Copy command"><span class="icon outlined">content_copy</span></button></div>
         </div>
       </div>
       <div class="req">
-        <div><span class="icon">desktop_windows</span><p style="margin:0"><strong>Windows 10 / 11（64 位）</strong><span>桌面版基于 Tauri 2 构建，体积小、启动快</span></p></div>
-        <div><span class="icon">public</span><p style="margin:0"><strong>WebView2 运行时</strong><span>Windows 10 / 11 已自带，无需另装</span></p></div>
-        <div><span class="icon">person</span><p style="margin:0"><strong>按当前用户安装</strong><span>不需要管理员权限，也不改动游戏文件</span></p></div>
-        <div><span class="icon">link</span><p style="margin:0"><strong>关联 .ysm 文件</strong><span>双击打开，资源管理器显示封面缩略图</span></p></div>
+        <div><span class="icon">desktop_windows</span><p style="margin:0"><strong><span data-en="Windows 10 / 11 (64-bit)">Windows 10 / 11（64 位）</span></strong><span><span data-en="Built with Tauri 2: small and fast to start">桌面版基于 Tauri 2 构建，体积小、启动快</span></span></p></div>
+        <div><span class="icon">public</span><p style="margin:0"><strong><span data-en="WebView2 runtime">WebView2 运行时</span></strong><span><span data-en="Already included in Windows 10 / 11">Windows 10 / 11 已自带，无需另装</span></span></p></div>
+        <div><span class="icon">person</span><p style="margin:0"><strong><span data-en="Per-user install">按当前用户安装</span></strong><span><span data-en="No administrator rights; your game files are not touched">不需要管理员权限，也不改动游戏文件</span></span></p></div>
+        <div><span class="icon">link</span><p style="margin:0"><strong><span data-en=".ysm file association">关联 .ysm 文件</span></strong><span><span data-en="Double-click to open; covers as Explorer thumbnails">双击打开，资源管理器显示封面缩略图</span></span></p></div>
       </div>
     </div>
   </div>
@@ -542,20 +549,20 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <section class="block" id="faq">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="sec-label"><span class="icon">help</span>常见问题</span>
-      <h2>你可能想知道</h2>
+      <span class="sec-label"><span class="icon">help</span><span data-en="FAQ">常见问题</span></span>
+      <h2><span data-en="You might be wondering">你可能想知道</span></h2>
     </div>
     <div class="faq">
-      <details class="reveal"><summary><span class="icon">lock</span>打开加密 .ysm 会把内容保存下来吗？<span class="icon chev">expand_more</span></summary>
-        <div class="ans"><p>不会。加密 <code>.ysm</code> 由 YSMParser 的 WebAssembly 版本在后台线程中解析，原文件和解密结果都不会写入磁盘。</p></div></details>
-      <details class="reveal"><summary><span class="icon">verified</span>预览效果和游戏里一样吗？<span class="icon chev">expand_more</span></summary>
-        <div class="ans"><p>渲染、动画控制器和 Molang 的行为以 ModernYSM 源码为准逐项对齐，包括控制器执行顺序、状态过渡混合、未设置变量与除零等细节。加密模型还可以切换到原始面渲染模式，直接绘制文件中存储的面数据。</p></div></details>
-      <details class="reveal"><summary><span class="icon">language</span>不想安装，能在浏览器里用吗？<span class="icon chev">expand_more</span></summary>
-        <div class="ans"><p>可以。克隆源码后运行 <code>npm ci</code> 和 <code>npm run browser</code>，会在本地启动并打开浏览器。部分桌面专属功能（如文件关联、资源管理器缩略图）只在 Windows 版中提供。</p></div></details>
-      <details class="reveal"><summary><span class="icon">translate</span>怎样添加新的界面语言？<span class="icon chev">expand_more</span></summary>
-        <div class="ans"><p>复制程序目录下的 <code>lang/en.lang</code>，修改其中的语言信息并翻译各条目，放回 <code>lang</code> 文件夹，然后在顶栏的语言按钮中切换。</p></div></details>
-      <details class="reveal"><summary><span class="icon">gavel</span>可以免费使用和修改吗？<span class="icon chev">expand_more</span></summary>
-        <div class="ans"><p>可以。YSM模型工具以 GPL-3.0-or-later 许可证开源，源代码托管在 GitHub 与 Codeberg。本工具是社区项目，并非 Yes Steve Model 官方出品。</p></div></details>
+      <details class="reveal"><summary><span class="icon">lock</span><span data-en="Does opening an encrypted .ysm save its contents?">打开加密 .ysm 会把内容保存下来吗？</span><span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p><span data-en="No. Encrypted &lt;code&gt;.ysm&lt;/code&gt; files are parsed in a background thread by the WebAssembly build of YSMParser; neither the file nor the decrypted result is written to disk.">不会。加密 <code>.ysm</code> 由 YSMParser 的 WebAssembly 版本在后台线程中解析，原文件和解密结果都不会写入磁盘。</span></p></div></details>
+      <details class="reveal"><summary><span class="icon">verified</span><span data-en="Does the preview look the same as in the game?">预览效果和游戏里一样吗？</span><span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p><span data-en="Rendering, animation controllers and Molang are matched item by item against the ModernYSM source — including controller order, state transition blending, unset variables and division by zero. Encrypted models can also use raw-face rendering, which draws the face data stored in the file directly.">渲染、动画控制器和 Molang 的行为以 ModernYSM 源码为准逐项对齐，包括控制器执行顺序、状态过渡混合、未设置变量与除零等细节。加密模型还可以切换到原始面渲染模式，直接绘制文件中存储的面数据。</span></p></div></details>
+      <details class="reveal"><summary><span class="icon">language</span><span data-en="Can I use it in a browser without installing?">不想安装，能在浏览器里用吗？</span><span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p><span data-en="Yes. Clone the source and run &lt;code&gt;npm ci&lt;/code&gt; and &lt;code&gt;npm run browser&lt;/code&gt;; it starts locally and opens your browser. Some desktop-only features (file association, Explorer thumbnails) are only in the Windows app.">可以。克隆源码后运行 <code>npm ci</code> 和 <code>npm run browser</code>，会在本地启动并打开浏览器。部分桌面专属功能（如文件关联、资源管理器缩略图）只在 Windows 版中提供。</span></p></div></details>
+      <details class="reveal"><summary><span class="icon">translate</span><span data-en="How do I add an interface language?">怎样添加新的界面语言？</span><span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p><span data-en="Copy &lt;code&gt;lang/en.lang&lt;/code&gt; from the program folder, edit its language info, translate the entries, put it back in the &lt;code&gt;lang&lt;/code&gt; folder, then switch with the language button in the top bar.">复制程序目录下的 <code>lang/en.lang</code>，修改其中的语言信息并翻译各条目，放回 <code>lang</code> 文件夹，然后在顶栏的语言按钮中切换。</span></p></div></details>
+      <details class="reveal"><summary><span class="icon">gavel</span><span data-en="Is it free to use and modify?">可以免费使用和修改吗？</span><span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p><span data-en="Yes. YSM Model Tool is open source under GPL-3.0-or-later, hosted on GitHub and Codeberg. It is a community project, not an official Yes Steve Model product.">可以。YSM模型工具以 GPL-3.0-or-later 许可证开源，源代码托管在 GitHub 与 Codeberg。本工具是社区项目，并非 Yes Steve Model 官方出品。</span></p></div></details>
     </div>
   </div>
 </section>
@@ -565,20 +572,20 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <footer>
   <div class="wrap">
     <div>
-      <a class="brand" href="#top"><img src="assets/app-logo.svg" alt="" width="36" height="36">YSM模型工具</a>
-      <p>一个让你更好查看和调试模型的助手。Vite + Three.js 渲染，Tauri 2 打包为 Windows 桌面应用。</p>
+      <a class="brand" href="#top"><img src="assets/app-logo.svg" alt="" width="36" height="36"><span data-en="YSM Model Tool">YSM模型工具</span></a>
+      <p><span data-en="A helper for viewing and debugging models. Rendered with Vite + Three.js, packaged for Windows with Tauri 2.">一个让你更好查看和调试模型的助手。Vite + Three.js 渲染，Tauri 2 打包为 Windows 桌面应用。</span></p>
     </div>
     <div>
-      <h4>链接</h4>
-      <nav aria-label="外部链接">
-        <a href="https://github.com/lspsemi/YSMTools" target="_blank" rel="noopener"><span class="icon outlined">code</span>GitHub 源代码</a>
-        <a href="https://codeberg.org/MioNext/YesSteveModelTestTools" target="_blank" rel="noopener"><span class="icon outlined">code</span>Codeberg 源代码</a>
-        <a href="https://github.com/lspsemi/YSMTools/releases" target="_blank" rel="noopener"><span class="icon outlined">deployed_code</span>版本发布</a>
-        <a href="https://github.com/lspsemi/YSMTools/issues" target="_blank" rel="noopener"><span class="icon outlined">bug_report</span>反馈问题</a>
+      <h4><span data-en="Links">链接</span></h4>
+      <nav aria-label="外部链接" data-en-aria-label="External links">
+        <a href="https://github.com/lspsemi/YSMTools" target="_blank" rel="noopener"><span class="icon outlined">code</span><span data-en="Source on GitHub">GitHub 源代码</span></a>
+        <a href="https://codeberg.org/MioNext/YesSteveModelTestTools" target="_blank" rel="noopener"><span class="icon outlined">code</span><span data-en="Source on Codeberg">Codeberg 源代码</span></a>
+        <a href="https://github.com/lspsemi/YSMTools/releases" target="_blank" rel="noopener"><span class="icon outlined">deployed_code</span><span data-en="Releases">版本发布</span></a>
+        <a href="https://github.com/lspsemi/YSMTools/issues" target="_blank" rel="noopener"><span class="icon outlined">bug_report</span><span data-en="Report an issue">反馈问题</span></a>
       </nav>
     </div>
-    <a class="gpl" href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener" aria-label="GPL v3 许可证"><img src="assets/gplv3-logo.svg" alt="GPLv3"></a>
-    <div class="fine"><span>© MioNext · 以 GPL-3.0-or-later 发布</span><span>图标：Material Symbols（Apache-2.0）</span></div>
+    <a class="gpl" href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener" aria-label="GPL v3 许可证" data-en-aria-label="GPL v3 license"><img src="assets/gplv3-logo.svg" alt="GPLv3"></a>
+    <div class="fine"><span><span data-en="© MioNext · Released under GPL-3.0-or-later">© MioNext · 以 GPL-3.0-or-later 发布</span></span><span><span data-en="Icons: Material Symbols (Apache-2.0)">图标：Material Symbols（Apache-2.0）</span></span></div>
   </div>
 </footer>
 
@@ -587,6 +594,46 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Language: Chinese is in the markup, English sits next to it in data-en / data-en-<attr> ---- */
+  const TEXT = {
+    zh: { title: 'YSM模型工具 · 下载', desc: document.querySelector('meta[name=description]').content,
+          copied: '已复制到剪贴板', selected: '已选中，按 Ctrl+C 复制', other: 'EN', otherLabel: 'Switch to English', otherLang: 'en' },
+    en: { title: 'YSM Model Tool · Download',
+          desc: 'YSM Model Tool: open Yes Steve Model packs on your PC and preview the model, animations, action-wheel actions, sounds and cover as they appear in the game, and manage your local model library.',
+          copied: 'Copied to clipboard', selected: 'Selected — press Ctrl+C to copy', other: '中文', otherLabel: '切换到中文', otherLang: 'zh-CN' }
+  };
+  let lang = 'zh';
+  const msg = key => TEXT[lang][key];
+  function setLang(next) {
+    lang = next === 'en' ? 'en' : 'zh';
+    const en = lang === 'en';
+    document.documentElement.lang = en ? 'en' : 'zh-CN';
+    document.querySelectorAll('[data-en]').forEach(el => {
+      if (el._zh === undefined) el._zh = el.innerHTML;
+      el.innerHTML = en ? el.dataset.en : el._zh;
+    });
+    document.querySelectorAll('[data-en-aria-label]').forEach(el => {
+      if (el._zhAria === undefined) el._zhAria = el.getAttribute('aria-label');
+      el.setAttribute('aria-label', en ? el.dataset.enAriaLabel : el._zhAria);
+    });
+    document.title = msg('title');
+    document.querySelector('meta[name=description]').content = msg('desc');
+    const btn = document.getElementById('lang');
+    document.getElementById('lang-label').textContent = msg('other');
+    btn.setAttribute('aria-label', msg('otherLabel'));
+    btn.setAttribute('lang', msg('otherLang'));
+  }
+  const stored = (() => { try { return localStorage.getItem('ysm-site-lang'); } catch { return null; } })();
+  const param = new URLSearchParams(location.search).get('lang');
+  const browserZh = (navigator.languages || [navigator.language]).some(l => /^zh\b/i.test(l || ''));
+  setLang(param === 'en' || param === 'zh' ? param : stored || (browserZh ? 'zh' : 'en'));
+  document.getElementById('lang').addEventListener('click', () => {
+    setLang(lang === 'en' ? 'zh' : 'en');
+    try { localStorage.setItem('ysm-site-lang', lang); } catch {}
+    const url = new URL(location.href); url.searchParams.set('lang', lang);
+    history.replaceState(null, '', url);
+  });
 
   /* ---- Expressive shapes: polar curves r(θ) = 0.5·(1 + a·cos(nθ)) ---- */
   const SHAPES = {
@@ -712,8 +759,8 @@ footer nav .icon{font-size:20px;color:var(--primary)}
   const show = msg => { toast.textContent = msg; toast.classList.add('show'); clearTimeout(show.t); show.t = setTimeout(() => toast.classList.remove('show'), 2200); };
   document.getElementById('copy').addEventListener('click', async () => {
     const text = [...document.querySelectorAll('#cmd code')].map(c => c.textContent).join(' && ');
-    try { await navigator.clipboard.writeText(text); show('已复制到剪贴板'); }
-    catch { const r = document.createRange(); r.selectNodeContents(document.getElementById('cmd')); getSelection().removeAllRanges(); getSelection().addRange(r); show('已选中，按 Ctrl+C 复制'); }
+    try { await navigator.clipboard.writeText(text); show(msg('copied')); }
+    catch { const r = document.createRange(); r.selectNodeContents(document.getElementById('cmd')); getSelection().removeAllRanges(); getSelection().addRange(r); show(msg('selected')); }
   });
 })();
 </script>
