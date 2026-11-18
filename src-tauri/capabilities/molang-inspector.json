@@ -1,0 +1,12 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "molang-inspector",
+  "description": "Molang 监视器 window (第 61 节): custom title bar drag/resize, close, events to the main window",
+  "windows": ["molang-inspector"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-start-dragging",
+    "core:window:allow-start-resize-dragging",
+    "core:window:allow-close"
+  ]
+}

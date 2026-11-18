@@ -1,0 +1,68 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "YSM模型工具",
+  "mainBinaryName": "ysm-preview",
+  "version": "1.1.13",
+  "identifier": "com.ysm.preview",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://127.0.0.1:5173",
+    "beforeDevCommand": "npm run thumbnail-provider && npm run dev",
+    "beforeBuildCommand": "npm run thumbnail-provider && npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "create": false,
+        "title": "YSM模型工具",
+        "width": 1440,
+        "height": 900,
+        "minWidth": 960,
+        "minHeight": 640,
+        "center": true,
+        "resizable": true,
+        "decorations": false,
+        "dragDropEnabled": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "resources": {
+      "../lang/*.lang": "lang/",
+      "icons/ysm-file/ysm-file.ico": "icons/ysm-file.ico",
+      "../thumbnail-provider/target/release/ysm_thumbnail.dll": "ysm_thumbnail.dll"
+    },
+    "publisher": "lspsemi",
+    "license": "GPL-3.0-or-later",
+    "shortDescription": "YSM 模型查看与管理",
+    "icon": [
+      "icons/ysm-model-tool/32x32.png",
+      "icons/ysm-model-tool/128x128.png",
+      "icons/ysm-model-tool/128x128@2x.png",
+      "icons/ysm-model-tool/icon.icns",
+      "icons/ysm-model-tool/icon.ico"
+    ],
+    "fileAssociations": [
+      {
+        "ext": ["ysm"],
+        "name": "YSMModelTool.ysm",
+        "description": "YSM 模型",
+        "role": "Viewer",
+        "mimeType": "application/x-ysm-model"
+      }
+    ],
+    "windows": {
+      "nsis": {
+        "languages": ["SimpChinese"],
+        "installMode": "currentUser",
+        "installerHooks": "windows/installer-hooks.nsh"
+      }
+    }
+  }
+}

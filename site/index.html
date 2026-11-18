@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YSM模型工具 · 下载</title>
+<meta name="description" content="YSM模型工具：在电脑上打开 Yes Steve Model 模型包，按游戏中的表现预览模型、动画、轮盘动作、声音与封面，并管理本地模型库。">
+<meta name="theme-color" content="#fff7fb">
+<link rel="icon" href="assets/app-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap">
+<style>
+@font-face{font-family:"Material Symbols Outlined";src:url("assets/fonts/material-symbols-outlined.ttf") format("truetype");font-weight:100 700;font-display:block}
+
+:root{
+  /* M3 light scheme seeded from the app logo (pink-purple) */
+  --primary:#874c8a; --on-primary:#fff;
+  --primary-container:#ffd6fb; --on-primary-container:#38073e;
+  --secondary:#6c5869; --secondary-container:#f5dbef; --on-secondary-container:#261625;
+  --tertiary:#8a4f45; --tertiary-container:#ffdad3; --on-tertiary-container:#370e08;
+  --mint-container:#d4f3e2; --on-mint-container:#0d2c1f;
+  --sky-container:#dbe5ff; --on-sky-container:#0f1c3d;
+  --sun-container:#ffe9b8; --on-sun-container:#2c1f00;
+  --surface:#fff7fb; --surface-dim:#efe3ea;
+  --surface-container-lowest:#ffffff; --surface-container-low:#fcf0f6;
+  --surface-container:#f7eaf1; --surface-container-high:#f1e4eb; --surface-container-highest:#ebdee5;
+  --on-surface:#201a1e; --on-surface-variant:#4f444c;
+  --outline:#80747c; --outline-variant:#d2c2cc;
+  --inverse-surface:#362e33; --inverse-on-surface:#fbedf3;
+
+  --font:"Roboto Flex","HarmonyOS Sans SC","MiSans","PingFang SC","Microsoft YaHei UI","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+  --mono:"Cascadia Code","JetBrains Mono",Consolas,ui-monospace,monospace;
+
+  /* M3 Expressive motion: spatial springs */
+  --spring-fast:cubic-bezier(.42,1.67,.21,.9);
+  --spring-default:cubic-bezier(.38,1.21,.22,1);
+  --effects:cubic-bezier(.34,.8,.34,1);
+  --emphasized:cubic-bezier(.2,0,0,1);
+
+  --r-xs:4px; --r-sm:8px; --r-md:12px; --r-lg:16px; --r-lgx:20px; --r-xl:28px; --r-xlx:32px; --r-xxl:48px; --r-full:999px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--surface);color:var(--on-surface);font-family:var(--font);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{display:block;max-width:100%}
+.icon{font-family:"Material Symbols Outlined";font-weight:400;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;display:inline-grid;place-items:center;width:1em;height:1em;overflow:hidden;font-feature-settings:"liga";font-variation-settings:"FILL" 1,"wght" 500,"GRAD" 0,"opsz" 24;user-select:none;flex:0 0 auto}
+.icon.outlined{font-variation-settings:"FILL" 0,"wght" 400,"GRAD" 0,"opsz" 24}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+@media (min-width:720px){.wrap{width:min(1200px,100% - 64px)}}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Buttons (M3 Expressive: pill at rest, squarer when pressed) ---------- */
+.btn{--h:48px;position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:var(--h);padding:0 24px;border:0;border-radius:calc(var(--h) / 2);font:inherit;font-weight:600;font-size:15px;letter-spacing:.01em;text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:border-radius .35s var(--spring-fast),transform .35s var(--spring-fast),box-shadow .2s var(--effects),background-color .2s var(--effects)}
+.btn::after{content:"";position:absolute;inset:0;border-radius:inherit;background:currentColor;opacity:0;transition:opacity .15s var(--effects);z-index:-1}
+.btn:hover::after{opacity:.08}
+.btn:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.btn:active{border-radius:var(--r-md);transform:scale(.97)}
+.btn:active::after{opacity:.12}
+.btn .icon{font-size:20px}
+.btn.lg{--h:64px;padding:0 32px;font-size:17px;gap:12px}
+.btn.lg .icon{font-size:26px}
+.btn.lg:active{border-radius:var(--r-lg)}
+.btn.filled{background:var(--primary);color:var(--on-primary)}
+.btn.filled:hover{box-shadow:0 1px 3px rgba(0,0,0,.18),0 4px 10px rgba(135,76,138,.22)}
+.btn.tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.btn.outlined{background:transparent;color:var(--primary);box-shadow:inset 0 0 0 1px var(--outline-variant)}
+.btn.text{background:transparent;color:var(--primary);padding:0 14px}
+.icon-btn{width:48px;height:48px;padding:0;border-radius:var(--r-full)}
+
+/* ---------- Top app bar ---------- */
+.appbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--surface) 82%,transparent);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);transition:box-shadow .25s var(--effects),background-color .25s}
+.appbar.scrolled{background:color-mix(in srgb,var(--surface-container) 88%,transparent);box-shadow:0 1px 0 var(--outline-variant)}
+.appbar .wrap{display:flex;align-items:center;gap:12px;height:72px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;font-size:19px;font-variation-settings:"wdth" 110}
+.brand img{width:36px;height:36px}
+.nav{display:none;margin-left:auto;gap:4px}
+.nav a{padding:10px 16px;border-radius:var(--r-full);text-decoration:none;color:var(--on-surface-variant);font-weight:500;font-size:15px;transition:background-color .2s,color .2s}
+.nav a:hover{background:var(--surface-container-high);color:var(--on-surface)}
+.appbar .btn{margin-left:auto;--h:40px;padding:0 18px;font-size:14px}
+@media (min-width:880px){.nav{display:flex}.appbar .btn{margin-left:8px}}
+
+/* ---------- Expressive shapes ---------- */
+.shape{position:relative;display:grid;place-items:center;isolation:isolate}
+.shape>svg.bg{position:absolute;inset:0;width:100%;height:100%;z-index:-1;overflow:visible}
+.shape>svg.bg path{fill:var(--shape-fill,var(--primary-container))}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:40px 0 72px}
+.hero .wrap{display:grid;gap:48px;align-items:center}
+@media (min-width:960px){.hero{padding:64px 0 96px}.hero .wrap{grid-template-columns:1.1fr .9fr}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px 0 8px;border-radius:var(--r-full);background:var(--surface-container-high);color:var(--on-surface-variant);font-size:14px;font-weight:500}
+.eyebrow b{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:var(--r-full);background:var(--primary);color:var(--on-primary);font-weight:600;font-size:13px}
+h1{margin:20px 0 16px;font-size:clamp(44px,8.4vw,92px);line-height:1.02;letter-spacing:-.02em;font-weight:800;font-variation-settings:"wdth" 120,"opsz" 144}
+h1 .accent{display:inline-block;background:linear-gradient(100deg,var(--primary) 10%,#c1589a 55%,var(--tertiary) 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{margin:0 0 32px;max-width:34em;font-size:clamp(17px,2vw,20px);color:var(--on-surface-variant)}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta-meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:24px;color:var(--on-surface-variant);font-size:14px}
+.cta-meta span{display:inline-flex;align-items:center;gap:6px}
+.cta-meta .icon{font-size:18px;color:var(--primary)}
+
+.hero-art{position:relative;width:min(480px,100%);aspect-ratio:1;margin-inline:auto}
+.hero-art .core{position:absolute;inset:14%;--shape-fill:var(--primary-container)}
+.hero-art .core svg.bg{animation:spin 40s linear infinite}
+.hero-art .core img{width:52%;filter:drop-shadow(0 18px 24px rgba(135,76,138,.25));animation:bob 6s ease-in-out infinite}
+.orbit{position:absolute;width:20%;aspect-ratio:1;animation:float 7s ease-in-out infinite;transition:transform .5s var(--spring-fast)}
+.orbit .icon{font-size:clamp(24px,4.4vw,38px)}
+.orbit:hover{transform:scale(1.15) rotate(-8deg)}
+.o1{left:0;top:6%;--shape-fill:var(--sky-container);color:var(--on-sky-container);animation-delay:-1s}
+.o2{right:2%;top:0;width:17%;--shape-fill:var(--sun-container);color:var(--on-sun-container);animation-delay:-3s}
+.o3{right:-2%;top:46%;width:22%;--shape-fill:var(--mint-container);color:var(--on-mint-container);animation-delay:-2s}
+.o4{right:16%;bottom:-2%;width:17%;--shape-fill:var(--tertiary-container);color:var(--on-tertiary-container);animation-delay:-5s}
+.o5{left:6%;bottom:6%;width:21%;--shape-fill:var(--secondary-container);color:var(--on-secondary-container);animation-delay:-4s}
+.o6{left:-4%;top:44%;width:14%;--shape-fill:var(--surface-container-highest);color:var(--primary);animation-delay:-6s}
+.o6 .icon{font-size:clamp(18px,3vw,26px)}
+.dots{position:absolute;inset:0;z-index:-2;background-image:radial-gradient(var(--outline-variant) 1.4px,transparent 1.6px);background-size:22px 22px;mask-image:radial-gradient(circle at 50% 50%,#000 30%,transparent 70%);-webkit-mask-image:radial-gradient(circle at 50% 50%,#000 30%,transparent 70%)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -12px}}
+
+/* ---------- Highlight strip ---------- */
+.strip{background:var(--surface-container-low);border-block:1px solid var(--outline-variant)}
+.strip .wrap{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:24px 0}
+@media (min-width:860px){.strip .wrap{grid-template-columns:repeat(4,1fr)}}
+.hl{display:flex;align-items:center;gap:14px;padding:12px}
+.hl .shape{width:52px;height:52px;flex:none;color:var(--on-primary-container)}
+.hl strong{display:block;font-size:16px;line-height:1.3}
+.hl small{color:var(--on-surface-variant);font-size:13px;line-height:1.4;display:block}
+
+/* ---------- Sections ---------- */
+section.block{padding:96px 0 0}
+.sec-head{display:grid;gap:12px;margin-bottom:40px;max-width:760px}
+.sec-label{display:inline-flex;align-items:center;gap:8px;color:var(--primary);font-weight:600;font-size:14px;letter-spacing:.08em}
+.sec-label .icon{font-size:20px}
+h2{margin:0;font-size:clamp(32px,5vw,56px);line-height:1.08;font-weight:800;letter-spacing:-.015em;font-variation-settings:"wdth" 115,"opsz" 96}
+.sec-head p{margin:0;color:var(--on-surface-variant);font-size:18px}
+
+/* ---------- Feature bento ---------- */
+.bento{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:700px){.bento{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1040px){.bento{grid-template-columns:repeat(6,1fr)}}
+.card{--c:var(--surface-container);--on:var(--on-surface);position:relative;overflow:hidden;padding:28px;border-radius:var(--r-xl);background:var(--c);color:var(--on);
+  transition:border-radius .5s var(--spring-default),transform .5s var(--spring-default)}
+.card:hover{border-radius:var(--r-xxl)}
+.card h3{margin:20px 0 8px;font-size:24px;line-height:1.2;font-weight:700;font-variation-settings:"wdth" 110}
+.card p{margin:0 0 14px;opacity:.86}
+.card ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.card li{position:relative;padding-left:18px;font-size:15px;line-height:1.6}
+.card li::before{content:"";position:absolute;left:2px;top:.68em;width:6px;height:6px;border-radius:2px;background:currentColor;opacity:.55;transform:rotate(45deg)}
+.card .shape.ic{width:64px;height:64px;color:var(--ic-on,var(--on-primary-container));--shape-fill:var(--ic-bg,var(--primary-container))}
+.card .shape.ic .icon{font-size:30px}
+.card code,.faq code,.dl code{font-family:var(--mono);font-size:.9em;padding:1px 6px;border-radius:6px;background:color-mix(in srgb,currentColor 9%,transparent)}
+.span2{grid-column:span 1}.span3{grid-column:span 1}.span4{grid-column:span 1}.span6{grid-column:1/-1}
+@media (min-width:700px){.span2,.span3{grid-column:span 1}.span4{grid-column:1/-1}}
+@media (min-width:1040px){.span2{grid-column:span 2}.span3{grid-column:span 3}.span4{grid-column:span 4}}
+.c-primary{--c:var(--primary-container);--on:var(--on-primary-container);--ic-bg:var(--surface-container-lowest);--ic-on:var(--primary)}
+.c-secondary{--c:var(--secondary-container);--on:var(--on-secondary-container);--ic-bg:var(--surface-container-lowest);--ic-on:var(--secondary)}
+.c-tertiary{--c:var(--tertiary-container);--on:var(--on-tertiary-container);--ic-bg:var(--surface-container-lowest);--ic-on:var(--tertiary)}
+.c-mint{--c:var(--mint-container);--on:var(--on-mint-container);--ic-bg:var(--surface-container-lowest);--ic-on:#1f6a4a}
+.c-sky{--c:var(--sky-container);--on:var(--on-sky-container);--ic-bg:var(--surface-container-lowest);--ic-on:#3a5ba9}
+.c-sun{--c:var(--sun-container);--on:var(--on-sun-container);--ic-bg:var(--surface-container-lowest);--ic-on:#7a5900}
+.c-plain{--c:var(--surface-container-low);box-shadow:inset 0 0 0 1px var(--outline-variant)}
+.c-inverse{--c:var(--inverse-surface);--on:var(--inverse-on-surface);--ic-bg:#ffd6fb;--ic-on:#38073e}
+
+/* format chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 14px 0 10px;border-radius:var(--r-sm);background:var(--surface-container-lowest);color:var(--on-surface);font-size:14px;font-weight:500;box-shadow:inset 0 0 0 1px var(--outline-variant)}
+.chip .icon{font-size:18px;color:var(--primary)}
+
+/* keycaps */
+.play{display:grid;gap:28px}
+@media (min-width:1040px){.play{grid-template-columns:1fr 1.05fr;align-items:center}}
+.keys{display:grid;gap:8px;justify-content:center}
+.krow{display:flex;gap:8px;justify-content:center}
+.keys{--u:clamp(34px,9.2vw,54px)}
+.krow{gap:clamp(4px,1.4vw,8px)}
+.key{--w:1;display:grid;place-items:center;text-align:center;line-height:1.15;width:calc(var(--w) * var(--u));height:var(--u);padding:0 4px;border-radius:calc(var(--u) / 4);font-size:clamp(12px,3.4vw,16px) !important;background:var(--surface-container-lowest);color:var(--on-surface);font-weight:700;font-size:16px;font-family:var(--font);
+  box-shadow:inset 0 -4px 0 var(--outline-variant),0 1px 0 var(--outline-variant);transition:transform .25s var(--spring-fast),background-color .2s,box-shadow .2s,color .2s}
+.key small{font-weight:500;font-size:11px;line-height:1;opacity:.7}
+.key.on,.key:hover{background:var(--primary);color:var(--on-primary);transform:translateY(2px);box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
+.key.ghost{visibility:hidden}
+.keylegend{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-top:16px;font-size:14px;opacity:.85}
+.keylegend span{display:inline-flex;gap:6px;align-items:center}
+.keylegend kbd{font-family:var(--font);font-weight:700;font-size:12px;padding:2px 7px;border-radius:6px;background:var(--surface-container-lowest);color:var(--on-surface)}
+
+/* molang inspector illustration */
+.inspector{margin-top:22px;border-radius:var(--r-lgx);background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);overflow:hidden;font-family:var(--mono);font-size:13.5px}
+.inspector .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.1);font-family:var(--font);font-size:13px;opacity:.85}
+.inspector .bar .icon{font-size:18px}
+.inspector .bar .pin{margin-left:auto}
+.vars{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:2px 14px;padding:12px 14px;align-items:center}
+.vars .k{color:#f3c6f0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card.c-plain{min-width:0}.vars .v{text-align:right;font-variant-numeric:tabular-nums}
+.vars .lock{font-size:16px;opacity:.6}
+.spark{display:block;width:100%;height:64px;border-top:1px solid rgba(255,255,255,.1)}
+.spark path{fill:none;stroke:#ffb0f4;stroke-width:2;vector-effect:non-scaling-stroke}
+.spark path.area{fill:rgba(255,176,244,.12);stroke:none}
+
+/* swatches for dynamic color */
+.swatches{display:flex;gap:6px;margin-top:18px}
+.swatches i{width:36px;height:36px;border-radius:50%;transition:border-radius .5s var(--spring-fast),transform .5s var(--spring-fast)}
+.card:hover .swatches i{border-radius:10px}
+.card:hover .swatches i:nth-child(2n){transform:translateY(-4px)}
+
+/* ---------- Steps ---------- */
+.steps{display:grid;gap:12px;counter-reset:s}
+@media (min-width:860px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{position:relative;padding:28px;border-radius:var(--r-xl);background:var(--surface-container-low);box-shadow:inset 0 0 0 1px var(--outline-variant)}
+.step .num{width:56px;height:56px;color:var(--on-primary);--shape-fill:var(--primary);font-weight:800;font-size:22px;font-variation-settings:"wdth" 120}
+.step h3{margin:18px 0 6px;font-size:21px}
+.step p{margin:0;color:var(--on-surface-variant)}
+
+/* ---------- Download ---------- */
+.dl{position:relative;overflow:hidden;border-radius:var(--r-xxl);background:var(--primary-container);color:var(--on-primary-container);padding:40px 24px;display:grid;gap:36px}
+@media (min-width:960px){.dl{grid-template-columns:1.2fr 1fr;padding:56px;align-items:center}}
+.dl h2{font-size:clamp(32px,4.6vw,52px)}
+.dl .lead{color:inherit;opacity:.85;margin:14px 0 28px}
+.dl .deco{position:absolute;right:-90px;top:-90px;width:320px;height:320px;--shape-fill:rgba(255,255,255,.45);pointer-events:none}
+.dl .deco svg.bg{animation:spin 60s linear infinite reverse}
+.wavy{display:block;width:100%;max-width:360px;height:14px;margin:4px 0 26px;color:var(--primary)}
+.wavy path{fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round}
+.wavy .track{stroke:color-mix(in srgb,var(--primary) 22%,transparent)}
+.req{position:relative;display:grid;gap:4px;padding:8px;border-radius:var(--r-xl);background:var(--surface-container-lowest);color:var(--on-surface)}
+.req div{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-lg)}
+.req div+div{border-top:1px solid var(--surface-container-high)}
+.req .icon{color:var(--primary);margin-top:2px}
+.req strong{display:block;font-size:15px}
+.req span{font-size:14px;color:var(--on-surface-variant)}
+.src{margin-top:28px;display:grid;gap:10px}
+.src .cmd{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 18px;border-radius:var(--r-lg);background:var(--inverse-surface);color:var(--inverse-on-surface);font-family:var(--mono);font-size:14px;overflow:hidden}
+.src .cmd code{flex:1;overflow-x:auto;white-space:nowrap;background:none;padding:0}
+.src .cmd .icon-btn{--h:40px;width:40px;height:40px;color:var(--inverse-on-surface);background:transparent}
+.src small{opacity:.8;font-size:13px}
+
+/* ---------- FAQ ---------- */
+.faq{display:grid;gap:8px;max-width:880px}
+.faq details{border-radius:var(--r-lg);background:var(--surface-container-low);transition:border-radius .4s var(--spring-default),background-color .2s}
+.faq details[open]{border-radius:var(--r-xl);background:var(--surface-container)}
+.faq summary{display:flex;align-items:center;gap:14px;padding:20px 22px;cursor:pointer;list-style:none;font-weight:600;font-size:17px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .chev{margin-left:auto;transition:transform .4s var(--spring-fast);color:var(--on-surface-variant)}
+.faq details[open] .chev{transform:rotate(180deg)}
+.faq summary>.icon:first-child{color:var(--primary)}
+.faq .ans{padding:0 22px 22px 60px;color:var(--on-surface-variant)}
+.faq .ans p{margin:0}
+
+/* ---------- Footer ---------- */
+footer{margin-top:112px;background:var(--surface-container);padding:48px 0 40px;border-radius:var(--r-xxl) var(--r-xxl) 0 0}
+footer .wrap{display:grid;gap:32px}
+@media (min-width:860px){footer .wrap{grid-template-columns:1.4fr 1fr auto;align-items:start}}
+footer .brand{font-size:20px}
+footer p{margin:10px 0 0;color:var(--on-surface-variant);font-size:14px;max-width:34em}
+footer h4{margin:0 0 10px;font-size:14px;color:var(--on-surface-variant);font-weight:600;letter-spacing:.06em}
+footer nav{display:grid;gap:4px}
+footer nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:6px 0;font-weight:500}
+footer nav a:hover{color:var(--primary)}
+footer nav .icon{font-size:20px;color:var(--primary)}
+.gpl img{height:64px;width:auto}
+.fine{grid-column:1/-1;padding-top:24px;border-top:1px solid var(--outline-variant);font-size:13px;color:var(--on-surface-variant);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(28px) scale(.98);transition:opacity .6s var(--effects),transform .8s var(--spring-default)}
+.reveal.in{opacity:1;transform:none}
+
+.toast{position:fixed;left:50%;bottom:24px;translate:-50% 140%;z-index:99;padding:14px 20px;border-radius:var(--r-sm);background:var(--inverse-surface);color:var(--inverse-on-surface);font-size:14px;box-shadow:0 6px 18px rgba(0,0,0,.2);transition:translate .4s var(--spring-default)}
+.toast.show{translate:-50% 0}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="appbar" id="appbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/app-logo.svg" alt="" width="36" height="36">YSM模型工具</a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#features">特性</a>
+      <a href="#play">操控模式</a>
+      <a href="#start">上手</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+    <a class="btn filled" href="#download"><span class="icon">download</span>下载</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow"><b data-version>V1.1.13</b>Windows 桌面版 · 开源免费</span>
+      <h1>看清每一帧<br><span class="accent">YSM 模型</span></h1>
+      <p class="lead">YSM模型工具，一个让你更好查看和调试模型的助手。在电脑上打开 Yes Steve Model 模型包，按游戏里的表现预览模型、动画、轮盘动作、声音与封面，还能管理本地模型库。</p>
+      <div class="cta">
+        <a class="btn filled lg" href="#download"><span class="icon">download</span>下载 Windows 版</a>
+        <a class="btn outlined lg" href="https://codeberg.org/MioNext/YesSteveModelTestTools" target="_blank" rel="noopener"><span class="icon outlined">code</span>源代码</a>
+      </div>
+      <div class="cta-meta">
+        <span><span class="icon">desktop_windows</span>Windows 10 / 11</span>
+        <span><span class="icon">admin_panel_settings</span>无需管理员权限</span>
+        <span><span class="icon">gavel</span>GPL-3.0 开源</span>
+      </div>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <div class="dots"></div>
+      <div class="shape core" data-shape="cookie12"><img src="assets/app-logo.svg" alt=""></div>
+      <div class="shape orbit o1" data-shape="cookie9"><span class="icon">animation</span></div>
+      <div class="shape orbit o2" data-shape="clover4"><span class="icon">music_note</span></div>
+      <div class="shape orbit o3" data-shape="flower8"><span class="icon">sports_esports</span></div>
+      <div class="shape orbit o4" data-shape="sunny"><span class="icon">photo_camera</span></div>
+      <div class="shape orbit o5" data-shape="cookie6"><span class="icon">data_object</span></div>
+      <div class="shape orbit o6" data-shape="circle"><span class="icon">palette</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HIGHLIGHTS ================= -->
+<div class="strip">
+  <div class="wrap">
+    <div class="hl"><div class="shape" data-shape="cookie9"><span class="icon">verified</span></div><div><strong>与游戏一致</strong><small>动画与 Molang 行为对齐 ModernYSM</small></div></div>
+    <div class="hl"><div class="shape" data-shape="flower8" style="--shape-fill:var(--mint-container)"><span class="icon" style="color:var(--on-mint-container)">lock</span></div><div><strong>加密 .ysm 不落盘</strong><small>原文件与解密结果都不写入磁盘</small></div></div>
+    <div class="hl"><div class="shape" data-shape="clover4" style="--shape-fill:var(--sky-container)"><span class="icon" style="color:var(--on-sky-container)">bolt</span></div><div><strong>流畅播放</strong><small>关键帧很多的模型也不卡顿</small></div></div>
+    <div class="hl"><div class="shape" data-shape="sunny" style="--shape-fill:var(--sun-container)"><span class="icon" style="color:var(--on-sun-container)">translate</span></div><div><strong>多语言界面</strong><small>内置简体中文与英文，可外挂语言文件</small></div></div>
+  </div>
+</div>
+
+<!-- ================= FEATURES ================= -->
+<section class="block" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-label"><span class="icon">auto_awesome</span>功能特性</span>
+      <h2>从导入到调试，<br>一个工具就够了</h2>
+      <p>看模型、试动作、听声音、做封面、管模型库、查 Molang——都在同一个窗口里完成。</p>
+    </div>
+
+    <div class="bento">
+      <article class="card c-primary span4 reveal">
+        <div class="shape ic" data-shape="cookie9"><span class="icon">file_open</span></div>
+        <h3>拖进来就能看</h3>
+        <p>支持按钮导入或直接拖放。双击 <code>.ysm</code> 文件即可打开；软件已在运行时，会在原窗口里打开，不会再开一份。</p>
+        <div class="chips">
+          <span class="chip"><span class="icon">folder</span>模型文件夹</span>
+          <span class="chip"><span class="icon">folder_zip</span>ZIP（含 GBK 文件名）</span>
+          <span class="chip"><span class="icon">enhanced_encryption</span>加密 .ysm</span>
+          <span class="chip"><span class="icon">deployed_code</span>原始面渲染模式</span>
+        </div>
+      </article>
+
+      <article class="card c-sky span2 reveal">
+        <div class="shape ic" data-shape="clover4"><span class="icon">view_in_ar</span></div>
+        <h3>渲染与动画对齐游戏</h3>
+        <ul>
+          <li>基岩版几何、箱型 UV、多贴图、发光图层</li>
+          <li>动画控制器、parallel 槽位、状态过渡混合</li>
+          <li>Molang：<code>??</code>、<code>bone_rot</code>、<code>perlin_noise</code>、眨眼、头部转动</li>
+        </ul>
+      </article>
+
+      <article class="card c-tertiary span2 reveal">
+        <div class="shape ic" data-shape="flower8"><span class="icon">donut_large</span></div>
+        <h3>轮盘、动作与声音</h3>
+        <ul>
+          <li>分类轮盘，滚轮翻页；模型设置以表单呈现</li>
+          <li>轮盘可导出为图片或多页 PDF</li>
+          <li>按声道播放声音，支持 <code>play_sound</code> 参数</li>
+          <li>手持物品菜单（含 TaCZ 枪械）</li>
+        </ul>
+      </article>
+
+      <article class="card c-mint span2 reveal">
+        <div class="shape ic" data-shape="sunny"><span class="icon">settings_backup_restore</span></div>
+        <h3>配置一键保存</h3>
+        <p>保存模型的全部设置，下次加载自动恢复；也能导出为 <code>.json</code> 分享给别人导入。</p>
+      </article>
+
+      <article class="card c-sun span2 reveal">
+        <div class="shape ic" data-shape="cookie6"><span class="icon">add_photo_alternate</span></div>
+        <h3>封面与导出</h3>
+        <ul>
+          <li>独立渲染封面，在“调整封面”中实时挑选帧</li>
+          <li>支持 <code>gui_hover</code> / <code>gui_focus</code> 与选中音效</li>
+          <li>截图保存 PNG，封面导出 GIF、APNG、MP4</li>
+        </ul>
+      </article>
+
+      <article class="card c-secondary span3 reveal">
+        <div class="shape ic" data-shape="cookie12"><span class="icon">checkroom</span></div>
+        <h3>YSM 衣橱 · 模型库</h3>
+        <ul>
+          <li>网格 / 详细信息视图、分页与记住位置、拖放导入</li>
+          <li>改名、设置图标，一键挂载到游戏；支持多个游戏目录、批量挂载与删除</li>
+          <li>3D 视图里按 <code>L</code> 快速切换模型</li>
+          <li>资源管理器中把封面显示为 <code>.ysm</code> 文件缩略图</li>
+        </ul>
+      </article>
+
+      <article class="card c-plain span3 reveal">
+        <div class="shape ic" data-shape="flower8"><span class="icon">palette</span></div>
+        <h3>Material 3 界面，随模型取色</h3>
+        <p>从模型贴图自动取色生成主题，支持浅色 / 深色；Logo 也会跟着变色。光照、曝光、色调映射与泛光都能调。</p>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:#874c8a"></i><i style="background:#ffd6fb"></i><i style="background:#2f6b4f"></i><i style="background:#d4f3e2"></i><i style="background:#3a5ba9"></i><i style="background:#dbe5ff"></i><i style="background:#8a4f45"></i><i style="background:#ffdad3"></i>
+        </div>
+        <ul style="margin-top:18px">
+          <li>工具栏和封面可移到独立窗口，并可置顶</li>
+          <li>整个应用全屏（F11）或只全屏 3D 视图</li>
+          <li>Benchmark 叠加层：帧率曲线与渲染统计</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLAY + DEBUG ================= -->
+<section class="block" id="play">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-label"><span class="icon">sports_esports</span>操控模式与模型调试</span>
+      <h2>像在游戏里一样<br>跑、跳、飞、游泳</h2>
+      <p>不用进游戏，就能检查模型在各种状态下的动画；主动作按游戏的状态优先级切换。</p>
+    </div>
+
+    <div class="bento">
+      <article class="card c-primary span3 reveal">
+        <div class="play">
+          <div>
+            <div class="shape ic" data-shape="cookie9"><span class="icon">directions_run</span></div>
+            <h3>第一 / 第三人称游玩</h3>
+            <ul>
+              <li>WASD 移动，跳跃、潜行、疾跑、飞行</li>
+              <li>鞘翅滑翔、按 X 进出水中游泳</li>
+              <li>F5 切换人称，第一人称显示手臂</li>
+              <li>Alt + 左 / 右键攻击与使用，K 打开物品面板</li>
+              <li>角色状态菜单：生命、盔甲、效果、天气、生物群系</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="card c-plain span3 reveal" style="display:grid;align-content:center">
+        <div class="keys" id="keys" aria-label="键位示意">
+          <div class="krow">
+            <span class="key" data-k="F1">F1</span><span class="key ghost"></span><span class="key" data-k="F5">F5</span><span class="key ghost"></span><span class="key" data-k="H">H</span><span class="key" data-k="K">K</span>
+          </div>
+          <div class="krow">
+            <span class="key ghost"></span><span class="key" data-k="W">W</span><span class="key ghost"></span><span class="key ghost"></span><span class="key ghost"></span><span class="key" data-k="L">L</span>
+          </div>
+          <div class="krow">
+            <span class="key" data-k="A">A</span><span class="key" data-k="S">S</span><span class="key" data-k="D">D</span><span class="key ghost"></span><span class="key" data-k="X">X</span><span class="key ghost"></span>
+          </div>
+          <div class="krow">
+            <span class="key" style="--w:1.8" data-k="Shift"><span>Shift<br><small>潜行</small></span></span><span class="key" style="--w:3.3" data-k="Space"><span>Space<br><small>跳跃 / 飞行</small></span></span><span class="key" style="--w:1.6" data-k="Ctrl"><span>Ctrl<br><small>疾跑</small></span></span>
+          </div>
+        </div>
+        <div class="keylegend">
+          <span><kbd>F5</kbd>切换人称</span><span><kbd>X</kbd>进出水中</span><span><kbd>K</kbd>物品面板</span><span><kbd>H</kbd>键位提示</span><span><kbd>F1</kbd>隐藏界面</span><span><kbd>L</kbd>切换模型</span>
+        </div>
+      </article>
+
+      <article class="card c-inverse span4 reveal">
+        <div class="shape ic" data-shape="flower8"><span class="icon">data_object</span></div>
+        <h3>Molang 监视器</h3>
+        <p>在独立窗口里实时查看 <code>v.</code> / <code>ctrl.</code> / <code>ysm.</code> / <code>q.</code> 变量和自定义表达式，执行赋值，查看每个控制器的状态与过渡条件，绘制每帧曲线，并锁定变量不让脚本修改。</p>
+        <div class="inspector" aria-hidden="true">
+          <div class="bar"><span class="icon">monitoring</span>监视表达式<span class="icon pin">push_pin</span></div>
+          <div class="vars" id="vars">
+            <span class="k">q.ground_speed</span><span class="v" data-v="speed">0.00</span><span class="icon lock outlined">lock_open</span>
+            <span class="k">v.roaming</span><span class="v">1</span><span class="icon lock">lock</span>
+            <span class="k">ctrl.walk</span><span class="v" data-v="walk">0</span><span class="icon lock outlined">lock_open</span>
+            <span class="k">ysm.is_close_eyes</span><span class="v" data-v="eyes">0</span><span class="icon lock outlined">lock_open</span>
+          </div>
+          <svg class="spark" id="spark" viewBox="0 0 300 64" preserveAspectRatio="none"><path class="area"/><path class="line"/></svg>
+        </div>
+      </article>
+
+      <article class="card c-sky span2 reveal">
+        <div class="shape ic" data-shape="cookie6"><span class="icon">translate</span></div>
+        <h3>多语言</h3>
+        <p>内置简体中文，英文随软件附带。其他语言是外置的 <code>.lang</code> 文件：复制 <code>lang/en.lang</code>，翻译后放进程序目录的 <code>lang</code> 文件夹即可。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STEPS ================= -->
+<section class="block" id="start">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-label"><span class="icon">rocket_launch</span>三步上手</span>
+      <h2>下载、打开、开玩</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="shape num" data-shape="cookie9">1</div><h3>安装</h3><p>下载安装包运行即可，安装到当前用户，不需要管理员权限。</p></div>
+      <div class="step reveal"><div class="shape num" data-shape="flower8">2</div><h3>打开模型</h3><p>把模型文件夹、ZIP 或 <code>.ysm</code> 拖进窗口，或者直接双击 <code>.ysm</code> 文件。</p></div>
+      <div class="step reveal"><div class="shape num" data-shape="clover4">3</div><h3>查看与调试</h3><p>点轮盘试动作、进操控模式游玩、调封面、打开 Molang 监视器排查问题。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DOWNLOAD ================= -->
+<section class="block" id="download">
+  <div class="wrap">
+    <div class="dl reveal">
+      <div class="shape deco" data-shape="cookie12" aria-hidden="true"></div>
+      <div style="position:relative">
+        <span class="sec-label"><span class="icon">download</span>下载</span>
+        <h2 style="margin-top:10px">获取 YSM模型工具</h2>
+        <svg class="wavy" viewBox="0 0 360 14" preserveAspectRatio="none" aria-hidden="true"><path class="track" d="M250 7 H356"/><path class="wave" id="wave"/></svg>
+        <p class="lead">当前版本 <strong data-version>V1.1.13</strong>。安装包与历次版本发布在 Codeberg 上，下载后运行 <code>YSM模型工具_&lt;版本&gt;_x64-setup.exe</code>。</p>
+        <div class="cta">
+          <a class="btn filled lg" href="https://codeberg.org/MioNext/YesSteveModelTestTools/releases/latest" target="_blank" rel="noopener"><span class="icon">install_desktop</span>下载安装包</a>
+          <a class="btn text" href="https://codeberg.org/MioNext/YesSteveModelTestTools/releases" target="_blank" rel="noopener"><span class="icon">history</span>全部版本</a>
+        </div>
+        <div class="src">
+          <small>也可以从源码在浏览器中运行（需要 Node.js 20.19+）：</small>
+          <div class="cmd"><code id="cmd">git clone https://codeberg.org/MioNext/YesSteveModelTestTools.git &amp;&amp; cd YesSteveModelTestTools &amp;&amp; npm ci &amp;&amp; npm run browser</code><button class="btn icon-btn" id="copy" type="button" aria-label="复制命令"><span class="icon outlined">content_copy</span></button></div>
+        </div>
+      </div>
+      <div class="req">
+        <div><span class="icon">desktop_windows</span><p style="margin:0"><strong>Windows 10 / 11（64 位）</strong><span>桌面版基于 Tauri 2 构建，体积小、启动快</span></p></div>
+        <div><span class="icon">public</span><p style="margin:0"><strong>WebView2 运行时</strong><span>Windows 10 / 11 已自带，无需另装</span></p></div>
+        <div><span class="icon">person</span><p style="margin:0"><strong>按当前用户安装</strong><span>不需要管理员权限，也不改动游戏文件</span></p></div>
+        <div><span class="icon">link</span><p style="margin:0"><strong>关联 .ysm 文件</strong><span>双击打开，资源管理器显示封面缩略图</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="block" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-label"><span class="icon">help</span>常见问题</span>
+      <h2>你可能想知道</h2>
+    </div>
+    <div class="faq">
+      <details class="reveal"><summary><span class="icon">lock</span>打开加密 .ysm 会把内容保存下来吗？<span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p>不会。加密 <code>.ysm</code> 由 YSMParser 的 WebAssembly 版本在后台线程中解析，原文件和解密结果都不会写入磁盘。</p></div></details>
+      <details class="reveal"><summary><span class="icon">verified</span>预览效果和游戏里一样吗？<span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p>渲染、动画控制器和 Molang 的行为以 ModernYSM 源码为准逐项对齐，包括控制器执行顺序、状态过渡混合、未设置变量与除零等细节。加密模型还可以切换到原始面渲染模式，直接绘制文件中存储的面数据。</p></div></details>
+      <details class="reveal"><summary><span class="icon">language</span>不想安装，能在浏览器里用吗？<span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p>可以。克隆源码后运行 <code>npm ci</code> 和 <code>npm run browser</code>，会在本地启动并打开浏览器。部分桌面专属功能（如文件关联、资源管理器缩略图）只在 Windows 版中提供。</p></div></details>
+      <details class="reveal"><summary><span class="icon">translate</span>怎样添加新的界面语言？<span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p>复制程序目录下的 <code>lang/en.lang</code>，修改其中的语言信息并翻译各条目，放回 <code>lang</code> 文件夹，然后在顶栏的语言按钮中切换。</p></div></details>
+      <details class="reveal"><summary><span class="icon">gavel</span>可以免费使用和修改吗？<span class="icon chev">expand_more</span></summary>
+        <div class="ans"><p>可以。YSM模型工具以 GPL-3.0-or-later 许可证开源，源代码托管在 Codeberg。本工具是社区项目，并非 Yes Steve Model 官方出品。</p></div></details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top"><img src="assets/app-logo.svg" alt="" width="36" height="36">YSM模型工具</a>
+      <p>一个让你更好查看和调试模型的助手。Vite + Three.js 渲染，Tauri 2 打包为 Windows 桌面应用。</p>
+    </div>
+    <div>
+      <h4>链接</h4>
+      <nav aria-label="外部链接">
+        <a href="https://codeberg.org/MioNext/YesSteveModelTestTools" target="_blank" rel="noopener"><span class="icon outlined">code</span>Codeberg 源代码</a>
+        <a href="https://codeberg.org/MioNext/YesSteveModelTestTools/releases" target="_blank" rel="noopener"><span class="icon outlined">deployed_code</span>版本发布</a>
+        <a href="https://codeberg.org/MioNext/YesSteveModelTestTools/issues" target="_blank" rel="noopener"><span class="icon outlined">bug_report</span>反馈问题</a>
+      </nav>
+    </div>
+    <a class="gpl" href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener" aria-label="GPL v3 许可证"><img src="assets/gplv3-logo.svg" alt="GPLv3"></a>
+    <div class="fine"><span>© MioNext · 以 GPL-3.0-or-later 发布</span><span>图标：Material Symbols（Apache-2.0）</span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Expressive shapes: polar curves r(θ) = 0.5·(1 + a·cos(nθ)) ---- */
+  const SHAPES = {
+    circle:  { n: 0,  a: 0 },
+    cookie6: { n: 6,  a: .07 },
+    cookie9: { n: 9,  a: .06 },
+    cookie12:{ n: 12, a: .045 },
+    clover4: { n: 4,  a: .16 },
+    flower8: { n: 8,  a: .1, sharp: true },
+    sunny:   { n: 10, a: .05, sharp: true }
+  };
+  function shapePath({ n, a, sharp }, rot = 0) {
+    const pts = 180, out = [];
+    for (let i = 0; i < pts; i++) {
+      const t = (i / pts) * Math.PI * 2;
+      let w = Math.cos(n * (t + rot));
+      if (sharp) w = Math.sign(w) * Math.pow(Math.abs(w), .6);
+      const r = 50 * (1 - a) + 50 * a * w;
+      out.push((50 + r * Math.cos(t)).toFixed(2) + ' ' + (50 + r * Math.sin(t)).toFixed(2));
+    }
+    return 'M' + out.join('L') + 'Z';
+  }
+  const NS = 'http://www.w3.org/2000/svg';
+  document.querySelectorAll('[data-shape]').forEach(el => {
+    const spec = SHAPES[el.dataset.shape] || SHAPES.circle;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'bg'); svg.setAttribute('viewBox', '0 0 100 100'); svg.setAttribute('aria-hidden', 'true');
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', shapePath(spec));
+    svg.appendChild(p); el.prepend(svg);
+    el._shape = { spec, path: p, amp: spec.a, rot: 0 };
+  });
+
+  /* Hovering a card morphs its icon shape: the scallops relax and turn (spring). */
+  function morph(el, target) {
+    const s = el._shape; if (!s || reduce) return;
+    cancelAnimationFrame(s.raf);
+    let v = 0, rv = 0; const tRot = target.rot;
+    const step = () => {
+      const f = 260, d = 14, dt = 1 / 60;           // spring stiffness / damping
+      v += (f * (target.amp - s.amp) - d * v) * dt; s.amp += v * dt;
+      rv += (f * (tRot - s.rot) - d * rv) * dt; s.rot += rv * dt;
+      s.path.setAttribute('d', shapePath({ ...s.spec, a: Math.max(0, s.amp) }, s.rot));
+      if (Math.abs(target.amp - s.amp) + Math.abs(tRot - s.rot) > 1e-4 || Math.abs(v) + Math.abs(rv) > 1e-3) s.raf = requestAnimationFrame(step);
+    };
+    s.raf = requestAnimationFrame(step);
+  }
+  document.querySelectorAll('.card, .step, .hl').forEach(card => {
+    const ic = card.querySelector('[data-shape]'); if (!ic) return;
+    card.addEventListener('pointerenter', () => morph(ic, { amp: ic._shape.spec.a * 1.9, rot: Math.PI / Math.max(ic._shape.spec.n, 1) }));
+    card.addEventListener('pointerleave', () => morph(ic, { amp: ic._shape.spec.a, rot: 0 }));
+  });
+
+  /* ---- App bar elevation on scroll ---- */
+  const bar = document.getElementById('appbar');
+  const onScroll = () => bar.classList.toggle('scrolled', scrollY > 8);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* ---- Scroll reveal with stagger ---- */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    const sib = [...el.parentElement.children].filter(c => c.classList.contains('reveal'));
+    el.style.transitionDelay = (sib.indexOf(el) % 4) * 70 + 'ms';
+    io.observe(el);
+  });
+
+  /* ---- Keycaps: a little walk-run-jump demo ---- */
+  const keys = Object.fromEntries([...document.querySelectorAll('.key[data-k]')].map(k => [k.dataset.k, k]));
+  const seq = [['W'], ['W', 'Ctrl'], ['W', 'Ctrl', 'Space'], ['W'], ['A'], ['S'], ['D'], ['Shift'], ['Space'], ['F5'], ['X'], ['K'], ['H']];
+  let si = 0, keyTimer;
+  const keyStep = () => {
+    Object.values(keys).forEach(k => k.classList.remove('on'));
+    (seq[si++ % seq.length]).forEach(k => keys[k] && keys[k].classList.add('on'));
+  };
+  const keysEl = document.getElementById('keys');
+  if (!reduce) {
+    new IntersectionObserver(([e]) => {
+      clearInterval(keyTimer);
+      if (e.isIntersecting) { keyStep(); keyTimer = setInterval(keyStep, 800); }
+    }).observe(keysEl);
+  }
+
+  /* ---- Molang inspector illustration: live-looking values + curve ---- */
+  const spark = document.getElementById('spark'), area = spark.querySelector('.area'), line = spark.querySelector('.line');
+  const vSpeed = document.querySelector('[data-v=speed]'), vWalk = document.querySelector('[data-v=walk]'), vEyes = document.querySelector('[data-v=eyes]');
+  const hist = Array.from({ length: 120 }, () => 0);
+  let t0 = performance.now(), visible = false, last = 0;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) requestAnimationFrame(tick); }).observe(spark);
+  function tick(now) {
+    if (!visible) return;
+    if (now - last > 50) {
+      last = now;
+      const t = (now - t0) / 1000;
+      const run = (Math.sin(t * .7) + 1) / 2;
+      const speed = Math.max(0, run * 4.3 + Math.sin(t * 9) * .12 - .3);
+      hist.push(speed); hist.shift();
+      vSpeed.textContent = speed.toFixed(2);
+      vWalk.textContent = speed > .2 ? '1' : '0';
+      vEyes.textContent = (t % 3.2) < .15 ? '1' : '0';
+      const pts = hist.map((v, i) => [(i / (hist.length - 1)) * 300, 58 - (v / 4.6) * 50]);
+      const d = 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L');
+      line.setAttribute('d', d); area.setAttribute('d', d + 'L300 64L0 64Z');
+    }
+    if (!reduce) requestAnimationFrame(tick);
+  }
+  if (reduce) { visible = true; tick(performance.now()); }
+
+  /* ---- Wavy progress indicator (M3 Expressive) ---- */
+  const wave = document.getElementById('wave');
+  let ph = 0;
+  (function w() {
+    const pts = [];
+    for (let x = 4; x <= 240; x += 3) pts.push(x + ' ' + (7 + Math.sin(x / 9 - ph) * 3.2).toFixed(2));
+    wave.setAttribute('d', 'M' + pts.join('L'));
+    ph += .12;
+    if (!reduce) requestAnimationFrame(w);
+  })();
+
+  /* ---- Copy command ---- */
+  const toast = document.getElementById('toast');
+  const show = msg => { toast.textContent = msg; toast.classList.add('show'); clearTimeout(show.t); show.t = setTimeout(() => toast.classList.remove('show'), 2200); };
+  document.getElementById('copy').addEventListener('click', async () => {
+    const text = document.getElementById('cmd').textContent;
+    try { await navigator.clipboard.writeText(text); show('已复制到剪贴板'); }
+    catch { const r = document.createRange(); r.selectNodeContents(document.getElementById('cmd')); getSelection().removeAllRanges(); getSelection().addRange(r); show('已选中，按 Ctrl+C 复制'); }
+  });
+})();
+</script>
+</body>
+</html>

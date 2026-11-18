@@ -1,0 +1,1052 @@
+/* =========================================================================
+   YSM 预览器 — Material Design 3 (Angular Material) styles
+   Tokens follow the M3 system: color roles, type scale, shape, elevation
+   and state layers. Components reuse the tokens instead of raw values.
+   ========================================================================= */
+
+/* ---------- Design tokens ---------- */
+:root{
+  /* App logo (src/app-logo.js): a copy of the LIGHT palette, never switched by the
+     dark theme; dynamic-color.js overrides the six base colors from the model. */
+  --ysm-logo-primary:#9a1fa3;
+  --ysm-logo-inverse-primary:#f6aef6;
+  --ysm-logo-outline:#7f747c;
+  --ysm-logo-outline-variant:#d1c2cc;
+  --ysm-logo-surface-container-lowest:#ffffff;
+  --ysm-logo-surface-container-low:#fcf0f6;
+  --ysm-logo-stroke:var(--ysm-logo-outline);
+  --ysm-logo-top-0:var(--ysm-logo-outline-variant);
+  --ysm-logo-top-1:color-mix(in srgb,var(--ysm-logo-primary) 30%,var(--ysm-logo-inverse-primary));
+  --ysm-logo-left-0:var(--ysm-logo-surface-container-lowest);
+  --ysm-logo-left-1:var(--ysm-logo-surface-container-low);
+  --ysm-logo-front-0:var(--ysm-logo-surface-container-low);
+  --ysm-logo-front-1:var(--ysm-logo-inverse-primary);
+  color-scheme:light;
+  --md-sys-color-primary:#9a1fa3;
+  --md-sys-color-on-primary:#ffffff;
+  --md-sys-color-primary-container:#ffd6f9;
+  --md-sys-color-on-primary-container:#3d0042;
+  --md-sys-color-secondary:#6d5869;
+  --md-sys-color-on-secondary:#ffffff;
+  --md-sys-color-secondary-container:#f6daef;
+  --md-sys-color-on-secondary-container:#261625;
+  --md-sys-color-tertiary:#82524a;
+  --md-sys-color-tertiary-container:#ffdad4;
+  --md-sys-color-on-tertiary-container:#33110c;
+  --md-sys-color-error:#ba1a1a;
+  --md-sys-color-surface:#fff7fa;
+  --md-sys-color-surface-container-lowest:#ffffff;
+  --md-sys-color-surface-container-low:#fcf0f6;
+  --md-sys-color-surface-container:#f6eaf0;
+  --md-sys-color-surface-container-high:#f0e4ea;
+  --md-sys-color-surface-container-highest:#eadfe5;
+  --md-sys-color-on-surface:#1f1a1e;
+  --md-sys-color-on-surface-variant:#4e444c;
+  --md-sys-color-outline:#7f747c;
+  --md-sys-color-outline-variant:#d1c2cc;
+  --md-sys-color-inverse-surface:#352f33;
+  --md-sys-color-inverse-on-surface:#f9eef4;
+  --md-sys-color-inverse-primary:#f6aef6;
+  /* Formatted Minecraft text is authored for a dark background. */
+  --ysm-text-surface:#2b2429;
+  --ysm-text-on-surface:#f3e6ee;
+
+  --md-sys-shape-corner-extra-small:4px;
+  --md-sys-shape-corner-small:8px;
+  --md-sys-shape-corner-medium:12px;
+  --md-sys-shape-corner-large:16px;
+  --md-sys-shape-corner-extra-large:28px;
+  --md-sys-shape-corner-full:9999px;
+
+  --md-sys-elevation-1:0 1px 2px 0 #0000004d,0 1px 3px 1px #00000026;
+  --md-sys-elevation-2:0 1px 2px 0 #0000004d,0 2px 6px 2px #00000026;
+  --md-sys-elevation-3:0 1px 3px 0 #0000004d,0 4px 8px 3px #00000026;
+
+  --md-sys-motion-easing-standard:cubic-bezier(.2,0,0,1);
+  --md-sys-motion-easing-emphasized-decelerate:cubic-bezier(.05,.7,.1,1);
+  --md-sys-motion-easing-emphasized-accelerate:cubic-bezier(.3,0,.8,.15);
+
+  --md-ref-typeface:Roboto,"Segoe UI","Microsoft YaHei UI","Microsoft YaHei","PingFang SC",sans-serif;
+
+  /* Legacy aliases still referenced by inline styles and scripts. */
+  --purple:var(--md-sys-color-primary);
+  --text:var(--md-sys-color-on-surface);
+  --muted:var(--md-sys-color-on-surface-variant);
+  --line:var(--md-sys-color-outline-variant);
+  --surface:var(--md-sys-color-surface);
+  --surface-soft:var(--md-sys-color-surface-container);
+  --purple-soft:var(--md-sys-color-secondary-container);
+
+  font-family:var(--md-ref-typeface);
+  font-synthesis:none;
+  color:var(--md-sys-color-on-surface);
+  background:var(--md-sys-color-surface);
+}
+[data-theme=dark]{
+  color-scheme:dark;
+  --md-sys-color-primary:#f6aef6;
+  --md-sys-color-on-primary:#5a1360;
+  --md-sys-color-primary-container:#772c7c;
+  --md-sys-color-on-primary-container:#ffd6f9;
+  --md-sys-color-secondary:#d9bfd3;
+  --md-sys-color-on-secondary:#3d2a39;
+  --md-sys-color-secondary-container:#554050;
+  --md-sys-color-on-secondary-container:#f6daef;
+  --md-sys-color-tertiary:#f5b8ad;
+  --md-sys-color-tertiary-container:#673b34;
+  --md-sys-color-on-tertiary-container:#ffdad4;
+  --md-sys-color-error:#ffb4ab;
+  --md-sys-color-surface:#171216;
+  --md-sys-color-surface-container-lowest:#110d10;
+  --md-sys-color-surface-container-low:#1f1a1e;
+  --md-sys-color-surface-container:#231e22;
+  --md-sys-color-surface-container-high:#2e282c;
+  --md-sys-color-surface-container-highest:#393337;
+  --md-sys-color-on-surface:#eadfe5;
+  --md-sys-color-on-surface-variant:#d1c2cc;
+  --md-sys-color-outline:#9a8d96;
+  --md-sys-color-outline-variant:#4e444c;
+  --md-sys-color-inverse-surface:#eadfe5;
+  --md-sys-color-inverse-on-surface:#352f33;
+  --md-sys-color-inverse-primary:#9a1fa3;
+  --ysm-text-surface:#2e282c;
+  --ysm-text-on-surface:#f3e6ee;
+}
+
+/* ---------- Base ---------- */
+*{box-sizing:border-box}
+html{background:var(--md-sys-color-surface)}
+body{margin:0;background:var(--md-sys-color-surface);color:var(--md-sys-color-on-surface);font-size:14px;line-height:20px;letter-spacing:.25px}
+[hidden]{display:none!important}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;letter-spacing:inherit;color:inherit}
+button{border:0;background:none;padding:0;cursor:pointer}
+button:disabled{cursor:default}
+button,a,input,select{-webkit-tap-highlight-color:transparent}
+h1,h2,p{margin:0}
+:focus-visible{outline:3px solid var(--md-sys-color-secondary);outline-offset:2px}
+input:focus-visible{outline:none}
+
+/* Material Symbols (the icon font used by mat-icon). */
+@font-face{font-family:"Material Symbols Outlined";src:url("/fonts/material-symbols-outlined.ttf") format("truetype");font-style:normal;font-weight:100 700;font-display:block}
+.material-symbol-icon{font-family:"Material Symbols Outlined";font-weight:400;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;word-wrap:normal;direction:ltr;display:inline-grid;place-items:center;flex:0 0 auto;width:1em;height:1em;overflow:hidden;-webkit-font-feature-settings:"liga";font-feature-settings:"liga";-webkit-font-smoothing:antialiased;font-variation-settings:"FILL" 0,"wght" 400,"GRAD" 0,"opsz" 24;user-select:none}
+
+/* State layer: hover 8%, focus 10%, pressed 10% of the content color. */
+.icon-button,.md-button,.tabs button,.link-grid>a,.author-contacts a,.texture-picker-trigger,.texture-picker-option,.wheel-crumb:not(.is-current),.action-wheel-controls button,.wheel-sector-gear-button,.wheel-settings>header button,.md-fab,.md-color{position:relative;isolation:isolate}
+.icon-button::before,.md-button::before,.tabs button::before,.link-grid>a::before,.author-contacts a::before,.texture-picker-trigger::before,.texture-picker-option::before,.wheel-crumb:not(.is-current)::before,.action-wheel-controls button::before,.wheel-sector-gear-button::before,.wheel-settings>header button::before,.md-fab::before,.md-color::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:currentColor;opacity:0;pointer-events:none;transition:opacity 15ms linear}
+:is(.icon-button,.md-button,.tabs button,.link-grid>a,.author-contacts a,.texture-picker-trigger,.texture-picker-option,.wheel-crumb:not(.is-current),.action-wheel-controls button,.wheel-sector-gear-button,.wheel-settings>header button,.md-fab,.md-color):hover:not(:disabled)::before{opacity:.08}
+:is(.icon-button,.md-button,.tabs button,.link-grid>a,.author-contacts a,.texture-picker-trigger,.texture-picker-option,.wheel-crumb:not(.is-current),.action-wheel-controls button,.wheel-sector-gear-button,.wheel-settings>header button,.md-fab,.md-color):is(:focus-visible,:active):not(:disabled)::before{opacity:.1}
+
+/* Legacy catalogue markup that the local viewer does not show. */
+.top-nav,.local-badge,.original-button,.breadcrumb,.title-row,.cover-badge,.cover-preview,.download-actions,.sidebar-meta,.sidebar-note,.tabs button:disabled,.animation-panel,.preview-note,.view-presets,.viewport-hint,.axis-widget,footer{display:none!important}
+
+/* ---------- Icon button (standard, 40px) ---------- */
+.icon-button{width:40px;height:40px;display:inline-grid;place-items:center;flex:0 0 40px;border-radius:var(--md-sys-shape-corner-full);color:var(--md-sys-color-on-surface-variant)}
+.icon-button:disabled{color:color-mix(in srgb,var(--md-sys-color-on-surface) 38%,transparent)}
+
+/* ---------- Common buttons (40px, full corner, label-large) ---------- */
+.md-button{height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 24px;border-radius:var(--md-sys-shape-corner-full);font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px;white-space:nowrap;transition:box-shadow .2s var(--md-sys-motion-easing-standard)}
+.md-button:has(.material-symbol-icon){padding-left:16px}
+.md-button .material-symbol-icon{font-size:18px}
+.md-button.filled{background:var(--md-sys-color-primary);color:var(--md-sys-color-on-primary)}
+.md-button.filled:hover:not(:disabled){box-shadow:var(--md-sys-elevation-1)}
+.md-button.tonal{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.md-button.tonal:hover:not(:disabled){box-shadow:var(--md-sys-elevation-1)}
+.md-button.outlined{border:1px solid var(--md-sys-color-outline);color:var(--md-sys-color-primary)}
+.md-button:disabled{background:color-mix(in srgb,var(--md-sys-color-on-surface) 12%,transparent);color:color-mix(in srgb,var(--md-sys-color-on-surface) 38%,transparent);box-shadow:none}
+.md-button.outlined:disabled{background:none;border-color:color-mix(in srgb,var(--md-sys-color-on-surface) 12%,transparent)}
+
+/* ---------- Slider (4px track, 20px handle) ---------- */
+.md-range{--fill:0%;min-width:0;height:40px;margin:0;background:transparent;appearance:none;cursor:pointer}
+.md-range::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--md-sys-color-primary) var(--fill),var(--md-sys-color-secondary-container) var(--fill))}
+.md-range::-moz-range-track{height:4px;border-radius:2px;background:var(--md-sys-color-secondary-container)}
+.md-range::-moz-range-progress{height:4px;border-radius:2px;background:var(--md-sys-color-primary)}
+.md-range::-webkit-slider-thumb{width:20px;height:20px;margin-top:-8px;border:0;border-radius:50%;background:var(--md-sys-color-primary);box-shadow:var(--md-sys-elevation-1);appearance:none;transition:box-shadow .1s}
+.md-range::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:var(--md-sys-color-primary);box-shadow:var(--md-sys-elevation-1)}
+.md-range:hover::-webkit-slider-thumb,.md-range:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 10px color-mix(in srgb,var(--md-sys-color-primary) 12%,transparent)}
+.md-range:hover::-moz-range-thumb,.md-range:focus-visible::-moz-range-thumb{box-shadow:0 0 0 10px color-mix(in srgb,var(--md-sys-color-primary) 12%,transparent)}
+.md-range:disabled{cursor:default;opacity:.38}
+
+/* ---------- Top app bar (small, 64px) ---------- */
+.site-header{position:sticky;top:0;z-index:20;height:64px;background:var(--md-sys-color-surface);transition:box-shadow .2s}
+.header-inner{max-width:1336px;height:100%;margin:auto;padding:0 16px 0 24px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;font-size:22px;line-height:28px;font-weight:400;white-space:nowrap;color:var(--md-sys-color-on-surface)}
+.brand-light{font-size:inherit;font-weight:inherit;color:var(--md-sys-color-on-surface-variant)}
+.brand-symbol{width:40px;height:40px;display:grid;place-items:center}
+.brand-symbol .app-logo{display:block;width:36px;height:36px;overflow:visible}
+.header-actions{margin-left:auto;display:flex;align-items:center;gap:4px}
+/* Desktop: window buttons at the right edge of the frameless main window (第 62 节), styled like the 独立窗口 title bars. */
+.window-controls{position:absolute;top:0;right:8px;height:100%;display:flex;align-items:center;gap:2px}
+.window-controls .icon-button{width:36px;height:36px;flex:0 0 36px}
+.window-controls .icon-button .material-symbol-icon{font-size:20px}
+.window-controls .window-close:hover{background:var(--md-sys-color-error);color:var(--md-sys-color-on-error)}
+.window-controls .window-close:hover::before{opacity:0}
+html.has-window-controls .header-inner{padding-right:132px}
+@media(min-width:1580px){html.has-window-controls .header-inner{padding-right:16px}}
+.render-mode-button[aria-pressed="true"]{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.render-mode-button[aria-pressed="true"] .material-symbol-icon{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+
+/* ---------- Page layout ---------- */
+.page-shell{max-width:1288px;margin:0 auto;padding:0 24px 32px}
+.model-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:32px;margin-top:16px;align-items:start}
+/* Setting "显示左侧封面" off: the whole sidebar goes away (and the card is not rendered). */
+.model-layout.cover-hidden{grid-template-columns:minmax(0,1fr)!important}
+.model-layout.cover-hidden>.model-sidebar{display:none}
+
+
+/* ---------- Character card (game card geometry) ---------- */
+.model-sidebar>.cover-card{position:relative;width:min(100%,300px);aspect-ratio:7/12;margin:0 auto;overflow:hidden;border-radius:var(--md-sys-shape-corner-large);background:#1b171d;box-shadow:var(--md-sys-elevation-1);isolation:isolate}
+.model-sidebar>.cover-card:not(.is-empty){cursor:pointer}
+.model-sidebar>.cover-card:focus-visible{outline:3px solid var(--md-sys-color-secondary);outline-offset:2px}
+/* 选中/悬停边框（设置 → 封面）：选中=primary（高彩度），悬停=outline（同色相低彩度），均随自动取色；选中优先 */
+.model-sidebar>.cover-card.has-state-outline{outline:3px solid transparent;outline-offset:3px;transition:outline-color var(--md-sys-motion-duration-short4,200ms) cubic-bezier(.2,0,0,1)}
+.model-sidebar>.cover-card.has-state-outline:not(.is-empty):hover{outline-color:var(--md-sys-color-outline)}
+.model-sidebar>.cover-card.has-state-outline:not(.is-empty):focus-within{outline-color:var(--md-sys-color-primary)}
+@media(prefers-reduced-motion:reduce){.model-sidebar>.cover-card.has-state-outline{transition:none}}
+.cover-card>.cover-layer{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;image-rendering:pixelated;pointer-events:none}
+.cover-card>.cover-background{z-index:0}
+.cover-card>.cover-foreground{z-index:2}
+.cover-card>.cover-wrap{position:absolute;z-index:1;top:0;left:0;width:100%;height:77.7778%;overflow:hidden}
+.cover-wrap>.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.cover-card>.cover-caption{position:absolute;z-index:3;left:0;right:0;bottom:0;height:22.2222%;padding:8px 16px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:22px;line-height:28px;font-weight:500;color:#fff;overflow-wrap:anywhere;text-shadow:0 1px 3px #0008}
+.cover-caption .minecraft-title-text{white-space:pre-wrap}
+.cover-card.is-empty{background:var(--md-sys-color-surface-container-highest);box-shadow:none}
+.cover-card.is-empty>.cover-caption{color:var(--md-sys-color-on-surface-variant);text-shadow:none;font-size:16px}
+
+/* Card controls under the character card. */
+.cover-actions{width:min(100%,300px);margin:16px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+/* Playback spans the row; save and export sit side by side below it. */
+.cover-actions>.card-playback-setting{grid-column:1/-1}
+.cover-actions>.md-button{width:100%;min-width:0;padding:0 12px;overflow:hidden;text-overflow:ellipsis}
+.cover-actions>.md-button:has(.material-symbol-icon){padding-left:12px}
+.card-playback-setting{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;padding:8px 16px 8px 8px;border-radius:var(--md-sys-shape-corner-medium);background:var(--md-sys-color-surface-container-low)}
+.card-playback-setting>.md-button{padding:0 16px 0 12px}
+.card-playback-setting>label{min-width:0;display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:8px}
+.card-playback-setting>label>span,.card-playback-setting output{font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px;color:var(--md-sys-color-on-surface-variant);font-variant-numeric:tabular-nums}
+.card-playback-setting input{grid-column:1/-1;width:100%;height:28px}
+/* The frame readout changes ~30 times a second: a fixed box keeps those
+   updates from relaying out the card controls. */
+.card-playback-setting output{display:block;width:7.5em;height:16px;text-align:right;white-space:nowrap;contain:strict}
+
+/* ---------- Primary tabs ---------- */
+.tabs{position:relative;display:flex;height:48px;border-bottom:1px solid var(--md-sys-color-surface-container-highest)}
+.tabs button{height:48px;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;overflow:hidden;font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px;color:var(--md-sys-color-on-surface-variant)}
+.tabs button[aria-selected=true]{color:var(--md-sys-color-primary)}
+.tabs button .material-symbol-icon{font-size:20px}
+.tabs button[aria-selected=true] .material-symbol-icon{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+.tabs .tab-indicator{position:absolute;left:0;bottom:-1px;height:3px;width:0;border-radius:3px 3px 0 0;background:var(--md-sys-color-primary);pointer-events:none;transition:transform .25s var(--md-sys-motion-easing-standard),width .25s var(--md-sys-motion-easing-standard)}
+.tab-pill{height:16px;display:inline-flex;align-items:center;padding:0 6px;border-radius:var(--md-sys-shape-corner-small);background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container);font-size:11px;line-height:16px;font-weight:500;letter-spacing:.5px}
+.tab-ripple{position:absolute;z-index:-1;border-radius:50%;background:currentColor;opacity:0;pointer-events:none;transform:scale(0);animation:tab-ink-ripple .45s var(--md-sys-motion-easing-standard)}
+@keyframes tab-ink-ripple{0%{opacity:.12;transform:scale(0)}100%{opacity:0;transform:scale(1)}}
+.tab-panel-enter{animation:tab-panel-enter .25s var(--md-sys-motion-easing-emphasized-decelerate) both}
+@keyframes tab-panel-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- Detail sections ---------- */
+.detail-section{padding-top:24px}
+.section-title{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}
+.section-title h2{flex:0 0 auto;white-space:nowrap;display:flex;align-items:center;gap:8px;font-size:16px;line-height:24px;font-weight:500;letter-spacing:.15px;color:var(--md-sys-color-on-surface)}
+.section-title h2 .material-symbol-icon{color:var(--md-sys-color-on-surface-variant)}
+.section-title>span{font-size:14px;line-height:20px;color:var(--md-sys-color-on-surface-variant)}
+
+/* Filled card for model-authored Minecraft-formatted text. */
+.model-description-text{padding:16px;border-radius:var(--md-sys-shape-corner-medium);background:var(--ysm-text-surface);color:var(--ysm-text-on-surface);font-size:14px;line-height:22px;white-space:pre-wrap;overflow-wrap:anywhere}
+.model-description-text .minecraft-title-text{text-shadow:var(--mc-shadow,1px 1px 0 #0006)}
+:root:has(.cover-card.is-empty) .model-description-text{background:var(--md-sys-color-surface-container);color:var(--md-sys-color-on-surface-variant)}
+:root:has(.cover-card.is-empty) .model-description-text .minecraft-title-text{text-shadow:none}
+
+/* Authors: outlined cards with avatar, headline, supporting text and chips. */
+.author-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.author-card{display:flex;align-items:flex-start;flex-wrap:wrap;gap:16px;min-width:0;padding:16px;border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-medium);background:var(--md-sys-color-surface)}
+.author-card>img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--md-sys-color-surface-container-highest)}
+.author-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.author-copy>strong{font-size:16px;line-height:24px;font-weight:400;letter-spacing:.5px}
+.author-comment{font-size:14px;line-height:20px;color:var(--md-sys-color-on-surface-variant);overflow-wrap:anywhere}
+.role-tag{height:24px;display:inline-flex;align-items:center;padding:0 8px;border-radius:var(--md-sys-shape-corner-small);background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container);font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px;white-space:nowrap}
+.author-contacts{display:flex;flex-wrap:wrap;gap:8px;width:100%;padding-left:56px}
+.author-contacts a{height:32px;display:inline-flex;align-items:center;padding:0 16px;border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-small);color:var(--md-sys-color-on-surface);font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px}
+.author-empty{grid-column:1/-1;padding:16px;border:1px dashed var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-medium);color:var(--md-sys-color-on-surface-variant)}
+
+/* Mod support and links: two-line list items in outlined cards. */
+.mod-grid,.link-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mod-card,.link-grid>a{min-height:72px;display:flex;align-items:center;gap:16px;padding:8px 16px;border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-medium);background:var(--md-sys-color-surface);overflow:hidden}
+.mod-card>img{width:40px;height:40px;border-radius:var(--md-sys-shape-corner-small);object-fit:contain;flex:0 0 40px}
+.link-icon{width:40px;height:40px;flex:0 0 40px;display:grid;place-items:center;border-radius:50%;background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.link-icon.pink{background:var(--md-sys-color-tertiary-container);color:var(--md-sys-color-on-tertiary-container)}
+.mod-card>div,.link-grid>a>div{flex:1;min-width:0;display:flex;flex-direction:column}
+.mod-card strong,.link-grid strong{font-size:16px;line-height:24px;font-weight:400;letter-spacing:.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mod-card>div>span,.link-grid>a>div>span{font-size:14px;line-height:20px;color:var(--md-sys-color-on-surface-variant);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.supported{display:flex;align-items:center;gap:4px;font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px;color:var(--md-sys-color-primary);white-space:nowrap}
+.supported .material-symbol-icon{font-size:18px}
+.link-grid>a>.material-symbol-icon{color:var(--md-sys-color-on-surface-variant)}
+
+/* License: filled card with leading icon, chips and a trailing icon button. */
+.license-card{margin-top:24px;display:flex;align-items:flex-start;gap:16px;padding:16px;border-radius:var(--md-sys-shape-corner-medium);background:var(--md-sys-color-surface-container-low)}
+.license-symbol{width:40px;height:40px;flex:0 0 40px;display:grid;place-items:center;border-radius:50%;background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)}
+.license-body{flex:1;min-width:0}
+.license-title{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.license-title h2{font-size:16px;line-height:24px;font-weight:500;letter-spacing:.15px}
+.license-title>span{height:24px;display:inline-flex;align-items:center;padding:0 8px;border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-small);font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px;color:var(--md-sys-color-on-surface-variant)}
+.license-body p{margin:4px 0 0;font-size:14px;line-height:20px;color:var(--md-sys-color-on-surface-variant)}
+
+/* ---------- 3D preview surface ---------- */
+.viewer-shell{margin-block:32px;border-radius:var(--md-sys-shape-corner-large);overflow:hidden;background:var(--md-sys-color-surface-container-low)}
+/* --viewport-dim (设置 → 背景压暗, 0–1) lays black over the themed gradient. */
+#viewport{position:relative;height:437px;overflow:hidden;background:linear-gradient(rgb(0 0 0/var(--viewport-dim,0)),rgb(0 0 0/var(--viewport-dim,0))),radial-gradient(ellipse at 50% 38%,var(--md-sys-color-surface-container-lowest) 0%,var(--md-sys-color-surface-container) 75%)}
+#scene{display:block;width:100%;height:100%;touch-action:none}
+.viewer-shell:fullscreen,.viewer-shell.is-fullscreen{display:flex;flex-direction:column;border-radius:0}
+.viewer-shell:fullscreen #viewport,.viewer-shell.is-fullscreen #viewport{flex:1;height:auto}
+/* Desktop 3D view fullscreen (第 64 节): no Fullscreen API, the view covers the (OS-fullscreen) window. */
+.viewer-shell.is-fullscreen{position:fixed;inset:0;z-index:1000;margin:0}
+html.viewer-fullscreen body{overflow:hidden}
+/* A transform (the tab panel's entry animation keeps one) would make the panel the containing block of the fixed view. */
+html.viewer-fullscreen .viewer-shell.is-fullscreen,html.viewer-fullscreen :has(.viewer-shell.is-fullscreen){transform:none!important;animation:none!important;filter:none!important;contain:none!important}
+/* Desktop app fullscreen: the window is fixed, no window buttons. */
+html.app-fullscreen .window-controls{display:none}
+html.has-window-controls.app-fullscreen .header-inner{padding-right:16px}
+/* Notice in the 3D view (Esc left 操控模式 in fullscreen): M3 snackbar look, top centre. */
+.viewer-notice{position:absolute;left:50%;top:88px;z-index:6;transform:translateX(-50%);display:flex;align-items:center;gap:12px;max-width:calc(100% - 32px);padding:12px 20px 12px 16px;border-radius:var(--md-sys-shape-corner-small);background:var(--md-sys-color-inverse-surface);color:var(--md-sys-color-inverse-on-surface);box-shadow:var(--md-sys-elevation-3);pointer-events:none}
+.viewer-notice>.material-symbol-icon{color:var(--md-sys-color-inverse-primary)}
+.viewer-notice>span{display:flex;flex-direction:column}
+.viewer-notice strong{font-size:16px;line-height:24px;font-weight:500;letter-spacing:.15px}
+.viewer-notice strong+span{font-size:14px;line-height:20px;letter-spacing:.25px;opacity:.85}
+.viewer-notice.is-shown{animation:viewer-notice-in .25s var(--md-sys-motion-easing-emphasized-decelerate) both}
+@keyframes viewer-notice-in{from{opacity:0;transform:translate(-50%,-8px)}}
+@media (prefers-reduced-motion:reduce){.viewer-notice.is-shown{animation:none}}
+
+/* Circular progress indicator inside the loading state. */
+.loading-state{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--md-sys-color-surface-container-low);color:var(--md-sys-color-on-surface);font-size:16px;line-height:24px;text-align:center;padding:16px}
+.loading-state>strong{font-weight:500}
+.loading-state>span:last-child{font-size:14px;line-height:20px;color:var(--md-sys-color-on-surface-variant)}
+/* Import progress: M3 linear progress indicator (4px, rounded, primary on secondary-container) with the step and percentage. */
+.import-progress-title{max-width:min(360px,100%);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.import-progress{width:min(320px,80%);height:4px;border-radius:2px;background:var(--md-sys-color-secondary-container);overflow:hidden}
+.import-progress-indicator{height:100%;border-radius:inherit;background:var(--md-sys-color-primary);transform:scaleX(0);transform-origin:left;transition:transform .2s var(--md-sys-motion-easing-standard)}
+.import-progress-meta{width:min(320px,80%);display:flex;justify-content:space-between;gap:16px;font-size:12px;line-height:16px;letter-spacing:.4px;color:var(--md-sys-color-on-surface-variant)}
+.import-progress-percent{font-variant-numeric:tabular-nums}
+/* Hourglass under the bar: Material Symbols-style glyph (24px, on-primary-container) in a 48px primary-container circle. 2.4s loop — turn 180° (emphasized easing), pause while the sand runs down, turn the next 180°, pause. */
+.import-hourglass{width:48px;height:48px;margin-top:8px;border-radius:50%;display:grid;place-items:center;background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)}
+.import-hourglass>svg{width:24px;height:24px;display:block}
+/* Compact variant beside the library's cover-generation progress. */
+.import-hourglass.is-compact{width:32px;height:32px;margin:0;flex:none}
+.import-hourglass.is-compact>svg{width:20px;height:20px}
+.import-hourglass-body{transform-box:view-box;transform-origin:50% 50%;animation:import-hourglass-turn 2.4s infinite}
+.import-hourglass-glass,.import-hourglass-sand{fill:currentColor}
+.import-hourglass-sand{animation:2.4s linear infinite}
+.import-hourglass-sand-top{animation-name:import-hourglass-sand-top}
+.import-hourglass-sand-bottom{animation-name:import-hourglass-sand-bottom}
+@keyframes import-hourglass-turn{0%{transform:rotate(0deg);animation-timing-function:cubic-bezier(.2,0,0,1)}25%,50%{transform:rotate(180deg);animation-timing-function:cubic-bezier(.2,0,0,1)}75%,100%{transform:rotate(360deg)}}
+@keyframes import-hourglass-sand-top{0%,25%{transform:translateY(-7px)}50%,75%{transform:translateY(0)}100%{transform:translateY(7px)}}
+@keyframes import-hourglass-sand-bottom{0%,25%{transform:translateY(0)}50%,75%{transform:translateY(-7px)}75.01%{transform:translateY(7px)}100%{transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.import-progress-indicator{transition:none}.import-hourglass-body,.import-hourglass-sand{animation:none}}
+.spinner{width:48px;height:48px;border:4px solid var(--md-sys-color-secondary-container);border-top-color:var(--md-sys-color-primary);border-radius:50%;animation:md-spin 1s linear infinite}
+@keyframes md-spin{to{transform:rotate(360deg)}}
+
+/* Floating toolbar (full corner, surface container, level 3). */
+/* Vertical toolbar on the right. Columns of 40px rows fill top to bottom and
+   wrap to the left (rtl) when the view is too short for all the buttons. */
+.viewer-tools{position:absolute;top:16px;right:16px;z-index:5;max-height:calc(100% - 32px);display:grid;grid-auto-flow:column;grid-template-rows:repeat(auto-fill,40px);gap:4px;padding:8px;direction:rtl;border-radius:var(--md-sys-shape-corner-large);background:var(--md-sys-color-surface-container);box-shadow:var(--md-sys-elevation-3)}
+.viewer-tools>*{direction:ltr}
+.viewer-tools .icon-button.active,.viewer-tools .icon-button[aria-expanded=true]{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.viewer-tools .icon-button.active .material-symbol-icon,.viewer-tools .icon-button[aria-expanded=true] .material-symbol-icon{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+#pose-run .material-symbol-icon{transform:scaleX(-1)}
+#viewport:has(.wheel-settings) .viewer-tools{visibility:hidden}
+/* 自动隐藏工具栏: the bar fades out after the pointer leaves and comes back
+   under the pointer, while it holds focus or while one of its menus is open. */
+#viewport.toolbar-auto-hide .viewer-tools{transform:translateX(calc(100% + 24px));box-shadow:none;transition:transform .2s var(--md-sys-motion-easing-emphasized-accelerate) .3s,box-shadow 0s .5s}
+#viewport.toolbar-auto-hide:has(.viewer-tools-edge:hover) .viewer-tools,#viewport.toolbar-auto-hide .viewer-tools:is(:hover,:focus-within,:has([aria-expanded=true])){transform:none;box-shadow:var(--md-sys-elevation-3);transition:transform .25s var(--md-sys-motion-easing-emphasized-decelerate),box-shadow 0s}
+/* The strip along the right border that brings the hidden toolbar in. */
+.viewer-tools-edge{display:none;position:absolute;top:0;right:0;bottom:0;z-index:4;width:24px}
+#viewport.toolbar-auto-hide .viewer-tools-edge{display:block}
+@media (prefers-reduced-motion:reduce){#viewport.toolbar-auto-hide .viewer-tools{transition:none!important}}
+.viewer-tools .wheel-close-button{position:absolute;top:-6px;z-index:3;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:var(--md-sys-color-primary);color:var(--md-sys-color-on-primary);box-shadow:var(--md-sys-elevation-1)}
+/* 操控模式: key hint chip at the bottom of the view (an M3 plain tooltip/snackbar surface). */
+.play-hint{position:absolute;left:50%;bottom:16px;z-index:4;transform:translateX(-50%);max-width:calc(100% - 32px);padding:8px 16px;border-radius:var(--md-sys-shape-corner-extra-small);background:var(--md-sys-color-inverse-surface);color:var(--md-sys-color-inverse-on-surface);box-shadow:var(--md-sys-elevation-2);font-size:12px;line-height:16px;letter-spacing:.4px;text-align:center;pointer-events:none}
+#viewport.is-playing #scene{cursor:pointer}
+/* 操控模式 keymap: grouped columns while shown, a small chip otherwise. */
+.play-hint.play-keymap{display:grid;grid-template-columns:repeat(4,max-content);gap:4px 24px;padding:12px 16px;text-align:left;animation:play-hint-in .15s var(--md-sys-motion-easing-emphasized-decelerate) both}
+.play-keymap section{display:flex;flex-direction:column;gap:4px}
+.play-keymap strong{margin-bottom:2px;font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px;opacity:.72}
+.play-keymap span{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.play-hint kbd{min-width:20px;padding:0 6px;border-radius:var(--md-sys-shape-corner-extra-small);background:color-mix(in srgb,var(--md-sys-color-inverse-on-surface) 16%,transparent);font-family:inherit;font-size:11px;line-height:18px;font-weight:500;text-align:center}
+.play-hint.play-hint-chip{left:16px;transform:none;height:32px;display:flex;align-items:center;gap:6px;padding:0 10px 0 8px;border-radius:var(--md-sys-shape-corner-small);animation:play-hint-in .2s var(--md-sys-motion-easing-emphasized-decelerate) both}
+.play-hint-chip .material-symbol-icon{font-size:18px}
+@keyframes play-hint-in{from{opacity:0}}
+@container (max-width:640px){.play-hint.play-keymap{grid-template-columns:repeat(2,max-content);row-gap:12px}}
+@media (prefers-reduced-motion:reduce){.play-hint.play-keymap,.play-hint.play-hint-chip{animation:none}}
+/* F1 in 操控模式 leaves only the picture. */
+#viewport.play-hud-hidden>:not(#scene,.loading-state,.action-wheel,.play-item-panel){visibility:hidden}
+/* 操控模式 item panel (hold K): M3 dialog surface with filter-chip-like item cells. */
+.play-item-panel{position:absolute;left:50%;top:50%;z-index:6;width:min(560px,calc(100% - 32px));max-height:calc(100% - 32px);display:flex;flex-direction:column;border-radius:var(--md-sys-shape-corner-extra-large);background:var(--md-sys-color-surface-container-high);color:var(--md-sys-color-on-surface);box-shadow:var(--md-sys-elevation-3);transform:translate(-50%,-50%);animation:play-item-in .15s var(--md-sys-motion-easing-emphasized-decelerate) both;overflow:hidden}
+@keyframes play-item-in{from{opacity:0}}
+.play-item-panel>header{display:flex;align-items:center;gap:16px;padding:20px 24px 12px}
+.play-item-panel>header strong{flex:1;font-size:22px;line-height:28px;font-weight:400}
+.play-item-hands{flex:none;width:184px}
+.play-item-body{min-height:0;overflow:auto;padding:0 24px 8px}
+.play-item-subheader{padding:12px 0 8px;color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px}
+.play-item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.play-item{position:relative;isolation:isolate;min-height:40px;display:flex;align-items:center;gap:8px;padding:6px 8px 6px 12px;border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-small);text-align:left;color:var(--md-sys-color-on-surface-variant);overflow:hidden}
+.play-item::before{content:"";position:absolute;inset:0;z-index:-1;background:currentColor;opacity:0;pointer-events:none;transition:opacity 15ms linear}
+.play-item:hover::before{opacity:.08}
+.play-item:is(:focus-visible,:active)::before{opacity:.1}
+.play-item:focus-visible{outline:2px solid var(--md-sys-color-secondary);outline-offset:2px}
+.play-item[aria-checked=true]{border-color:transparent;background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.play-item-label{flex:1;min-width:0;font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.play-item-tags{flex:none;display:flex;gap:2px}
+.play-item-tags>span{min-width:18px;height:18px;padding:0 3px;border-radius:var(--md-sys-shape-corner-extra-small);background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container);font-size:11px;line-height:18px;font-weight:500;text-align:center}
+.play-item-note{margin:0;padding:12px 24px 20px;color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px;letter-spacing:.4px}
+@media(max-width:540px){.play-item-panel>header{flex-wrap:wrap}.play-item-hands{width:100%}}
+@media (prefers-reduced-motion:reduce){.play-item-panel{animation:none}}
+.viewer-tools .wheel-close-button .material-symbol-icon{font-size:16px}
+
+/* Texture menu: text button trigger plus an M3 menu. */
+.texture-picker{position:relative;min-width:0}
+.texture-picker-trigger{height:40px;max-width:min(180px,29vw);display:flex;align-items:center;gap:4px;padding:0 8px 0 12px;border-radius:var(--md-sys-shape-corner-full);color:var(--md-sys-color-on-surface-variant);font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px;white-space:nowrap}
+.texture-picker-trigger>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis}
+/* In the vertical toolbar the trigger is an icon button; its title names the texture. */
+.texture-picker-trigger>.material-symbol-icon:first-child{display:none}
+@media(min-width:541px){.texture-picker-trigger{width:40px;padding:0;justify-content:center}.texture-picker-trigger>.material-symbol-icon:first-child{display:block}.texture-picker-trigger>#texture-current,.texture-picker-trigger>.material-symbol-icon:not(:first-child),.texture-picker-trigger>svg{display:none}/* Menus open to the left, level with the toolbar's top edge (their pickers are not positioned). */.viewer-tools :is(.hand-item-picker,.texture-picker){position:static}.viewer-tools :is(.texture-picker-options,.hand-item-menu){left:auto;right:calc(100% + 12px);top:0;transform:none;transform-origin:top right;animation-name:md-menu-in}.viewer-tools .hand-item-menu{max-height:400px}.viewer-tools .hand-item-options{flex:1 1 auto;min-height:0}}
+.texture-picker-trigger[aria-expanded=true] .material-symbol-icon{transform:rotate(180deg)}
+.texture-picker-options{position:absolute;right:0;top:calc(100% + 12px);z-index:10;min-width:112px;width:max-content;max-width:min(280px,80vw);max-height:min(320px,60vh);overflow:auto;padding:8px 0;border-radius:var(--md-sys-shape-corner-extra-small);background:var(--md-sys-color-surface-container);box-shadow:var(--md-sys-elevation-2);transform-origin:top right;animation:md-menu-in .15s var(--md-sys-motion-easing-emphasized-decelerate) both}
+.texture-picker-options.is-closing{animation:md-menu-out .1s var(--md-sys-motion-easing-emphasized-accelerate) both}
+@keyframes md-menu-in{from{opacity:0;transform:scaleY(.8)}to{opacity:1;transform:none}}
+@keyframes md-menu-out{to{opacity:0}}
+.texture-picker-option{width:100%;height:48px;display:flex;align-items:center;gap:12px;padding:0 12px;text-align:left;font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px;color:var(--md-sys-color-on-surface);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.texture-picker-option[aria-selected=true]{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.texture-picker-option::after{content:"check";margin-left:auto;font:normal 400 24px/1 "Material Symbols Outlined";font-feature-settings:"liga";-webkit-font-feature-settings:"liga";opacity:0}
+.texture-picker-option[aria-selected=true]::after{opacity:1}
+
+/* 光照调节: non-modal popover with M3 sliders, a colour well and a switch. */
+.light-picker{position:relative;display:flex}
+/* Docked in the 3D view's top-left corner so the model in the middle stays visible. */
+.light-panel{position:absolute;left:16px;top:16px;z-index:6;width:280px;max-width:calc(100% - 32px);max-height:calc(100% - 32px);overflow:auto;display:grid;gap:0;padding:8px 16px 8px;border-radius:var(--md-sys-shape-corner-large);background:color-mix(in srgb,var(--md-sys-color-surface-container) 92%,transparent);box-shadow:var(--md-sys-elevation-2);transform-origin:top left;animation:md-menu-in .15s var(--md-sys-motion-easing-emphasized-decelerate) both}
+.light-panel.is-closing{animation:md-menu-out .1s var(--md-sys-motion-easing-emphasized-accelerate) both}
+.light-panel>header{display:flex;align-items:center;gap:4px;margin-right:-8px}
+.light-panel>header strong{margin-right:auto}
+.light-marker-toggle[aria-pressed=true]{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.light-marker-toggle[aria-pressed=true] .material-symbol-icon{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+.light-panel>header strong{font-size:16px;line-height:24px;font-weight:500;color:var(--md-sys-color-on-surface)}
+.light-row{min-height:32px;display:grid;grid-template-columns:72px minmax(0,1fr) 40px;align-items:center;column-gap:8px;font-size:14px;line-height:20px;color:var(--md-sys-color-on-surface)}
+.light-row output{order:3;text-align:right;font-size:13px;font-weight:500;color:var(--md-sys-color-on-surface-variant);font-variant-numeric:tabular-nums}
+.light-row>.md-range{order:2;width:100%;height:32px}
+.light-color-row,.light-switch-row{grid-template-columns:1fr auto;cursor:pointer}
+.light-subheader{padding:6px 0 0;font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px;color:var(--md-sys-color-primary)}
+.light-note{margin:4px 0 0;font-size:12px;line-height:16px;letter-spacing:.4px;color:var(--md-sys-color-on-surface-variant)}
+/* 角色状态 panel: reuses the 光照调节 popover surface and rows. */
+.status-panel{width:300px}
+.light-subheader small,.status-effect small{margin-left:8px;font-size:11px;font-weight:500;letter-spacing:.5px;color:var(--md-sys-color-on-surface-variant)}
+.status-panel .md-segmented{height:32px;margin:6px 0 4px}
+.status-panel .md-segmented>label{padding:0 4px;gap:4px;font-size:13px}
+.status-armor .material-symbol-icon{display:none!important}
+.status-effects{max-height:200px;overflow:auto;margin:2px -8px 0;padding:0 8px}
+.status-effect{min-height:36px;display:grid;grid-template-columns:minmax(0,1fr) 32px 32px 32px;align-items:center;font-size:14px;line-height:20px;color:var(--md-sys-color-on-surface)}
+.status-effect>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.status-effect output{text-align:center;font-size:13px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--md-sys-color-on-surface-variant)}
+.status-effect .icon-button{width:32px;height:32px;flex-basis:32px}
+.status-effect .icon-button .material-symbol-icon{font-size:20px}
+.status-effect .icon-button:disabled{color:color-mix(in srgb,var(--md-sys-color-on-surface) 38%,transparent)}
+.light-subheader .status-used{padding:0 6px;border-radius:var(--md-sys-shape-corner-extra-small,4px);background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)}
+.status-summary{margin:2px 0 4px;padding:8px 12px;border-radius:var(--md-sys-shape-corner-medium,12px);background:var(--md-sys-color-surface-container-highest);font-size:12px;line-height:16px;letter-spacing:.4px;color:var(--md-sys-color-on-surface-variant)}
+/* Options the loaded model's scripts read get a primary dot. */
+.status-panel .light-row.is-used{position:relative}
+.status-panel .light-row.is-used::before{content:"";position:absolute;left:-10px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--md-sys-color-primary)}
+.status-armor>label.is-used{position:relative}
+.status-armor>label.is-used::after{content:"";position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--md-sys-color-primary)}
+.status-chip.is-used>span::after{content:"";display:inline-block;width:6px;height:6px;margin-left:4px;vertical-align:middle;border-radius:50%;background:var(--md-sys-color-primary)}
+.status-chip.is-used{border-color:var(--md-sys-color-primary)}
+.status-more{margin:2px -8px 0}
+.status-more>summary{height:36px;display:flex;align-items:center;gap:8px;padding:0 8px;border-radius:var(--md-sys-shape-corner-full,999px);cursor:pointer;list-style:none;font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px;color:var(--md-sys-color-primary)}
+.status-more>summary::-webkit-details-marker{display:none}
+.status-more>summary:hover{background:color-mix(in srgb,var(--md-sys-color-primary) 8%,transparent)}
+.status-more>summary:focus-visible{outline:2px solid var(--md-sys-color-secondary);outline-offset:-2px}
+.status-more>summary small{font-size:12px;font-weight:500;color:var(--md-sys-color-on-surface-variant)}
+.status-more>summary .material-symbol-icon{font-size:20px;transition:transform .2s var(--md-sys-motion-easing-standard,ease)}
+.status-more[open]>summary .material-symbol-icon{transform:rotate(180deg)}
+.status-more>.status-effects{margin:0;padding:0 8px}
+.status-biomes{display:grid;gap:6px;margin:6px 0 2px}
+.status-biome-group{display:grid;grid-template-columns:32px minmax(0,1fr);align-items:start;column-gap:8px}
+.status-biome-group>span{padding-top:6px;font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px;color:var(--md-sys-color-on-surface-variant)}
+.status-biome-group>div{display:flex;flex-wrap:wrap;gap:6px}
+/* M3 filter chip, single select. */
+.status-chip{position:relative;height:28px;display:inline-flex;align-items:center;padding:0 10px;border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-small);font-size:13px;line-height:20px;font-weight:500;letter-spacing:.1px;color:var(--md-sys-color-on-surface-variant);cursor:pointer}
+.status-chip input{position:absolute;opacity:0;pointer-events:none}
+.status-chip:hover{background:color-mix(in srgb,var(--md-sys-color-on-surface-variant) 8%,transparent)}
+.status-chip:has(input:checked){border-color:transparent;background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.status-chip:has(input:focus-visible){outline:2px solid var(--md-sys-color-secondary);outline-offset:1px}
+@media(max-width:540px){.light-panel{left:8px;top:104px;max-width:calc(100% - 16px);max-height:calc(100% - 112px)}}
+
+/* Held items: M3 menu with a main/off-hand segmented button and radio items. */
+.hand-item-picker{position:relative;display:flex}
+.hand-item-menu{position:absolute;left:50%;top:calc(100% + 12px);z-index:10;width:280px;max-width:80vw;display:flex;flex-direction:column;gap:8px;padding:12px 0 8px;border-radius:var(--md-sys-shape-corner-extra-small);background:var(--md-sys-color-surface-container);box-shadow:var(--md-sys-elevation-2);transform:translateX(-50%);transform-origin:top center;animation:hand-menu-in .15s var(--md-sys-motion-easing-emphasized-decelerate) both}
+.hand-item-menu.is-closing{animation:hand-menu-out .1s var(--md-sys-motion-easing-emphasized-accelerate) both}
+@keyframes hand-menu-in{from{opacity:0;transform:translateX(-50%) scaleY(.8)}to{opacity:1;transform:translateX(-50%)}}
+@keyframes hand-menu-out{from{opacity:1}to{opacity:0}}
+.hand-item-hands{margin:0 12px;flex:none}
+.hand-item-options{max-height:360px;overflow:auto}
+.hand-item-subheader{padding:12px 12px 4px;color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px}
+.hand-item-note{margin:4px 12px;color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px;letter-spacing:.4px}
+.hand-item-option{position:relative;isolation:isolate;width:100%;min-height:48px;display:flex;align-items:center;gap:12px;padding:4px 12px;text-align:left;color:var(--md-sys-color-on-surface)}
+.hand-item-option::before{content:"";position:absolute;inset:0;z-index:-1;background:currentColor;opacity:0;pointer-events:none;transition:opacity 15ms linear}
+.hand-item-option:hover::before{opacity:.08}
+.hand-item-option:is(:focus-visible,:active)::before{opacity:.1}
+.hand-item-option:focus-visible{outline:none}
+.hand-item-option[aria-checked=true]{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.hand-item-text{min-width:0;display:flex;flex-direction:column}
+.hand-item-text>span{font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px}
+.hand-item-text>small{color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px;letter-spacing:.4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hand-item-option[aria-checked=true] .hand-item-text>small{color:inherit;opacity:.8}
+.hand-item-option::after{content:"check";margin-left:auto;font:normal 400 24px/1 "Material Symbols Outlined";font-feature-settings:"liga";-webkit-font-feature-settings:"liga";opacity:0}
+.hand-item-option[aria-checked=true]::after{opacity:1}
+@media(max-width:540px){.hand-item-menu{left:auto;right:-80px;transform:none;animation-name:md-menu-in}}
+
+/* Screenshot & watermark panel: elevated card, outlined field, switch, slider and FAB. */
+.capture-panel{position:absolute;right:16px;bottom:16px;z-index:3;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 12px;border-radius:var(--md-sys-shape-corner-large);background:var(--md-sys-color-surface-container-low);box-shadow:var(--md-sys-elevation-2)}
+#viewport:has(.wheel-settings) .capture-panel,#viewport:has(.action-wheel:not([hidden])) .capture-panel{visibility:hidden}
+/* The watermark controls live in 设置; the panel is just the status line and the FAB. */
+.capture-fields{display:grid;gap:4px;max-width:180px}
+.capture-status{font-size:11px;line-height:16px;font-weight:500;letter-spacing:.5px;color:var(--md-sys-color-on-surface-variant);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.capture-row{display:flex;align-items:center;gap:8px;min-width:0}
+.md-outlined-field{position:relative;flex:1;min-width:0;height:40px}
+.md-outlined-field>input{width:100%;height:100%;padding:0 12px;border:1px solid var(--md-sys-color-outline);border-radius:var(--md-sys-shape-corner-extra-small);outline:none;background:transparent;color:var(--md-sys-color-on-surface);font-size:16px;letter-spacing:.5px;transition:border-color .15s}
+.md-outlined-field>input:hover{border-color:var(--md-sys-color-on-surface)}
+.md-outlined-field>input:focus{border:2px solid var(--md-sys-color-primary);padding:0 11px}
+.md-outlined-field>span{position:absolute;left:8px;top:50%;padding:0 4px;transform:translateY(-50%);background:var(--md-sys-color-surface-container-low);color:var(--md-sys-color-on-surface-variant);font-size:16px;line-height:1;letter-spacing:.5px;pointer-events:none;transition:top .15s var(--md-sys-motion-easing-standard),font-size .15s var(--md-sys-motion-easing-standard),color .15s}
+.md-outlined-field>input:focus+span,.md-outlined-field>input:not(:placeholder-shown)+span{top:0;font-size:12px}
+.md-outlined-field>input:focus+span{color:var(--md-sys-color-primary)}
+.md-switch{position:relative;flex:0 0 52px;width:52px;height:32px;cursor:pointer}
+.md-switch>input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.md-switch-track{position:absolute;inset:0;border:2px solid var(--md-sys-color-outline);border-radius:16px;background:var(--md-sys-color-surface-container-highest);transition:background .2s,border-color .2s;pointer-events:none}
+.md-switch-handle{position:absolute;left:6px;top:50%;width:16px;height:16px;border-radius:50%;background:var(--md-sys-color-outline);transform:translateY(-50%);transition:left .2s var(--md-sys-motion-easing-standard),width .2s,height .2s,background .2s}
+.md-switch-handle::before{content:"";position:absolute;left:50%;top:50%;width:40px;height:40px;border-radius:50%;background:var(--md-sys-color-on-surface);opacity:0;transform:translate(-50%,-50%);transition:opacity .15s}
+.md-switch:hover .md-switch-handle::before{opacity:.08}
+.md-switch>input:checked+.md-switch-track{border-color:var(--md-sys-color-primary);background:var(--md-sys-color-primary)}
+.md-switch>input:checked+.md-switch-track .md-switch-handle{left:22px;width:24px;height:24px;background:var(--md-sys-color-on-primary)}
+.md-switch>input:checked+.md-switch-track .md-switch-handle::before{background:var(--md-sys-color-primary)}
+.md-switch>input:focus-visible+.md-switch-track{outline:3px solid var(--md-sys-color-secondary);outline-offset:2px}
+.md-color{flex:0 0 40px;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;cursor:pointer;color:var(--md-sys-color-on-surface)}
+.md-color>input{width:24px;height:24px;padding:0;border:1px solid var(--md-sys-color-outline-variant);border-radius:50%;background:none;cursor:pointer;appearance:none}
+.md-color>input::-webkit-color-swatch-wrapper{padding:0}
+.md-color>input::-webkit-color-swatch{border:0;border-radius:50%}
+.md-color>input::-moz-color-swatch{border:0;border-radius:50%}
+.md-color>input:focus-visible{outline:3px solid var(--md-sys-color-secondary);outline-offset:2px}
+.md-slider{flex:1;min-width:0;display:flex;align-items:center;gap:4px;color:var(--md-sys-color-on-surface-variant);cursor:pointer}
+.md-slider>.material-symbol-icon{font-size:20px}
+.md-slider>.md-range{flex:1}
+.md-fab{flex:0 0 56px;width:56px;height:56px;display:grid;place-items:center;border-radius:var(--md-sys-shape-corner-large);background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container);box-shadow:var(--md-sys-elevation-3);transition:box-shadow .2s}
+.md-fab:hover{box-shadow:0 2px 3px #0000004d,0 6px 10px 4px #00000026}
+.md-fab .material-symbol-icon{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+
+/* ---------- Action wheel (mirrors the in-game radial menu) ---------- */
+.action-wheel{position:absolute;left:50%;top:50%;z-index:4;width:320px;height:320px;transform:translate(-50%,-50%);border-radius:50%}
+.action-wheel-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 4px 12px #0000001f)}
+.wheel-sector{cursor:pointer;outline:none}
+.wheel-sector>path,.wheel-sector-empty>path{fill:color-mix(in srgb,var(--md-sys-color-surface-container-high) 82%,transparent);stroke:color-mix(in srgb,var(--md-sys-color-surface) 60%,transparent);stroke-width:1.4;transition:fill .18s,stroke .18s}
+.wheel-sector:hover>path,.wheel-sector:focus>path{fill:color-mix(in srgb,var(--md-sys-color-secondary-container) 92%,transparent)}
+.wheel-sector.wheel-sector-folder>path{fill:color-mix(in srgb,var(--md-sys-color-primary-container) 80%,transparent)}
+.wheel-sector.wheel-sector-folder:hover>path,.wheel-sector.wheel-sector-folder:focus>path{fill:color-mix(in srgb,var(--md-sys-color-primary-container) 100%,transparent)}
+.wheel-sector:active:not(.is-missing)>path{fill:color-mix(in srgb,var(--md-sys-color-primary) 34%,transparent)}
+.wheel-sector.is-playing>path{fill:color-mix(in srgb,var(--md-sys-color-primary) 52%,transparent)!important;stroke:var(--md-sys-color-primary)!important}
+.wheel-sector text{fill:var(--md-sys-color-on-surface);font:500 11px var(--md-ref-typeface);pointer-events:none}
+.wheel-sector.is-playing text{font-weight:700}
+.wheel-sector.is-pressing{transform-box:fill-box;transform-origin:center;animation:wheel-sector-press .16s ease-out}
+@keyframes wheel-sector-press{0%{transform:scale(1)}30%{transform:scale(.9)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.wheel-sector.is-pressing{animation:none}}
+.wheel-sector.is-missing{cursor:default}
+.wheel-sector.is-missing:hover>path,.wheel-sector.is-missing:focus>path{fill:color-mix(in srgb,var(--md-sys-color-surface-container-high) 82%,transparent)}
+.wheel-sector.is-missing text{fill-opacity:.38}
+.wheel-sector-preview>path{fill:#e3a51b55;stroke:#d9910dce}
+.wheel-sector-preview text{fill:#704800;font-weight:600}
+.wheel-sector-preview:hover>path,.wheel-sector-preview:focus>path{fill:#e3a51b88;stroke:#c27a00}
+.wheel-sector-preview.is-playing>path{fill:#e3a51b9c!important;stroke:#b96c00!important}
+[data-theme=dark] .wheel-sector-preview>path{fill:#d9941c66;stroke:#f0b43d}
+[data-theme=dark] .wheel-sector-preview text{fill:#fff0c3}
+[data-theme=dark] .wheel-sector-preview.is-playing>path{fill:#d9941cbb!important;stroke:#ffcc65!important}
+.wheel-sector-gear-button{position:absolute;z-index:2;width:24px;height:24px;display:grid;place-items:center;transform:translate(-50%,-50%);border-radius:50%;color:var(--md-sys-color-on-surface-variant)}
+.wheel-sector-gear-button .material-symbol-icon{font-size:16px}
+.wheel-sector-sound{color:var(--md-sys-color-on-surface-variant);pointer-events:none}
+.wheel-sector.is-playing .wheel-sector-sound{color:var(--md-sys-color-on-surface)}
+.action-wheel-controls{position:absolute;left:50%;top:calc(100% + 12px);transform:translateX(-50%);display:flex;align-items:center;gap:4px;width:max-content;max-width:calc(100vw - 20px);height:32px;padding:0 4px;border-radius:var(--md-sys-shape-corner-small);background:var(--md-sys-color-surface-container-high);box-shadow:var(--md-sys-elevation-1);color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px}
+.action-wheel-controls>span{display:flex;align-items:center;height:100%;white-space:nowrap}
+.wheel-breadcrumbs{display:flex;align-items:center;flex:0 1 auto;min-width:0;max-width:calc(100vw - 120px);height:100%;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+.wheel-breadcrumbs::-webkit-scrollbar{display:none}
+.wheel-crumb{display:inline-block;flex:0 0 auto;max-width:14em;height:24px;padding:0 8px;line-height:24px;border-radius:var(--md-sys-shape-corner-small);color:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wheel-crumb.is-current{color:var(--md-sys-color-on-surface)}
+.wheel-crumb-separator{display:inline-flex;align-items:center;justify-content:center;width:16px;flex:0 0 16px}
+.wheel-page-indicator{flex:0 0 auto;padding:0 2px;font-variant-numeric:tabular-nums}
+/* Page arrows only; breadcrumb buttons size to their label. */
+.action-wheel-controls>button{width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;border-radius:50%;color:inherit}
+.action-wheel-controls>button .material-symbol-icon{font-size:20px}
+.action-wheel-controls>button:disabled{opacity:.38}
+.action-wheel-empty{position:absolute;left:50%;top:calc(50% + 32px);z-index:2;transform:translateX(-50%);white-space:nowrap;font-size:12px;color:var(--md-sys-color-on-surface-variant)}
+.viewer-shell:fullscreen .action-wheel,.viewer-shell.is-fullscreen .action-wheel{--wheel-size:clamp(220px,min(76vw,62vh),600px);width:var(--wheel-size);height:var(--wheel-size)}
+.viewer-shell:fullscreen .action-wheel-controls,.viewer-shell.is-fullscreen .action-wheel-controls{top:calc(100% + 2vmin);height:clamp(32px,5.5vmin,48px);font-size:clamp(12px,2vmin,16px)}
+.viewer-shell:fullscreen .action-wheel-controls>button,.viewer-shell.is-fullscreen .action-wheel-controls>button{width:clamp(28px,4vmin,40px);height:clamp(28px,4vmin,40px);flex-basis:clamp(28px,4vmin,40px)}
+.viewer-shell:fullscreen .action-wheel-empty,.viewer-shell.is-fullscreen .action-wheel-empty{top:calc(50% + 13%);font-size:clamp(12px,2vmin,16px)}
+@media(max-width:540px){.action-wheel{width:min(300px,calc(100vw - 32px));height:min(300px,calc(100vw - 32px))}}
+
+/* ---------- Wheel configuration side sheet ---------- */
+.action-wheel:has(.wheel-settings),.viewer-shell:fullscreen .action-wheel:has(.wheel-settings),.viewer-shell.is-fullscreen .action-wheel:has(.wheel-settings){left:0;right:0;top:0;width:100%;height:100%;transform:none;border-radius:0;pointer-events:none}
+.wheel-settings{position:absolute;inset:0 0 0 auto;width:min(300px,70%);height:100%;display:flex;flex-direction:column;min-height:0;border-radius:var(--md-sys-shape-corner-large) 0 0 var(--md-sys-shape-corner-large);background:var(--md-sys-color-surface-container-low);color:var(--md-sys-color-on-surface);box-shadow:var(--md-sys-elevation-1);overflow:hidden;pointer-events:auto}
+/* 第 65 节: slide in from the right edge, fast then slow (setting 配置界面动效). */
+.wheel-settings.is-entering{animation:wheel-settings-in .4s cubic-bezier(.05,.7,.1,1) both}
+@keyframes wheel-settings-in{from{transform:translateX(100%)}to{transform:none}}
+.wheel-settings.is-leaving{animation:wheel-settings-out .25s cubic-bezier(.3,0,.8,.15) both;pointer-events:none}
+@keyframes wheel-settings-out{from{transform:none}to{transform:translateX(100%)}}
+@media(prefers-reduced-motion:reduce){.wheel-settings.is-entering,.wheel-settings.is-leaving{animation:none}}
+.wheel-settings>header{min-height:56px;flex:0 0 auto;display:flex;align-items:center;gap:4px;padding:8px 8px 8px 24px;border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.wheel-settings>header strong{flex:1;font-size:16px;line-height:24px;font-weight:500;letter-spacing:.15px}
+.wheel-settings>header button{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;color:var(--md-sys-color-on-surface-variant)}
+.wheel-settings>header button[hidden]{display:none}
+.wheel-settings>header .material-symbol-icon{font-size:22px}
+.wheel-config-bar{display:flex;flex-wrap:wrap;gap:4px;padding:8px 12px;border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.wheel-config-bar .md-button{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px 0 10px}
+.wheel-config-bar .md-button .material-symbol-icon{font-size:18px}
+.wheel-config-bar .md-button[hidden]{display:none}
+.wheel-config-hint{display:flex;align-items:flex-start;gap:6px;margin:0;padding:0 24px 8px;color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px}
+.wheel-config-hint .material-symbol-icon{flex:0 0 auto;font-size:16px;line-height:16px}
+.wheel-config-bar:has(+.wheel-config-hint){border-bottom:0}
+.wheel-config-hint{border-bottom:1px solid var(--md-sys-color-outline-variant)}
+.wheel-config-status{margin:0;padding:8px 24px;border-bottom:1px solid var(--md-sys-color-outline-variant);background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container);font-size:12px;line-height:16px}
+.wheel-config-status[hidden]{display:none}
+.wheel-settings-fields{flex:1 1 auto;min-height:0;padding:16px 24px 24px;overflow-y:auto;overscroll-behavior:contain;}
+.wheel-settings-fields>p{color:var(--md-sys-color-on-surface-variant)}
+.wheel-setting{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;margin:0 0 16px;padding:0;border:0;min-width:0}
+.wheel-setting:last-child{margin-bottom:0}
+.wheel-setting>span,.wheel-setting legend{font-size:14px;line-height:20px;letter-spacing:.25px;color:var(--md-sys-color-on-surface)}
+.wheel-setting output.range-value-current{font-size:14px;line-height:20px;color:var(--md-sys-color-on-surface-variant);font-variant-numeric:tabular-nums}
+.wheel-setting small{grid-column:1/-1;font-size:12px;line-height:16px;letter-spacing:.4px;color:var(--md-sys-color-on-surface-variant)}
+/* Checkbox: 18px box inside a 40px target. */
+.check-setting{grid-template-columns:40px minmax(0,1fr);align-items:center;column-gap:4px;min-height:40px;margin-left:-11px}
+.check-setting input{appearance:none;position:relative;justify-self:center;width:18px;height:18px;margin:0;border:2px solid var(--md-sys-color-on-surface-variant);border-radius:2px;cursor:pointer}
+.check-setting input::before{content:"";position:absolute;inset:-13px;border-radius:50%;background:var(--md-sys-color-on-surface);opacity:0;transition:opacity .15s}
+.check-setting input:hover::before{opacity:.08}
+.check-setting input:checked{border-color:var(--md-sys-color-primary);background:var(--md-sys-color-primary)}
+.check-setting input:checked::after{content:"";position:absolute;left:4px;top:0;width:5px;height:10px;border:solid var(--md-sys-color-on-primary);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.check-setting input:focus-visible{outline:3px solid var(--md-sys-color-secondary);outline-offset:2px}
+.check-setting small{grid-column:2}
+/* Radio buttons: 20px control inside a 40px target. */
+.radio-setting legend{margin-bottom:4px;font-weight:500}
+.radio-setting>div{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:0 8px}
+.radio-setting>div label{min-height:40px;display:flex;align-items:center;gap:4px;font-size:14px;line-height:20px;cursor:pointer}
+.radio-setting input{appearance:none;position:relative;flex:0 0 40px;width:40px;height:40px;margin:0;border-radius:50%;cursor:pointer}
+.radio-setting input::before{content:"";position:absolute;left:10px;top:10px;width:20px;height:20px;box-sizing:border-box;border:2px solid var(--md-sys-color-on-surface-variant);border-radius:50%}
+.radio-setting input::after{content:"";position:absolute;left:15px;top:15px;width:10px;height:10px;border-radius:50%;background:var(--md-sys-color-primary);transform:scale(0);transition:transform .15s var(--md-sys-motion-easing-standard)}
+.radio-setting input:hover{background:color-mix(in srgb,var(--md-sys-color-on-surface) 8%,transparent)}
+.radio-setting input:checked::before{border-color:var(--md-sys-color-primary)}
+.radio-setting input:checked::after{transform:scale(1)}
+.radio-setting input:focus-visible{outline:3px solid var(--md-sys-color-secondary);outline-offset:-4px}
+/* Discrete slider with value indicator (MDC slider geometry). */
+.range-setting{position:relative}
+.material-slider{position:relative;grid-column:1/-1;width:calc(100% - 20px);height:48px;margin:0 10px;touch-action:pan-y;cursor:pointer;--range-fill:0%;--thumb-position:4px}
+.material-slider-track{position:absolute;top:50%;left:0;width:100%;height:4px;transform:translateY(-50%);pointer-events:none}
+.material-slider-inactive{position:absolute;inset:0;border-radius:2px;background:var(--md-sys-color-secondary-container)}
+.material-slider-active{position:absolute;left:0;top:0;width:var(--range-fill);height:4px;border-radius:2px;background:var(--md-sys-color-primary)}
+.material-slider-input{position:absolute!important;z-index:2;top:2px;left:-10px;width:calc(100% + 20px)!important;height:44px!important;margin:0!important;padding:0!important;opacity:0;appearance:none!important;background:transparent!important;border:0!important;cursor:pointer;outline:none!important}
+.material-slider-thumb{position:absolute;z-index:1;top:0;left:var(--thumb-position);width:40px;height:48px;transform:translateX(-50%);pointer-events:none}
+.material-slider-thumb-knob{position:absolute;left:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%);border-radius:50%;background:var(--md-sys-color-primary);box-shadow:var(--md-sys-elevation-1)}
+.material-slider-thumb-knob::before{content:"";position:absolute;inset:-10px;border-radius:50%;background:var(--md-sys-color-primary);opacity:0;transition:opacity .1s}
+.material-slider:hover .material-slider-thumb-knob::before{opacity:.08}
+.material-slider.is-adjusting .material-slider-thumb-knob::before{opacity:.12}
+.material-slider:has(.material-slider-input:focus-visible) .material-slider-thumb-knob{outline:3px solid var(--md-sys-color-secondary);outline-offset:2px}
+.range-value-indicator-container{position:absolute;left:50%;bottom:44px;pointer-events:none;transform:translateX(-50%) rotate(-45deg)}
+.range-value-bubble{position:relative;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50% 50% 50% 0;background:var(--md-sys-color-primary);color:var(--md-sys-color-on-primary);opacity:0;transform:scale(0);transform-origin:0 28px;transition:transform .1s var(--md-sys-motion-easing-emphasized-accelerate);font-size:12px;line-height:28px;font-weight:500;font-variant-numeric:tabular-nums}
+.range-value-bubble-text{display:block;width:28px;text-align:center;transform:rotate(45deg);color:inherit}
+.material-slider.is-adjusting .range-value-bubble{opacity:1;transform:scale(1);transition:transform .1s var(--md-sys-motion-easing-emphasized-decelerate)}
+.viewer-shell:fullscreen .wheel-settings,.viewer-shell.is-fullscreen .wheel-settings{width:clamp(320px,40vw,720px)}
+
+/* Minecraft-formatted titles keep the game's subtle text shadow. */
+.minecraft-title-text{text-shadow:var(--mc-shadow)}
+
+/* ---------- Snackbar ---------- */
+.toast{position:fixed;left:50%;bottom:24px;z-index:30;min-width:min(344px,calc(100vw - 32px));max-width:min(600px,calc(100vw - 32px));min-height:48px;display:flex;align-items:center;padding:14px 16px;border-radius:var(--md-sys-shape-corner-extra-small);background:var(--md-sys-color-inverse-surface);color:var(--md-sys-color-inverse-on-surface);box-shadow:var(--md-sys-elevation-3);font-size:14px;line-height:20px;letter-spacing:.25px;opacity:0;transform:translate(-50%,8px) scale(.96);transition:opacity .15s linear,transform .25s var(--md-sys-motion-easing-emphasized-decelerate)}
+.toast.is-visible{opacity:1;transform:translate(-50%,0) scale(1)}
+
+/* ---------- Drag-and-drop scrim ---------- */
+.drop-overlay{position:fixed;inset:0;z-index:25;display:grid;place-items:center;padding:16px;background:color-mix(in srgb,var(--md-sys-color-surface) 70%,transparent);outline:2px dashed var(--md-sys-color-primary);outline-offset:-16px;pointer-events:none}
+.drop-overlay>div{padding:24px;border-radius:var(--md-sys-shape-corner-extra-large);background:var(--md-sys-color-surface-container-high);box-shadow:var(--md-sys-elevation-3);color:var(--md-sys-color-on-surface);font-size:22px;line-height:28px}
+
+/* ---------- Responsive ---------- */
+@media(min-width:1450px){.model-layout{grid-template-columns:320px minmax(0,1fr);gap:48px}#viewport{height:467px}}
+@media(max-width:1100px){.model-layout{grid-template-columns:260px minmax(0,1fr);gap:24px}.mod-grid,.link-grid{grid-template-columns:1fr}.role-tag{display:none}}
+@media(max-width:760px){.header-inner{padding:0 8px 0 16px}.brand{font-size:20px;gap:8px}.page-shell{padding:0 16px 24px}.model-layout{grid-template-columns:210px minmax(0,1fr);gap:16px}.author-grid{grid-template-columns:1fr}.section-title>span{display:none}.tabs button{padding:0 12px}.capture-status{display:none}}
+@media(max-width:540px){.model-layout{grid-template-columns:1fr}.cover-card>.cover-caption{font-size:18px}#viewport{height:400px}.viewer-tools{top:8px;left:8px;right:8px;max-height:none;display:flex;flex-wrap:wrap;justify-content:flex-end;padding:4px;gap:0;direction:ltr}.viewer-tools .icon-button{width:36px;height:36px;flex-basis:36px}.capture-panel{right:8px;bottom:8px;gap:8px;padding:8px;border-radius:var(--md-sys-shape-corner-medium)}.capture-fields{width:168px}.author-contacts{padding-left:0}.wheel-settings{width:min(300px,85%)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* ---------- Settings tab: M3 list rows with trailing switch or radios ---------- */
+.settings-list{display:grid;border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-large);background:var(--md-sys-color-surface-container-low);overflow:hidden}
+.settings-item{display:flex;align-items:center;gap:16px;min-height:72px;margin:0;padding:12px 16px 12px 16px;cursor:pointer;transition:opacity .2s}
+.settings-item+.settings-item{border-top:1px solid var(--md-sys-color-outline-variant)}
+.settings-item-text{flex:1;min-width:0;display:grid;gap:2px}
+.settings-item-text strong{font:500 16px/24px var(--md-ref-typeface);color:var(--md-sys-color-on-surface)}
+.settings-item-text>span{font-size:14px;line-height:20px;color:var(--md-sys-color-on-surface-variant)}
+.settings-choice{cursor:default}
+.settings-range{cursor:default}
+.settings-field{cursor:default}
+.settings-field>.md-outlined-field{flex:0 0 240px}
+.settings-range>div{flex:0 0 200px;display:grid;grid-template-columns:1fr;justify-items:end;gap:4px}
+.settings-range output{font-size:14px;line-height:20px;font-weight:500;color:var(--md-sys-color-on-surface-variant);font-variant-numeric:tabular-nums}
+.settings-range .md-range{width:100%}
+.settings-choice>div{display:flex;flex-wrap:wrap;gap:0 8px}
+.settings-item[aria-disabled=true]{opacity:.38}
+.settings-item[aria-disabled=true] input{cursor:default}
+/* Status line under a setting (e.g. 自动取色), an M3 tonal container. */
+.settings-status{display:flex;align-items:center;gap:12px;margin:0 16px 16px;padding:12px 16px;border-radius:var(--md-sys-shape-corner-medium);background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container);font-size:14px;line-height:20px;letter-spacing:.25px}
+.settings-status .material-symbol-icon{font-size:20px}
+.settings-status[data-state=off],.settings-status[data-state=empty],.settings-status[data-state=default]{background:var(--md-sys-color-surface-container-highest);color:var(--md-sys-color-on-surface-variant)}
+.settings-status[data-state=pending] .material-symbol-icon{animation:md-pulse 1s ease-in-out infinite alternate}
+@keyframes md-pulse{from{opacity:1}to{opacity:.38}}
+@media (prefers-reduced-motion:reduce){.settings-status[data-state=pending] .material-symbol-icon{animation:none}}
+@media (max-width:600px){.settings-choice,.settings-range,.settings-field{flex-wrap:wrap}.settings-range>div,.settings-field>.md-outlined-field{flex-basis:100%}}
+
+/* ---------- Navigation rail (viewer / model library) ---------- */
+#app{padding-left:80px}
+.nav-rail{position:fixed;z-index:30;left:0;top:0;bottom:0;width:80px;display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:76px;background:var(--md-sys-color-surface)}
+.nav-rail-item{width:80px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0;color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px;font-weight:500;letter-spacing:.5px}
+.nav-rail-indicator{width:56px;height:32px;display:grid;place-items:center;border-radius:var(--md-sys-shape-corner-full);position:relative;isolation:isolate;overflow:hidden;transition:background .2s var(--md-sys-motion-easing-standard)}
+.nav-rail-indicator::before{content:"";position:absolute;inset:0;background:var(--md-sys-color-on-surface);opacity:0;z-index:-1;transition:opacity .15s}
+.nav-rail-item:hover .nav-rail-indicator::before{opacity:.08}
+.nav-rail-item:focus-visible{outline:none}
+.nav-rail-item:focus-visible .nav-rail-indicator{outline:2px solid var(--md-sys-color-primary)}
+.nav-rail-item[aria-current] {color:var(--md-sys-color-on-surface)}
+.nav-rail-item[aria-current] .nav-rail-indicator{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.nav-rail-item[aria-current] .material-symbol-icon{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+.page-shell[hidden],.library-view[hidden]{display:none}
+@media(max-width:600px){#app{padding-left:0;padding-bottom:80px}.nav-rail{top:auto;right:0;width:auto;height:80px;flex-direction:row;justify-content:center;padding:12px 0 0;box-shadow:var(--md-sys-elevation-2);background:var(--md-sys-color-surface-container)}}
+
+/* ---------- Viewer page: sidebar and content scroll independently ---------- */
+@media(min-width:541px){
+  .page-shell{height:calc(100dvh - 64px - var(--nav-rail-bottom,0px));display:flex;flex-direction:column;padding-bottom:0}
+  .model-layout{flex:1;min-height:0;margin-top:0;align-items:stretch}
+  .model-sidebar,.model-content{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:16px 0 32px}
+  /* Keep the tab bar in view while the content column scrolls; its top gap
+     is a margin so nothing shows above it once it sticks. */
+  .model-content{padding-top:0}
+  /* Room for the cover's state outline (drawn outside the card), which the
+     scrolling sidebar would otherwise clip; the negative margin keeps the
+     column width unchanged. */
+  .model-sidebar{padding-inline:8px;margin-inline:-8px}
+  .model-content>.tabs{position:sticky;top:0;z-index:5;margin-top:16px;background:var(--md-sys-color-surface)}
+  /* Content scrolling under the sticky tab bar fades out instead of being cut
+     by a straight edge, which made the rounded cards look square (第 51 节).
+     The panels start 24px below the bar, so the fade covers nothing at rest. */
+  .model-content>.tabs::after{content:"";position:absolute;left:0;right:0;top:calc(100% + 1px);height:16px;background:linear-gradient(var(--md-sys-color-surface),color-mix(in srgb,var(--md-sys-color-surface) 0%,transparent));pointer-events:none}
+}
+@media(max-width:600px){:root{--nav-rail-bottom:80px}}
+
+/* ---------- Scrollbars ----------
+   M3 has no scrollbar component; follow its overlay style: a thin rounded
+   on-surface-variant thumb with no track, shown only while the element
+   scrolls (src/scrollbars.js adds .is-scrolling) or while the thumb is
+   hovered or dragged. Chromium (WebView2) ignores ::-webkit-scrollbar when
+   scrollbar-color/scrollbar-width are set, so those are only used elsewhere. */
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}
+::-webkit-scrollbar-thumb{border:4px solid transparent;border-radius:var(--md-sys-shape-corner-full);background:transparent;background-clip:padding-box;min-height:40px}
+.is-scrolling::-webkit-scrollbar-thumb{background-color:color-mix(in srgb,var(--md-sys-color-on-surface-variant) 45%,transparent)}
+::-webkit-scrollbar-thumb:hover{border-width:3px;background-color:color-mix(in srgb,var(--md-sys-color-on-surface-variant) 60%,transparent)}
+::-webkit-scrollbar-thumb:active{border-width:3px;background-color:color-mix(in srgb,var(--md-sys-color-on-surface-variant) 75%,transparent)}
+@supports not selector(::-webkit-scrollbar){*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--md-sys-color-on-surface-variant) 45%,transparent) transparent}}
+
+/* ---------- Animated card export dialog (M3 basic dialog) ---------- */
+.md-button.text{padding:0 12px;color:var(--md-sys-color-primary)}
+.md-button.text:hover:not(:disabled){background:color-mix(in srgb,var(--md-sys-color-primary) 8%,transparent)}
+.md-dialog{width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 48px);padding:0;border:0;border-radius:var(--md-sys-shape-corner-extra-large);background:var(--md-sys-color-surface-container-high);color:var(--md-sys-color-on-surface);box-shadow:var(--md-sys-elevation-3)}
+.md-dialog::backdrop{background:color-mix(in srgb,var(--md-sys-color-scrim,#000) 32%,transparent)}
+.md-dialog[open]{animation:md-dialog-in .25s var(--md-sys-motion-easing-emphasized-decelerate)}
+@keyframes md-dialog-in{from{opacity:0;transform:translateY(-16px) scale(.98)}to{opacity:1;transform:none}}
+.md-dialog>form{display:flex;flex-direction:column;gap:16px;padding:24px}
+.md-dialog h2{margin:0;font-size:24px;line-height:32px;font-weight:400}
+.md-dialog-supporting{margin:0;font-size:14px;line-height:20px;letter-spacing:.25px;color:var(--md-sys-color-on-surface-variant)}
+.md-dialog-actions{display:flex;justify-content:flex-end;gap:8px;padding-top:8px}
+.export-field{margin:0;padding:0;border:0;min-width:0;display:grid;gap:8px}
+.export-field[hidden]{display:none}
+.export-field>legend{padding:0;margin-bottom:8px;font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px}
+.export-hint{margin:0;font-size:12px;line-height:16px;letter-spacing:.4px;color:var(--md-sys-color-on-surface-variant)}
+.export-hint:empty{display:none}
+/* M3 segmented button: outlined segments, selected one tonal with a check. */
+.md-segmented{display:flex;height:40px;border:1px solid var(--md-sys-color-outline);border-radius:var(--md-sys-shape-corner-full);overflow:hidden}
+.md-segmented>label{position:relative;flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 12px;font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px;color:var(--md-sys-color-on-surface);cursor:pointer;white-space:nowrap}
+.md-segmented>label+label{border-left:1px solid var(--md-sys-color-outline)}
+.md-segmented input{position:absolute;opacity:0;pointer-events:none}
+.md-segmented .material-symbol-icon{display:none;font-size:18px}
+.md-segmented>label:hover{background:color-mix(in srgb,var(--md-sys-color-on-surface) 8%,transparent)}
+.md-segmented>label:has(input:checked){background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.md-segmented>label:has(input:checked) .material-symbol-icon{display:inline-block}
+.md-segmented>label:has(input:focus-visible){outline:2px solid var(--md-sys-color-secondary);outline-offset:-3px}
+fieldset:disabled .md-segmented{border-color:color-mix(in srgb,var(--md-sys-color-on-surface) 12%,transparent)}
+fieldset:disabled .md-segmented>label{color:color-mix(in srgb,var(--md-sys-color-on-surface) 38%,transparent);cursor:default;background:none}
+.export-progress{display:grid;gap:8px;font-size:12px;line-height:16px;letter-spacing:.4px;color:var(--md-sys-color-on-surface-variant);font-variant-numeric:tabular-nums}
+.export-progress[hidden]{display:none}
+.md-linear-progress{height:4px;border-radius:2px;background:var(--md-sys-color-secondary-container);overflow:hidden}
+.md-linear-progress>span{display:block;width:var(--progress,0%);height:100%;border-radius:2px;background:var(--md-sys-color-primary);transition:width .15s linear}
+@media (max-width:480px){.md-segmented>label{padding:0 6px;gap:4px}.md-segmented .material-symbol-icon{font-size:16px}}
+.export-range{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px}
+.export-range>input{width:100%;height:28px}
+.export-range>output{min-width:52px;text-align:right;font-size:14px;line-height:20px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--md-sys-color-on-surface-variant)}
+/* 操控模式: current camera (F5) at the top left of the view, an M3 assist chip on a tonal surface. */
+.play-view{position:absolute;left:16px;top:84px;z-index:4;height:32px;display:flex;align-items:center;gap:8px;padding:0 8px 0 8px;border-radius:var(--md-sys-shape-corner-small);background:color-mix(in srgb,var(--md-sys-color-surface-container) 92%,transparent);box-shadow:var(--md-sys-elevation-1);font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px;color:var(--md-sys-color-on-surface);pointer-events:none}
+.play-view .material-symbol-icon{font-size:18px;color:var(--md-sys-color-primary)}
+.play-view kbd{padding:0 6px;border-radius:var(--md-sys-shape-corner-extra-small);background:var(--md-sys-color-surface-container-highest);font-family:inherit;font-size:11px;line-height:18px;font-weight:500;color:var(--md-sys-color-on-surface-variant)}
+.play-view-divider{width:1px;height:16px;margin:0 4px;background:var(--md-sys-color-outline-variant)}
+/* 操控模式 in water (X): a blue wash over the 3D view, under the overlays. */
+#viewport.play-in-water #scene{filter:saturate(.85)}
+#viewport.play-in-water::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgb(40 120 200/.16),rgb(20 70 150/.30));border-radius:inherit}
+.play-view.is-changed{animation:play-view-pulse .3s var(--md-sys-motion-easing-emphasized-decelerate)}
+/* Below the toolbar in a narrow view; beside it once the view is wide enough. */
+#viewport{container-type:inline-size}
+@media(min-width:541px){.play-view{top:16px}}
+@keyframes play-view-pulse{from{transform:scale(.92);opacity:.6}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.play-view.is-changed{animation:none}}
+/* 设置 → 性能 → Benchmark: frame-rate overlay in the 3D view (src/benchmark.js). */
+.benchmark-hud{position:absolute;left:16px;top:16px;z-index:4;width:256px;display:grid;gap:8px;padding:10px 12px 8px;border-radius:var(--md-sys-shape-corner-medium);background:color-mix(in srgb,var(--md-sys-color-surface-container) 88%,transparent);box-shadow:var(--md-sys-elevation-1);color:var(--md-sys-color-on-surface-variant);font-size:11px;line-height:16px;letter-spacing:.2px;font-variant-numeric:tabular-nums;pointer-events:none;user-select:none;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.benchmark-hud[hidden]{display:none}
+.benchmark-head{display:flex;align-items:baseline;justify-content:space-between}
+.benchmark-fps{display:flex;align-items:baseline;gap:4px;color:var(--md-sys-color-primary);transition:color .2s}
+.benchmark-fps strong{font-size:28px;line-height:32px;font-weight:500;letter-spacing:0}
+.benchmark-fps span{font-size:12px;font-weight:500;letter-spacing:.5px}
+.benchmark-frame{font-size:12px;color:var(--md-sys-color-on-surface)}
+.benchmark-chart{display:block;width:100%;height:64px;border-radius:var(--md-sys-shape-corner-extra-small);background:color-mix(in srgb,var(--md-sys-color-surface-container-highest) 60%,transparent)}
+.benchmark-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 8px;margin:0}
+.benchmark-stats div{min-width:0}
+.benchmark-stats dt{font-size:10px;line-height:14px;opacity:.8}
+.benchmark-stats dd{margin:0;color:var(--md-sys-color-on-surface);font-weight:500;white-space:nowrap}
+.benchmark-foot{display:grid;gap:0;padding-top:6px;border-top:1px solid var(--md-sys-color-outline-variant);font-size:10px;line-height:14px}
+.benchmark-foot span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#viewport:has(.benchmark-hud:not([hidden])) .play-view{top:258px}
+@media (max-width:600px){.benchmark-hud{width:208px;left:8px;top:8px}.benchmark-fps strong{font-size:22px;line-height:28px}}
+.settings-status[hidden]{display:none}
+.settings-status .md-button[hidden]{display:none}
+#uncapped-fps-status .settings-status-text{flex:1}
+#uncapped-fps-status .md-button{margin:-6px -8px -6px 0;color:inherit}
+
+/* Language menu (第 47 节): top-bar icon button + M3 menu, same look as the texture picker. */
+.language-picker{position:relative;display:inline-flex}
+.language-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:30;min-width:200px;width:max-content;max-width:min(320px,80vw);max-height:min(400px,70vh);overflow:auto;padding:8px 0;border-radius:var(--md-sys-shape-corner-extra-small);background:var(--md-sys-color-surface-container);box-shadow:var(--md-sys-elevation-2);transform-origin:top right;animation:md-menu-in .15s var(--md-sys-motion-easing-emphasized-decelerate) both}
+.language-menu.is-closing{animation:md-menu-out .1s var(--md-sys-motion-easing-emphasized-accelerate) both}
+.language-option{position:relative;isolation:isolate;width:100%;min-height:48px;display:flex;align-items:center;gap:12px;padding:4px 12px;text-align:left;color:var(--md-sys-color-on-surface)}
+.language-option::before{content:"";position:absolute;inset:0;z-index:-1;background:currentColor;opacity:0;pointer-events:none;transition:opacity 15ms linear}
+.language-option:hover::before{opacity:.08}
+.language-option:is(:focus-visible,:active)::before{opacity:.1}
+.language-option:focus-visible{outline:none}
+.language-option[aria-checked=true]{background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.language-option[role=menuitemradio]::after{content:"check";margin-left:auto;font:normal 400 24px/1 "Material Symbols Outlined";font-feature-settings:"liga";-webkit-font-feature-settings:"liga";opacity:0}
+.language-option[aria-checked=true]::after{opacity:1}
+.language-option-text{min-width:0;display:flex;flex-direction:column}
+.language-option-text>span{font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px}
+.language-option-text>small{font-size:12px;line-height:16px;letter-spacing:.4px;color:var(--md-sys-color-on-surface-variant)}
+.language-option[aria-checked=true] .language-option-text>small{color:inherit}
+.language-menu-divider{height:1px;margin:8px 0;background:var(--md-sys-color-outline-variant)}
+.language-menu-note{margin:4px 12px;max-width:240px;font-size:12px;line-height:16px;letter-spacing:.4px;color:var(--md-sys-color-on-surface-variant)}
+/* ---------- 模型状态 panel (第 60 节): M3 pill at the top of the 3D view ---------- */
+.model-status{position:absolute;left:50%;top:16px;z-index:4;display:flex;align-items:center;gap:8px;max-width:calc(100% - 200px);height:40px;padding:0 12px;transform:translateX(-50%);border-radius:var(--md-sys-shape-corner-full);background:color-mix(in srgb,var(--md-sys-color-surface-container-high) 90%,transparent);box-shadow:var(--md-sys-elevation-1);color:var(--md-sys-color-on-surface);font-size:14px;line-height:20px;font-weight:500;letter-spacing:.1px;pointer-events:none;user-select:none;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:model-status-in .2s var(--md-sys-motion-easing-standard) both}
+.model-status[hidden],.model-status [hidden]{display:none!important}
+@keyframes model-status-in{from{opacity:0;transform:translate(-50%,-6px)}}
+.model-status-kind{display:grid;place-items:center;color:var(--md-sys-color-on-surface-variant)}
+.model-status-kind .material-symbol-icon{font-size:20px}
+.model-status.is-action .model-status-kind{color:var(--md-sys-color-primary)}
+.model-status-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Speaker: waves appear one by one, stay, then all vanish together. */
+.model-status-sound{display:grid;place-items:center;width:28px;height:28px;border-radius:var(--md-sys-shape-corner-full);background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container)}
+.model-status-speaker{width:20px;height:20px;overflow:visible}
+.model-status-speaker .speaker-body{fill:currentColor}
+.model-status-speaker .speaker-wave{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;opacity:0;animation:speaker-wave 1.8s linear infinite}
+.model-status-speaker .w2{animation-name:speaker-wave-2}
+.model-status-speaker .w3{animation-name:speaker-wave-3}
+@keyframes speaker-wave{0%,8%{opacity:0}14%,78%{opacity:1}86%,100%{opacity:0}}
+@keyframes speaker-wave-2{0%,26%{opacity:0}32%,78%{opacity:1}86%,100%{opacity:0}}
+@keyframes speaker-wave-3{0%,44%{opacity:0}50%,78%{opacity:1}86%,100%{opacity:0}}
+/* 操控模式 movement indicators: idle ones dimmed, the active one tonal and animated. */
+.model-status-moves{display:flex;align-items:center;gap:2px;padding-left:8px;border-left:1px solid var(--md-sys-color-outline-variant)}
+.model-status-move{display:grid;place-items:center;width:28px;height:28px;border-radius:var(--md-sys-shape-corner-full);color:var(--md-sys-color-on-surface-variant);opacity:.38;transition:opacity .2s,background-color .2s,color .2s}
+.model-status-move .material-symbol-icon{font-size:18px}
+.model-status-move.is-active{opacity:1;background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)}
+.model-status-move.is-active .material-symbol-icon{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 20}
+.model-status-move.is-active[data-move=run] .material-symbol-icon{animation:status-run .36s ease-in-out infinite alternate}
+.model-status-move.is-active[data-move=jump] .material-symbol-icon{animation:status-jump .7s cubic-bezier(.3,0,.4,1) infinite}
+.model-status-move.is-active[data-move=fly] .material-symbol-icon{animation:status-fly 1.6s ease-in-out infinite}
+.model-status-move.is-active[data-move=elytra_fly] .material-symbol-icon{animation:status-glide 1.4s ease-in-out infinite}
+.model-status-move.is-active[data-move=swim] .material-symbol-icon{animation:status-swim 1.2s ease-in-out infinite}
+@keyframes status-run{from{transform:translate(-1px,0) rotate(-4deg)}to{transform:translate(1px,-1.5px) rotate(4deg)}}
+@keyframes status-jump{0%,100%{transform:translateY(2px) scaleY(.92)}45%{transform:translateY(-4px) scaleY(1.04)}}
+@keyframes status-fly{0%,100%{transform:translateY(1.5px)}50%{transform:translateY(-2.5px)}}
+@keyframes status-glide{0%{transform:translate(-3px,-2px) rotate(-6deg);opacity:.6}50%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(3px,2px) rotate(6deg);opacity:.6}}
+@keyframes status-swim{0%,100%{transform:translateX(-1.5px) rotate(-5deg)}50%{transform:translateX(1.5px) rotate(5deg)}}
+@media (prefers-reduced-motion:reduce){.model-status,.model-status *{animation:none!important}.model-status-speaker .speaker-wave{opacity:1}}
+
+/* Molang 监视器 (第 61 节): molang-inspector.html fills its own OS window. Desktop: the
+   window is transparent and undecorated, so the page draws the rounded card and the
+   opacity slider (inline opacity on .molang-inspector) fades the whole window. */
+html.molang-inspector-page,html.molang-inspector-page body{height:100%;margin:0;overflow:hidden;background:transparent}
+html.molang-inspector-page.is-browser body{background:var(--md-sys-color-surface-dim,var(--md-sys-color-surface))}
+.molang-inspector{position:fixed;inset:0;display:flex;flex-direction:column;overflow:hidden;background:var(--md-sys-color-surface-container-high);color:var(--md-sys-color-on-surface);font-size:14px;line-height:20px}
+.is-desktop .molang-inspector{border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-large)}
+.molang-inspector-header{display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 4px 4px 16px;user-select:none;color:var(--md-sys-color-on-surface-variant)}
+.is-desktop .molang-inspector-header{cursor:grab}
+.is-desktop.is-maximized .molang-inspector{border-radius:0;border:0}
+.is-maximized .molang-inspector-grip{display:none}
+.molang-inspector-header .icon-button{width:36px;height:36px;flex:0 0 36px}
+.molang-inspector-header .window-close:hover{background:var(--md-sys-color-error);color:var(--md-sys-color-on-error)}
+.molang-inspector-header .window-close:hover::before{opacity:0}
+.molang-inspector-header>.material-symbol-icon{color:var(--md-sys-color-primary)}
+.molang-inspector-header h1{flex:1;margin:0;color:var(--md-sys-color-on-surface);font-size:16px;font-weight:500;line-height:24px;letter-spacing:.15px}
+.molang-inspector-input{display:flex;align-items:center;gap:4px;margin:0 12px 8px;padding:0 4px 0 12px;border-radius:var(--md-sys-shape-corner-full);background:var(--md-sys-color-surface-container-highest)}
+.molang-inspector-input:focus-within{outline:2px solid var(--md-sys-color-primary);outline-offset:-2px}
+.molang-inspector-input>input{flex:1;min-width:0;height:40px;border:0;outline:none;background:transparent;color:var(--md-sys-color-on-surface);font:14px/20px ui-monospace,Consolas,monospace}
+.molang-inspector-input>input::placeholder,.molang-inspector-filter>input::placeholder{color:var(--md-sys-color-on-surface-variant)}
+.molang-inspector-message{margin:0 16px 8px;color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px}
+.molang-inspector-message.is-error{color:var(--md-sys-color-error)}
+.molang-inspector-message[hidden]{display:none}
+.molang-inspector-body{flex:1;min-height:0;overflow:auto;padding:0 8px 8px}
+.molang-inspector-body h2{margin:8px 8px 4px;color:var(--md-sys-color-primary);font-size:14px;font-weight:500;line-height:20px;letter-spacing:.1px}
+.molang-inspector-vars-head{display:flex;align-items:center;gap:8px}
+.molang-inspector-vars-head h2{flex:1}
+.molang-inspector-filter{display:flex;align-items:center;gap:4px;width:150px;height:32px;margin-top:4px;padding:0 8px;border-radius:var(--md-sys-shape-corner-full);background:var(--md-sys-color-surface-container-highest);color:var(--md-sys-color-on-surface-variant)}
+.molang-inspector-filter .material-symbol-icon{font-size:18px}
+.molang-inspector-filter>input{flex:1;min-width:0;border:0;outline:none;background:transparent;color:var(--md-sys-color-on-surface);font:12px/16px ui-monospace,Consolas,monospace}
+.molang-inspector-list{margin:0;padding:0;list-style:none}
+.molang-inspector-row{display:flex;align-items:center;gap:8px;min-height:32px;padding:0 8px;border-radius:var(--md-sys-shape-corner-small);cursor:pointer}
+.molang-inspector-row:hover{background:color-mix(in srgb,var(--md-sys-color-on-surface) 8%,transparent)}
+.molang-inspector-watch-list .molang-inspector-row{padding-right:0}
+.molang-inspector-key{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--md-sys-color-on-surface);font:12px/16px ui-monospace,Consolas,monospace}
+.molang-inspector-value{max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 6px;border-radius:var(--md-sys-shape-corner-extra-small);color:var(--md-sys-color-on-surface-variant);font:500 12px/20px ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums;text-align:right}
+.molang-inspector-watch-list .molang-inspector-value{color:var(--md-sys-color-primary)}
+.molang-inspector-value.is-changed{animation:molang-value-changed .6s var(--md-sys-motion-easing-standard,ease)}
+@keyframes molang-value-changed{from{background:var(--md-sys-color-tertiary-container);color:var(--md-sys-color-on-tertiary-container)}}
+.molang-inspector-remove{width:32px;height:32px;flex-basis:32px}
+.molang-inspector-remove .material-symbol-icon{font-size:18px}
+.molang-inspector-empty{margin:4px 8px;color:var(--md-sys-color-on-surface-variant);font-size:12px;line-height:16px}
+.molang-inspector-empty[hidden]{display:none}
+.molang-inspector-group>summary{display:flex;align-items:center;gap:8px;min-height:32px;padding:0 8px;border-radius:var(--md-sys-shape-corner-small);cursor:pointer;list-style:none;color:var(--md-sys-color-on-surface-variant);font-weight:500}
+.molang-inspector-group>summary::-webkit-details-marker{display:none}
+.molang-inspector-group>summary::before{content:"chevron_right";font:normal 400 18px/1 "Material Symbols Outlined";font-feature-settings:"liga";-webkit-font-feature-settings:"liga";transition:transform .15s}
+.molang-inspector-group[open]>summary::before{transform:rotate(90deg)}
+.molang-inspector-group>summary:hover{background:color-mix(in srgb,var(--md-sys-color-on-surface) 8%,transparent)}
+.molang-inspector-count{margin-left:auto;padding:0 6px;border-radius:var(--md-sys-shape-corner-full);background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container);font-size:11px;line-height:16px}
+.molang-inspector-group .molang-inspector-row{padding-left:34px}
+.molang-inspector-footer{position:relative;display:flex;align-items:center;gap:8px;padding:0 24px 0 16px;border-top:1px solid var(--md-sys-color-outline-variant);color:var(--md-sys-color-on-surface-variant);font-size:12px}
+.molang-inspector-footer .material-symbol-icon{font-size:20px}
+.molang-inspector-footer>.md-range{flex:1}
+.molang-inspector-footer>output{min-width:36px;text-align:right;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.molang-inspector-value.is-changed{animation:none}}
+.molang-inspector-grip{position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;background:linear-gradient(135deg,transparent 55%,var(--md-sys-color-outline) 55%,var(--md-sys-color-outline) 62%,transparent 62%,transparent 72%,var(--md-sys-color-outline) 72%,var(--md-sys-color-outline) 79%,transparent 79%);border-bottom-right-radius:var(--md-sys-shape-corner-large)}
+.is-browser .molang-inspector-grip{display:none}
+/* 第 66 节: 锁定, 曲线, 控制器 */
+.molang-inspector-locks[hidden]{display:none}
+.molang-inspector-remove,.molang-inspector-graph,.molang-inspector-var-lock{width:32px;height:32px;flex:0 0 32px}
+.molang-inspector-graph .material-symbol-icon,.molang-inspector-var-lock .material-symbol-icon{font-size:18px}
+.molang-inspector-graph[aria-pressed=true]{color:var(--md-sys-color-primary)}
+.molang-inspector-chart{position:relative;height:64px;margin:0 8px 6px;border-radius:var(--md-sys-shape-corner-small);background:var(--md-sys-color-surface-container-lowest);--chart-line:var(--md-sys-color-primary);--chart-zero:var(--md-sys-color-outline-variant)}
+.molang-inspector-chart canvas{display:block;width:100%;height:100%}
+.molang-inspector-chart>span{position:absolute;left:6px;color:var(--md-sys-color-on-surface-variant);font:11px/14px ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums;pointer-events:none}
+.molang-inspector-chart-max{top:2px}
+.molang-inspector-chart-min{bottom:2px}
+.molang-inspector-lock-list .molang-inspector-row{padding-right:0;cursor:default}
+.molang-inspector-lock-list .molang-inspector-row>.material-symbol-icon{font-size:18px;color:var(--md-sys-color-primary);font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+.molang-inspector-lock-value{width:88px;height:28px;padding:0 8px;border:1px solid var(--md-sys-color-outline);border-radius:var(--md-sys-shape-corner-extra-small);background:transparent;color:var(--md-sys-color-on-surface);font:12px/16px ui-monospace,Consolas,monospace;text-align:right}
+.molang-inspector-lock-value:focus{outline:2px solid var(--md-sys-color-primary);outline-offset:-2px;border-color:transparent}
+.molang-inspector-var-groups .molang-inspector-row{padding-right:0}
+.molang-inspector-var-lock{visibility:hidden}
+.molang-inspector-row:hover>.molang-inspector-var-lock,.molang-inspector-var-lock:focus-visible,.is-locked>.molang-inspector-var-lock{visibility:visible}
+.is-locked>.molang-inspector-var-lock{color:var(--md-sys-color-primary)}
+.is-locked>.molang-inspector-var-lock .material-symbol-icon{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+.molang-inspector-controller>summary{gap:6px}
+.molang-inspector-controller>summary .molang-inspector-key{flex:1 1 auto;font-weight:400}
+.molang-inspector-state{flex:0 1 auto;min-width:0;max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 8px;border-radius:var(--md-sys-shape-corner-small);background:var(--md-sys-color-secondary-container);color:var(--md-sys-color-on-secondary-container);font:500 12px/20px ui-monospace,Consolas,monospace}
+.molang-inspector-state-time{flex:0 0 auto;min-width:52px;color:var(--md-sys-color-on-surface-variant);font:12px/20px ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums;text-align:right}
+.molang-inspector-controller-body{padding:0 0 6px 26px}
+.molang-inspector-clips{display:flex;flex-wrap:wrap;gap:4px;margin:2px 8px 4px}
+.molang-inspector-clip{padding:0 6px;border:1px solid var(--md-sys-color-outline-variant);border-radius:var(--md-sys-shape-corner-small);color:var(--md-sys-color-on-surface);font:11px/18px ui-monospace,Consolas,monospace}
+.molang-inspector-clip.is-inactive{color:var(--md-sys-color-on-surface-variant);opacity:.6;text-decoration:line-through}
+.molang-inspector-clip.is-missing{border-color:var(--md-sys-color-error);color:var(--md-sys-color-error)}
+.molang-inspector-finished{margin:0 8px 2px;color:var(--md-sys-color-on-surface-variant);font:11px/16px ui-monospace,Consolas,monospace}
+.molang-inspector-finished:empty{display:none}
+.molang-inspector-group .molang-inspector-transition{padding-left:8px}
+.molang-inspector-transition>.material-symbol-icon{font-size:16px;color:var(--md-sys-color-on-surface-variant)}
+.molang-inspector-target{flex:0 1 auto;max-width:35%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 12px/16px ui-monospace,Consolas,monospace}
+.molang-inspector-transition .molang-inspector-key{color:var(--md-sys-color-on-surface-variant)}
+.molang-inspector-transition.is-true>.molang-inspector-value{background:var(--md-sys-color-primary-container);color:var(--md-sys-color-on-primary-container)}
+.molang-inspector-transition.is-unchecked{opacity:.6}
+/* 第 67 节: 监视器设置 */
+.molang-inspector-settings{flex:1;min-height:0;overflow:auto;padding:0 8px 8px}
+.molang-inspector-settings[hidden],.molang-inspector-body[hidden],.molang-inspector-input[hidden]{display:none}
+.molang-inspector-settings-head{display:flex;align-items:center;gap:4px;min-height:40px}
+.molang-inspector-settings-head h2{margin:0;color:var(--md-sys-color-on-surface);font-size:16px;font-weight:500;line-height:24px}
+.molang-inspector-settings .settings-item{padding:12px 8px;border-radius:var(--md-sys-shape-corner-medium)}
+.molang-inspector-settings-button[aria-pressed=true]{color:var(--md-sys-color-primary)}
+.molang-inspector-lock-list .is-driving .molang-inspector-key{color:var(--md-sys-color-primary);font-weight:500}
+.molang-inspector-lock-list .is-driving::after{content:"directions_run";order:-1;font:normal 400 18px/1 "Material Symbols Outlined";font-feature-settings:"liga";-webkit-font-feature-settings:"liga";color:var(--md-sys-color-primary)}
+
+/* Settings sub-page (二级菜单, 第 62 节): a navigation row and a page with a back button. */
+.settings-nav{width:100%;border:0;background:transparent;color:inherit;font:inherit;text-align:left;position:relative;isolation:isolate}
+.settings-nav::before{content:"";position:absolute;inset:0;z-index:-1;background:currentColor;opacity:0;pointer-events:none;transition:opacity 15ms linear}
+.settings-nav:hover::before{opacity:.08}
+.settings-nav:is(:focus-visible,:active)::before{opacity:.1}
+.settings-nav>.material-symbol-icon{color:var(--md-sys-color-on-surface-variant)}
+.settings-subpage{padding-top:16px}
+.settings-subpage-header{display:flex;align-items:center;gap:8px;min-height:56px;margin:0 0 8px -8px}
+.settings-subpage-header h2{margin:0;font:400 22px/28px var(--md-ref-typeface);color:var(--md-sys-color-on-surface)}
+.settings-subpage-intro{margin:0 0 16px;color:var(--md-sys-color-on-surface-variant);font-size:14px;line-height:20px}
+.settings-nav:is(a){text-decoration:none;box-sizing:border-box}
+/* 关于 page (第 72 节): logo follows the dynamic palette through logoSvg(). */
+@property --ysm-logo-primary{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --ysm-logo-inverse-primary{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --ysm-logo-outline{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --ysm-logo-outline-variant{syntax:'<color>';inherits:true;initial-value:transparent}
+@property --ysm-logo-surface-container-low{syntax:'<color>';inherits:true;initial-value:transparent}
+.about-card{display:grid;justify-items:center;gap:4px;padding:32px 24px 28px;margin-bottom:16px;text-align:center;border-radius:var(--md-sys-shape-corner-large);background:var(--md-sys-color-surface-container)}
+.about-logo{display:block;width:96px;height:96px;margin:0 0 12px;padding:0;border:0;background:none;cursor:pointer;border-radius:var(--md-sys-shape-corner-medium,12px);-webkit-tap-highlight-color:transparent}
+.about-logo:focus-visible{outline:2px solid var(--md-sys-color-secondary);outline-offset:4px}
+/* 彩蛋 (第 73 节): JS sets the six base --ysm-logo-* colors on the button; the derived
+   ones are declared again here so they mix the new base values instead of inheriting
+   the :root results. Registered as <color> so the change fades. */
+.about-logo.is-recolored{--ysm-logo-stroke:var(--ysm-logo-outline);--ysm-logo-top-0:var(--ysm-logo-outline-variant);--ysm-logo-top-1:color-mix(in srgb,var(--ysm-logo-primary) 30%,var(--ysm-logo-inverse-primary));--ysm-logo-left-0:var(--ysm-logo-surface-container-lowest);--ysm-logo-left-1:var(--ysm-logo-surface-container-low);--ysm-logo-front-0:var(--ysm-logo-surface-container-low);--ysm-logo-front-1:var(--ysm-logo-inverse-primary);transition:--ysm-logo-primary .35s,--ysm-logo-inverse-primary .35s,--ysm-logo-outline .35s,--ysm-logo-outline-variant .35s,--ysm-logo-surface-container-low .35s}
+.about-logo.is-bouncing{animation:about-logo-bounce .32s cubic-bezier(.2,0,0,1)}
+@keyframes about-logo-bounce{40%{transform:scale(.88)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.about-logo.is-recolored{transition:none}.about-logo.is-bouncing{animation:none}}
+.confetti-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:2147483000;pointer-events:none}
+.about-logo svg{display:block;width:100%;height:100%}
+.about-name{margin:0;font:400 28px/36px var(--md-ref-typeface);color:var(--md-sys-color-on-surface)}
+.about-version{margin:0;font:500 14px/20px var(--md-ref-typeface);letter-spacing:.1px;color:var(--md-sys-color-primary)}
+.about-description{margin:12px 0 0;max-width:40em;font-size:16px;line-height:24px;color:var(--md-sys-color-on-surface-variant)}
+.about-license{display:grid;justify-items:center;gap:8px;padding:24px 16px 8px;text-align:center}
+.about-license a{display:block;line-height:0;border-radius:var(--md-sys-shape-corner-small)}
+.about-license img{display:block;height:72px;width:auto}
+.about-license p{margin:0;font:500 14px/20px var(--md-ref-typeface);color:var(--md-sys-color-on-surface-variant)}
+
+/* 独立窗口 (第 62 节): popout.html showing a moved part of the page. */
+html.popout-page,html.popout-page body{margin:0;min-height:100%}
+html.popout-page body{background:var(--md-sys-color-surface)}
+/* Toolbar window: one horizontal row; drop-down menus open below it and the window grows to fit. */
+html.popout-toolbar,html.popout-toolbar body{overflow:hidden;background:var(--md-sys-color-surface-container)}
+html.popout-toolbar .viewer-tools{position:relative!important;inset:auto!important;width:max-content;max-height:none!important;display:flex!important;flex-wrap:nowrap!important;align-items:center;gap:4px!important;padding:8px 12px!important;direction:ltr!important;transform:none!important;border-radius:0!important;box-shadow:none!important;visibility:visible!important;transition:none!important}
+html.popout-toolbar .viewer-tools .icon-button{width:40px!important;height:40px!important;flex:0 0 40px!important}
+html.popout-toolbar .viewer-tools :is(.hand-item-picker,.texture-picker,.light-picker){position:static!important}
+html.popout-toolbar .texture-picker-trigger{width:40px!important;max-width:none!important;padding:0!important;justify-content:center!important}
+html.popout-toolbar .texture-picker-trigger>.material-symbol-icon:first-child{display:block!important}
+html.popout-toolbar .texture-picker-trigger>#texture-current,html.popout-toolbar .texture-picker-trigger>.material-symbol-icon:not(:first-child),html.popout-toolbar .texture-picker-trigger>svg{display:none!important}
+html.popout-toolbar .viewer-tools :is(.texture-picker-options,.hand-item-menu){left:12px!important;right:auto!important;top:calc(100% + 4px)!important;transform:none!important;transform-origin:top left!important;animation-name:md-menu-in!important;max-width:none!important}
+html.popout-toolbar .viewer-tools .hand-item-menu{max-height:400px}
+html.popout-toolbar .viewer-tools .hand-item-options{flex:1 1 auto;min-height:0}
+/* Cover window: the sidebar fills the window; the card is as large as the height allows. */
+html.popout-cover body{box-sizing:border-box;min-height:100vh;padding:16px;overflow:auto}
+html.popout-cover .model-sidebar{display:block!important;margin:0!important;padding:0!important}
+html.popout-cover .model-sidebar>.cover-card{width:min(100%,calc((100vh - 136px) * 7 / 12))}
+html.popout-cover .cover-actions{width:min(100%,max(300px,calc((100vh - 136px) * 7 / 12)))}
+/* Desktop pop-outs are undecorated: an M3 title bar (drag, minimize, maximize, close) on top. */
+html.popout-framed body{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.window-titlebar{flex:none;display:flex;align-items:center;gap:2px;height:40px;padding:0 4px 0 12px;user-select:none;background:var(--md-sys-color-surface-container);color:var(--md-sys-color-on-surface-variant)}
+.window-titlebar>.material-symbol-icon{font-size:20px;color:var(--md-sys-color-primary)}
+.window-titlebar h1{flex:1;min-width:0;margin:0 0 0 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--md-sys-color-on-surface);font:500 14px/20px var(--md-ref-typeface);letter-spacing:.1px}
+.window-titlebar .icon-button{width:36px;height:36px;flex:0 0 36px}
+.window-titlebar .icon-button .material-symbol-icon{font-size:20px}
+.window-titlebar .window-close:hover{background:var(--md-sys-color-error);color:var(--md-sys-color-on-error)}
+.window-titlebar .window-close:hover::before{opacity:0}
+.window-resize-grip{position:fixed;right:0;bottom:0;z-index:50;width:16px;height:16px;cursor:nwse-resize;background:linear-gradient(135deg,transparent 55%,var(--md-sys-color-outline) 55%,var(--md-sys-color-outline) 62%,transparent 62%,transparent 72%,var(--md-sys-color-outline) 72%,var(--md-sys-color-outline) 79%,transparent 79%)}
+html.is-maximized .window-resize-grip{display:none}
+/* 置顶 (图钉) toggle in the 独立窗口 / Molang 监视器 title bars: selected = filled primary pin. */
+.window-pin[aria-pressed=true]{color:var(--md-sys-color-primary)}
+.window-pin[aria-pressed=true] .material-symbol-icon{font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24}
+html.popout-cover.popout-framed body{padding:0}
+html.popout-cover.popout-framed .model-sidebar{flex:1;min-height:0;overflow:auto;padding:16px!important}
+html.popout-cover.popout-framed .model-sidebar>.cover-card{width:min(100%,calc((100vh - 176px) * 7 / 12))}
+html.popout-cover.popout-framed .cover-actions{width:min(100%,max(300px,calc((100vh - 176px) * 7 / 12)))}
+html.popout-toolbar.popout-framed .viewer-tools{flex:none}

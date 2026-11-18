@@ -1,0 +1,12 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "popout",
+  "description": "独立窗口 (第 62 节): toolbar / cover windows opened by the main page",
+  "windows": [
+    "popout-*"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:allow-start-resize-dragging"
+  ]
+}
