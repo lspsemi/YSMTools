@@ -230,9 +230,12 @@ h2{margin:0;font-size:clamp(32px,5vw,56px);line-height:1.08;font-weight:800;lett
 .req strong{display:block;font-size:15px}
 .req span{font-size:14px;color:var(--on-surface-variant)}
 .src{margin-top:28px;display:grid;gap:10px}
-.src .cmd{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 18px;border-radius:var(--r-lg);background:var(--inverse-surface);color:var(--inverse-on-surface);font-family:var(--mono);font-size:14px;overflow:hidden}
-.src .cmd code{flex:1;overflow-x:auto;white-space:nowrap;background:none;padding:0}
-.src .cmd .icon-btn{--h:40px;width:40px;height:40px;color:var(--inverse-on-surface);background:transparent}
+.src .cmd{display:flex;align-items:flex-start;gap:8px;padding:14px 8px 14px 18px;border-radius:var(--r-lgx);background:var(--inverse-surface);color:var(--inverse-on-surface);font-family:var(--mono);font-size:14px;line-height:1.7}
+.src .cmd ol{flex:1;min-width:0;margin:0;padding:0;list-style:none;display:grid;gap:2px}
+.src .cmd li{display:flex;gap:10px;min-width:0}
+.src .cmd li::before{content:"$";flex:none;color:#f3c6f0;opacity:.75;user-select:none}
+.src .cmd li code{min-width:0;overflow-wrap:anywhere;white-space:pre-wrap;background:none;padding:0;font-size:1em}
+.src .cmd .icon-btn{--h:40px;width:40px;height:40px;margin-top:-6px;color:var(--inverse-on-surface);background:transparent}
 .src small{opacity:.8;font-size:13px}
 
 /* ---------- FAQ ---------- */
@@ -522,7 +525,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
         </div>
         <div class="src">
           <small>也可以从源码在浏览器中运行（需要 Node.js 20.19+）：</small>
-          <div class="cmd"><code id="cmd">git clone https://github.com/lspsemi/YSMTools.git &amp;&amp; cd YSMTools &amp;&amp; npm ci &amp;&amp; npm run browser</code><button class="btn icon-btn" id="copy" type="button" aria-label="复制命令"><span class="icon outlined">content_copy</span></button></div>
+          <div class="cmd"><ol id="cmd"><li><code>git clone https://github.com/lspsemi/YSMTools.git</code></li><li><code>cd YSMTools</code></li><li><code>npm ci</code></li><li><code>npm run browser</code></li></ol><button class="btn icon-btn" id="copy" type="button" aria-label="复制命令"><span class="icon outlined">content_copy</span></button></div>
         </div>
       </div>
       <div class="req">
@@ -708,7 +711,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
   const toast = document.getElementById('toast');
   const show = msg => { toast.textContent = msg; toast.classList.add('show'); clearTimeout(show.t); show.t = setTimeout(() => toast.classList.remove('show'), 2200); };
   document.getElementById('copy').addEventListener('click', async () => {
-    const text = document.getElementById('cmd').textContent;
+    const text = [...document.querySelectorAll('#cmd code')].map(c => c.textContent).join(' && ');
     try { await navigator.clipboard.writeText(text); show('已复制到剪贴板'); }
     catch { const r = document.createRange(); r.selectNodeContents(document.getElementById('cmd')); getSelection().removeAllRanges(); getSelection().addRange(r); show('已选中，按 Ctrl+C 复制'); }
   });
