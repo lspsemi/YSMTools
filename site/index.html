@@ -265,8 +265,8 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 .reveal{opacity:0;transform:translateY(28px) scale(.98);transition:opacity .6s var(--effects),transform .8s var(--spring-default)}
 .reveal.in{opacity:1;transform:none}
 
-.toast{position:fixed;left:50%;bottom:24px;translate:-50% 140%;z-index:99;padding:14px 20px;border-radius:var(--r-sm);background:var(--inverse-surface);color:var(--inverse-on-surface);font-size:14px;box-shadow:0 6px 18px rgba(0,0,0,.2);transition:translate .4s var(--spring-default)}
-.toast.show{translate:-50% 0}
+.toast{position:fixed;left:50%;bottom:24px;translate:-50% 140%;z-index:99;padding:14px 20px;border-radius:var(--r-sm);background:var(--inverse-surface);color:var(--inverse-on-surface);font-size:14px;box-shadow:0 6px 18px rgba(0,0,0,.2);visibility:hidden;translate:-50% calc(100% + 40px);transition:translate .4s var(--spring-default),visibility 0s linear .4s}
+.toast.show{translate:-50% 0;visibility:visible;transition:translate .4s var(--spring-default),visibility 0s}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
