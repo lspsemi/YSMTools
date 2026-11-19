@@ -10,6 +10,11 @@
           "type": "improve",
           "zh": "详情、预览、设置收进左侧“查看器”下面；打开软件直接显示预览，详情和设置改为居中弹出的面板（左上返回、右上关闭），打开时模型的动画和声音不再停止。",
           "en": "Details, Preview and Settings now sit under Viewer in the left rail; the app opens straight to the preview, and Details and Settings open as a centered panel (back at top left, close at top right) without stopping the model's animation or sound."
+        },
+        {
+          "type": "improve",
+          "zh": "详情和设置面板打开时从右往左滑入（先快后慢），关闭时从左往右滑出（先慢后快）。",
+          "en": "The Details and Settings panel now slides in from the right when opened (fast, then easing out) and slides back out to the right when closed (slow, then speeding up)."
         }
       ]
     },
