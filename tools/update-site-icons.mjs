@@ -5,7 +5,11 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const root = new URL('../site/', import.meta.url);
 const html = await readFile(new URL('index.html', root), 'utf8');
-const names = [...new Set([...html.matchAll(/<span class="icon[^"]*"[^>]*>([a-z0-9_]+)<\/span>/g)].map(m => m[1]))].sort();
+// Icons in the markup, plus icons the page script renders with icon('name').
+const names = [...new Set([
+  ...[...html.matchAll(/<span class="icon[^"]*"[^>]*>([a-z0-9_]+)<\/span>/g)].map(m => m[1]),
+  ...[...html.matchAll(/\bicon\('([a-z0-9_]+)'\)/g)].map(m => m[1])
+])].sort();
 
 // FILL 0..1 and wght 400..500 are the only axis values the page uses (opsz 24, GRAD 0).
 const css = await (await fetch(
