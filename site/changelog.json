@@ -15,6 +15,11 @@
           "type": "improve",
           "zh": "详情和设置面板打开时从右往左滑入（先快后慢），关闭时从左往右滑出（先慢后快）。",
           "en": "The Details and Settings panel now slides in from the right when opened (fast, then easing out) and slides back out to the right when closed (slow, then speeding up)."
+        },
+        {
+          "type": "improve",
+          "zh": "截图按钮移到右侧工具栏，去掉 3D 视图右下角挡住画面的截图面板和骨骼数显示。",
+          "en": "The screenshot button moved into the right-hand toolbar; the panel in the bottom-right corner of the 3D view that covered the model, along with its bone count, is gone."
         }
       ]
     },
