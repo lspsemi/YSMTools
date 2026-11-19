@@ -30,11 +30,6 @@
           "type": "improve",
           "zh": "截图按钮移到右侧工具栏，去掉 3D 视图右下角挡住画面的截图面板和骨骼数显示。",
           "en": "The screenshot button moved into the right-hand toolbar; the panel in the bottom-right corner of the 3D view that covered the model, along with its bone count, is gone."
-        },
-        {
-          "type": "fix",
-          "zh": "打包脚本输入 `=` 保持版本号时不再报“不是内部或外部命令”的错误；重新生成使用说明改为先询问，可以跳过。",
-          "en": "The packaging script no longer prints \"is not recognized as an internal or external command\" errors when you enter `=` to keep the version, and it now asks before regenerating the user manual so you can skip it."
         }
       ]
     },
