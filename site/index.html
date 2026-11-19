@@ -652,12 +652,13 @@ footer nav .icon{font-size:20px;color:var(--primary)}
       return;
     }
     const en = lang === 'en';
-    const latest = changelog.find(e => e.version);
+    const isDev = e => e.status === 'dev';
+    const latest = changelog.find(e => !isDev(e));
     box.innerHTML = changelog.map(e => {
-      const dev = !e.version, isLatest = e === latest;
+      const dev = isDev(e), isLatest = e === latest;
       const items = (e.items || []).filter(i => i.zh || i.en);
       const head = `<div class="cl-head">`
-        + `<span class="cl-ver">${dev ? esc(msg('next')) : 'V' + esc(e.version)}</span>`
+        + `<span class="cl-ver">V${esc(e.version)}</span>`
         + (dev ? `<span class="cl-badge dev">${icon('construction')}${esc(msg('dev'))}</span>`
                : isLatest ? `<span class="cl-badge">${icon('new_releases')}${esc(msg('latest'))}</span>` : '')
         + (e.date ? `<time class="cl-date" datetime="${esc(e.date)}">${esc(e.date)}</time>` : '')
@@ -680,10 +681,10 @@ footer nav .icon{font-size:20px;color:var(--primary)}
   /* ---- Language: Chinese is in the markup, English sits next to it in data-en / data-en-<attr> ---- */
   const TEXT = {
     zh: { title: 'YSM模型工具 · 下载', desc: document.querySelector('meta[name=description]').content,
-          copied: '已复制到剪贴板', selected: '已选中，按 Ctrl+C 复制', dev: '开发中', next: '下一个版本', latest: '最新版本', noNotes: '本版本暂无更新说明', clError: '更新日志暂时无法加载', clEmpty: '还没有更新日志', release: '下载此版本', types: { new: '新功能', improve: '改进', fix: '修复' }, other: 'EN', otherLabel: 'Switch to English', otherLang: 'en' },
+          copied: '已复制到剪贴板', selected: '已选中，按 Ctrl+C 复制', dev: '开发中', latest: '最新版本', noNotes: '本版本暂无更新说明', clError: '更新日志暂时无法加载', clEmpty: '还没有更新日志', release: '下载此版本', types: { new: '新功能', improve: '改进', fix: '修复' }, other: 'EN', otherLabel: 'Switch to English', otherLang: 'en' },
     en: { title: 'YSM Model Tool · Download',
           desc: 'YSM Model Tool: open Yes Steve Model packs on your PC and preview the model, animations, action-wheel actions, sounds and cover as they appear in the game, and manage your local model library.',
-          copied: 'Copied to clipboard', selected: 'Selected — press Ctrl+C to copy', dev: 'In development', next: 'Next version', latest: 'Latest', noNotes: 'No release notes for this version.', clError: 'The changelog could not be loaded.', clEmpty: 'No changelog entries yet.', release: 'Download', types: { new: 'New', improve: 'Improved', fix: 'Fixed' }, other: '中文', otherLabel: '切换到中文', otherLang: 'zh-CN' }
+          copied: 'Copied to clipboard', selected: 'Selected — press Ctrl+C to copy', dev: 'In development', latest: 'Latest', noNotes: 'No release notes for this version.', clError: 'The changelog could not be loaded.', clEmpty: 'No changelog entries yet.', release: 'Download', types: { new: 'New', improve: 'Improved', fix: 'Fixed' }, other: '中文', otherLabel: '切换到中文', otherLang: 'zh-CN' }
   };
   let lang = 'zh';
   const msg = key => TEXT[lang][key];
