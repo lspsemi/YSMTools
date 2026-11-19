@@ -3,7 +3,10 @@
 //   node tools/ysmtools.mjs <command> [args] [--yes]
 //
 //   status                         remote head, recent commits, releases, local dev card
-//   changelog ["msg"]              publish ONLY site/changelog.json (runs immediately)
+//   select [ver] [--only 1,3|all|none]
+//                                  choose which items of a card go to the site (others stay local only)
+//   changelog ["msg"]              publish ONLY site/changelog.json (runs immediately); at a console it
+//                                  first asks which dev-card items to publish (--no-select skips that)
 //   site ["msg"]                   publish site/ + Pages workflow + site tools (runs immediately)
 //   code ["msg"] --yes             upload the source (Codeberg rules: excluded paths, MioNext author)
 //   release <ver> --yes            finalize the local card, set the site version, publish the site,
@@ -18,6 +21,7 @@
 //   revert <commit> --yes          undo one commit on main as a new commit (no force push)
 //
 // Without --yes, code / release / undo-* / revert only print what they would do.
+// Items with "publish": false are removed from every upload and from release notes.
 import { execFileSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -29,7 +33,7 @@ const REPO_URL = 'https://github.com/lspsemi/YSMTools.git';
 const GH_REPO = 'lspsemi/YSMTools';
 const CHANGELOG = 'site/changelog.json';
 const SITE_HTML = 'site/index.html';
-const EXCLUDE = ['AGENTS.md', 'CLAUDE.md', 'docs', '.claude', 'output', '介绍视频', '打包软件.bat', 'public/__test__'];
+const EXCLUDE = ['AGENTS.md', 'CLAUDE.md', 'docs', '.claude', 'output', '介绍视频', '打包软件.bat', '发布到GitHub.bat', 'public/__test__'];
 const SITE_PATHS = ['site', '.github/workflows/pages.yml', 'tools/update-site-icons.mjs', 'tools/ysmtools.mjs', 'tools/publish-site-changelog.mjs'];
 const INSTALLER_DIR = 'src-tauri/target/release/bundle/nsis';
 const INDEX = '.git/index.ysmtools-script';
@@ -79,10 +83,22 @@ function readChangelog(text = readFileSync(join(root, CHANGELOG), 'utf8')) {
   for (const x of e) for (const i of x.items || []) {
     if (!['new', 'improve', 'fix'].includes(i.type)) fail(`${CHANGELOG}: V${x.version} has an item with type "${i.type}"`);
     if (!i.zh && !i.en) fail(`${CHANGELOG}: V${x.version} has an item without text`);
+    if ('publish' in i && typeof i.publish !== 'boolean') fail(`${CHANGELOG}: "publish" must be true or false`);
   }
   return data;
 }
 const writeChangelog = data => writeFileSync(join(root, CHANGELOG), JSON.stringify(data, null, 2) + '\n');
+/** Items marked "publish": false stay in the local file only; they never reach the site or release notes. */
+const isPublic = i => i.publish !== false;
+function publicChangelogText(data = readChangelog()) {
+  const pub = { ...data, entries: data.entries.map(e => ({ ...e, items: (e.items || []).filter(isPublic).map(({ publish, ...i }) => i) })) };
+  return JSON.stringify(pub, null, 2) + '\n';
+}
+/** Puts the public changelog into the temporary index, replacing whatever `git add` took from the working tree. */
+function putPublicChangelog(env) {
+  const blob = git(['hash-object', '-w', '--stdin'], { input: publicChangelogText() });
+  git(['update-index', '--add', '--cacheinfo', `100644,${blob},${CHANGELOG}`], { env });
+}
 function setSiteVersion(version) {
   const p = join(root, SITE_HTML), html = readFileSync(p, 'utf8');
   const next = html.replace(/(data-version(?:>|&gt;))V\d+\.\d+\.\d+/g, `$1V${version}`);
@@ -92,25 +108,77 @@ function setSiteVersion(version) {
 
 /* ---------------- trees ---------------- */
 const changelogTree = parent => withIndex(env => {
-  readChangelog(); // refuse to publish a broken file
-  const blob = git(['hash-object', '-w', CHANGELOG], { quiet: true });
   git(['read-tree', parent], { env });
-  git(['update-index', '--add', '--cacheinfo', `100644,${blob},${CHANGELOG}`], { env });
+  putPublicChangelog(env); // validates the file first
   return git(['write-tree'], { env });
 });
 const siteTree = parent => withIndex(env => {
   readChangelog();
   git(['read-tree', parent], { env });
-  git(['rm', '-r', '-q', '--cached', '--ignore-unmatch', '--', 'site'], { env });
+  git(['rm', '-r', '-q', '-f', '--cached', '--ignore-unmatch', '--', 'site'], { env }); // temp index only; files on disk untouched
   git(['add', '-A', '--', ...SITE_PATHS.filter(p => existsSync(join(root, p)))], { env, quiet: true });
+  putPublicChangelog(env);
   return git(['write-tree'], { env });
 });
 const codeTree = parent => withIndex(env => {
   readChangelog();
   git(['read-tree', parent], { env });
   git(['add', '-A', '--', '.', ...EXCLUDE.map(p => `:!${p}`)], { env, quiet: true });
+  putPublicChangelog(env);
   return git(['write-tree'], { env });
 });
+
+/* ---------------- choosing which items go public ---------------- */
+const TYPE_ZH = { new: '新功能', improve: '改进', fix: '修复' };
+/**
+ * Lets the user tick which items of a card are published. Saves "publish": false on unticked items.
+ * `only` ("1,3" / "all" / "none") sets the choice without asking.
+ */
+async function selectItems(card, only) {
+  const items = card.items || [];
+  if (!items.length) { console.log(`V${card.version} 没有更新记录，无需选择。`); return; }
+  const apply = set => items.forEach((it, n) => { if (set.has(n + 1)) delete it.publish; else it.publish = false; });
+  const parse = text => {
+    const t = text.trim().toLowerCase();
+    if (t === 'all' || t === 'a') return new Set(items.map((_, n) => n + 1));
+    if (t === 'none' || t === 'n') return new Set();
+    const nums = t.split(/[\s,，]+/).filter(Boolean).map(Number);
+    if (nums.some(x => !Number.isInteger(x) || x < 1 || x > items.length)) return null;
+    return new Set(nums);
+  };
+  const show = () => {
+    console.log(`\nV${card.version} 的更新记录（[√] = 同步到发布网页，[ ] = 只留在本地）：`);
+    items.forEach((it, n) => console.log(`  ${String(n + 1).padStart(2)}. [${isPublic(it) ? '√' : ' '}] ${TYPE_ZH[it.type] || it.type}：${it.zh || it.en}`));
+  };
+  if (only !== undefined) {
+    const set = parse(only);
+    if (!set) fail(`--only: use item numbers 1-${items.length}, "all" or "none"`);
+    apply(set);
+  } else {
+    // Read answers line by line (works for typing and for piped input; end of input = done).
+    const { createInterface } = await import('node:readline');
+    const rl = createInterface({ input: process.stdin, terminal: false });
+    const lines = rl[Symbol.asyncIterator]();
+    try {
+      for (;;) {
+        show();
+        process.stdout.write('输入编号切换勾选（如 2 5），a = 全选，n = 全不选，直接回车 = 完成：');
+        const { value: answer = '', done } = await lines.next();
+        if (done || !answer.trim()) { process.stdout.write('\n'); break; }
+        const t = answer.trim().toLowerCase();
+        if (t === 'a' || t === 'all' || t === 'n' || t === 'none') { apply(parse(t)); continue; }
+        const set = parse(answer);
+        if (!set) { console.log(`请输入 1-${items.length} 之间的编号。`); continue; }
+        for (const n of set) { const it = items[n - 1]; if (isPublic(it)) it.publish = false; else delete it.publish; }
+      }
+    } finally { rl.close(); }
+  }
+  show();
+  const hidden = items.filter(i => !isPublic(i)).length;
+  console.log(`共 ${items.length} 条：同步 ${items.length - hidden} 条，不同步 ${hidden} 条。选择已保存到 ${CHANGELOG}。\n`);
+}
+/** Ask interactively only when a person is at the console and did not opt out. */
+const canAsk = flags => process.stdin.isTTY && !flags.has('--no-select');
 
 /* ---------------- release helpers ---------------- */
 function installerPath(version) {
@@ -125,7 +193,7 @@ function releaseExists(version) {
 }
 function releaseNotes(card) {
   const label = { new: ['新功能', 'New'], improve: ['改进', 'Improved'], fix: ['修复', 'Fixed'] };
-  const items = card.items || [];
+  const items = (card.items || []).filter(isPublic);
   const zh = items.length ? items.map(i => `- ${label[i.type][0]}：${i.zh || i.en}`).join('\n') : '本版本暂无更新说明。';
   const en = items.length ? items.map(i => `- ${label[i.type][1]}: ${i.en || i.zh}`).join('\n') : 'No release notes for this version.';
   return `YSM模型工具 ${card.version}（Windows 10 / 11 x64）\n\n## 更新内容\n\n${zh}\n\n## What's new\n\n${en}\n\n`
@@ -155,14 +223,28 @@ const commands = {
     console.log(`YSMTools main: ${short(head)}\n` + git(['log', '--format=%h %ad %s', '--date=short', '-8', head]).split('\n').map(l => '  ' + l).join('\n'));
     console.log('\nReleases:\n' + gh(['release', 'list', '-R', GH_REPO, '--limit', '10'], { quiet: true }));
     const data = readChangelog(), dev = data.entries.find(e => e.status === 'dev');
-    console.log(dev ? `\nLocal dev card: V${dev.version}, ${dev.items?.length || 0} item(s)` : '\nLocal changelog: no dev card');
+    const hidden = dev ? (dev.items || []).filter(i => !isPublic(i)).length : 0;
+    console.log(dev ? `\nLocal dev card: V${dev.version}, ${dev.items?.length || 0} item(s), ${hidden} kept local only` : '\nLocal changelog: no dev card');
     const remote = git(['show', `${head}:${CHANGELOG}`], { quiet: true });
     const norm = t => t.replace(/\r\n/g, '\n').trim();
-    console.log(norm(remote) === norm(readFileSync(join(root, CHANGELOG), 'utf8'))
+    console.log(norm(remote) === norm(publicChangelogText(data))
       ? 'Changelog: published version matches the local file.' : 'Changelog: local file differs from the published one (run "changelog" to publish).');
   },
 
-  changelog({ message }) {
+  async select({ args, flags, rest }) {
+    const data = readChangelog();
+    const card = args[0] ? data.entries.find(e => e.version === args[0]) : data.entries.find(e => e.status === 'dev') || data.entries[0];
+    if (!card) fail(args[0] ? `No card for V${args[0]} in ${CHANGELOG}.` : `${CHANGELOG} has no cards.`);
+    const i = rest.indexOf('--only');
+    await selectItems(card, i >= 0 ? rest[i + 1] ?? '' : undefined);
+    writeChangelog(data);
+  },
+
+  async changelog({ message, flags }) {
+    if (canAsk(flags)) {
+      const data = readChangelog(), dev = data.entries.find(e => e.status === 'dev');
+      if (dev?.items?.length) { await selectItems(dev); writeChangelog(data); }
+    }
     const parent = fetchMain();
     commitAndPush(parent, changelogTree(parent), message || 'Update site changelog', true);
   },
@@ -177,7 +259,7 @@ const commands = {
     commitAndPush(parent, codeTree(parent), message || 'Update source', yes);
   },
 
-  release({ args, yes }) {
+  async release({ args, yes, flags }) {
     const version = args[0];
     if (!VERSION_RE.test(version || '')) fail('Usage: release <version> --yes   (e.g. release 1.1.14 --yes)');
     if (releaseExists(version)) fail(`Release v${version} already exists. Use "release-asset ${version}" to replace the installer, or "undo-release ${version}" first.`);
@@ -187,6 +269,8 @@ const commands = {
     const data = readChangelog();
     const card = data.entries.find(e => e.version === version);
     if (!card) fail(`No changelog card for V${version} in ${CHANGELOG}. Add one first (it may be the dev card).`);
+    // Choose the public items in the preview run; the --yes run uses the saved choice.
+    if (!yes && canAsk(flags)) { await selectItems(card); writeChangelog(data); }
     const finalize = card.status === 'dev';
     console.log(`Release v${version}\n  installer: ${src}\n  size ${statSync(src).size} bytes, sha256 ${sha256(src)}`);
     console.log(finalize ? `  card V${version}: in development -> released, date ${today()}` : `  card V${version}: already released (${card.date || 'no date'})`);
@@ -295,11 +379,13 @@ const [cmd, ...rest] = process.argv.slice(2);
 const flags = new Set(rest.filter(a => a.startsWith('--')));
 const toIdx = rest.indexOf('--to');
 const to = toIdx >= 0 ? rest[toIdx + 1] : undefined;
-const args = rest.filter((a, i) => !a.startsWith('--') && !(toIdx >= 0 && i === toIdx + 1));
-const ctx = { args, flags, to, yes: flags.has('--yes'), message: ['changelog', 'site', 'code'].includes(cmd) ? args[0] : undefined };
+const valueOf = new Set(['--to', '--only'].map(f => rest.indexOf(f)).filter(i => i >= 0).map(i => i + 1));
+const args = rest.filter((a, i) => !a.startsWith('--') && !valueOf.has(i));
+const ctx = { args, flags, to, rest, yes: flags.has('--yes'), message: ['changelog', 'site', 'code'].includes(cmd) ? args[0] : undefined };
 if (!commands[cmd]) {
-  console.log(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').filter(l => l.startsWith('//')).slice(0, 23).map(l => l.slice(3)).join('\n'));
+  const src = readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n');
+  console.log(src.slice(0, src.findIndex(l => !l.startsWith('//'))).map(l => l.slice(3)).join('\n'));
   process.exit(cmd ? 1 : 0);
 }
-try { commands[cmd](ctx); }
+try { await commands[cmd](ctx); }
 catch (e) { console.error(`Error: ${e.message}`); process.exit(1); }

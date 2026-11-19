@@ -656,7 +656,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
     const latest = changelog.find(e => !isDev(e));
     box.innerHTML = changelog.map(e => {
       const dev = isDev(e), isLatest = e === latest;
-      const items = (e.items || []).filter(i => i.zh || i.en);
+      const items = (e.items || []).filter(i => (i.zh || i.en) && i.publish !== false); // local-only items never show
       const head = `<div class="cl-head">`
         + `<span class="cl-ver">V${esc(e.version)}</span>`
         + (dev ? `<span class="cl-badge dev">${icon('construction')}${esc(msg('dev'))}</span>`
