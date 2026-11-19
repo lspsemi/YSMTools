@@ -1,5 +1,5 @@
 {
-  "_format": "entries newest first. version null = in development (not released yet). item type: new | improve | fix. zh/en text; `backticks` become <code>.",
+  "_format": "entries newest first; every entry has a version. status \"dev\" = in development (at most one, first); no status = released. item type: new | improve | fix. zh/en text; `backticks` become <code>.",
   "entries": [
     {
       "version": "1.1.13",
