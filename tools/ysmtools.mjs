@@ -91,7 +91,10 @@ const writeChangelog = data => writeFileSync(join(root, CHANGELOG), JSON.stringi
 /** Items marked "publish": false stay in the local file only; they never reach the site or release notes. */
 const isPublic = i => i.publish !== false;
 function publicChangelogText(data = readChangelog()) {
-  const pub = { ...data, entries: data.entries.map(e => ({ ...e, items: (e.items || []).filter(isPublic).map(({ publish, ...i }) => i) })) };
+  const pub = { ...data, entries: data.entries
+    .map(e => ({ ...e, items: (e.items || []).filter(isPublic).map(({ publish, ...i }) => i) }))
+    // Development cards are NEVER published: the site only shows versions that have been released.
+    .filter(e => e.status !== 'dev') };
   return JSON.stringify(pub, null, 2) + '\n';
 }
 /** Puts the public changelog into the temporary index, replacing whatever `git add` took from the working tree. */
@@ -240,11 +243,14 @@ const commands = {
     writeChangelog(data);
   },
 
-  async changelog({ message, flags }) {
-    if (canAsk(flags)) {
-      const data = readChangelog(), dev = data.entries.find(e => e.status === 'dev');
-      if (dev?.items?.length) { await selectItems(dev); writeChangelog(data); }
-    }
+  async changelog({ message, flags, yes }) {
+    // Only the user publishes the changelog: from a console (the bat menu), or explicitly with --yes.
+    if (!process.stdin.isTTY && !yes) fail('Publishing the changelog needs the user: run it from the console (发布到GitHub.bat → 2), or add --yes when the user asked for it.');
+    const data = readChangelog(), dev = data.entries.find(e => e.status === 'dev');
+    if (dev) console.log(`V${dev.version} 还在开发中，不会出现在网页上；发布版本（release）时才会公开。`);
+    // Only released cards are public, so the choice here is about the latest released one.
+    const latest = data.entries.find(e => e.status !== 'dev');
+    if (canAsk(flags) && latest?.items?.length) { await selectItems(latest); writeChangelog(data); }
     const parent = fetchMain();
     commitAndPush(parent, changelogTree(parent), message || 'Update site changelog', true);
   },

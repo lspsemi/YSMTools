@@ -2,38 +2,6 @@
   "_format": "entries newest first; every entry has a version. status \"dev\" = in development (at most one, first); no status = released. item type: new | improve | fix. zh/en text; `backticks` become <code>.",
   "entries": [
     {
-      "version": "1.1.14",
-      "status": "dev",
-      "date": "2026-11-19",
-      "items": [
-        {
-          "type": "improve",
-          "zh": "轮盘搜索定位时的扇区闪烁更明显：改为快速闪烁两下，颜色按自动取色的主色调整到与轮盘背景有足够对比度，文字同时切换为黑或白以保持清晰。",
-          "en": "The sector flash when Wheel Search jumps to a result is now much easier to see: two quick blinks in the theme's primary colour, adjusted for enough contrast with the wheel, with the label switching to black or white so it stays readable."
-        },
-        {
-          "type": "new",
-          "zh": "新增轮盘搜索：在设置的“搜索”中打开后弹出一个独立窗口，按名称搜索轮盘里的动作、子分类和设置面板，并显示所在的轮盘路径和页码；点击结果会自动打开轮盘、翻到那一页并闪烁对应分区。窗口可调节透明度。",
-          "en": "New Wheel Search: turn it on under Settings → Search to open a separate window that finds actions, sub-categories and settings panels in the action wheel by name, showing each one's wheel path and page. Clicking a result opens the wheel on that page and flashes the sector. The window's opacity is adjustable."
-        },
-        {
-          "type": "improve",
-          "zh": "详情、预览、设置收进左侧“查看器”下面；打开软件直接显示预览，详情和设置改为居中弹出的面板（左上返回、右上关闭），打开时模型的动画和声音不再停止。",
-          "en": "Details, Preview and Settings now sit under Viewer in the left rail; the app opens straight to the preview, and Details and Settings open as a centered panel (back at top left, close at top right) without stopping the model's animation or sound."
-        },
-        {
-          "type": "improve",
-          "zh": "详情和设置面板打开时从右往左滑入（先快后慢），关闭时从左往右滑出（先慢后快）。",
-          "en": "The Details and Settings panel now slides in from the right when opened (fast, then easing out) and slides back out to the right when closed (slow, then speeding up)."
-        },
-        {
-          "type": "improve",
-          "zh": "截图按钮移到右侧工具栏，去掉 3D 视图右下角挡住画面的截图面板和骨骼数显示。",
-          "en": "The screenshot button moved into the right-hand toolbar; the panel in the bottom-right corner of the 3D view that covered the model, along with its bone count, is gone."
-        }
-      ]
-    },
-    {
       "version": "1.1.13",
       "date": "2026-11-18",
       "items": []
