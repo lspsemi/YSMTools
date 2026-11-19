@@ -9,9 +9,13 @@
 //                                  first asks which dev-card items to publish (--no-select skips that)
 //   site ["msg"]                   publish site/ + Pages workflow + site tools (runs immediately)
 //   code ["msg"] --yes             upload the source (Codeberg rules: excluded paths, MioNext author)
-//   release <ver> --yes            finalize the local card, set the site version, publish the site,
-//                                  create GitHub release v<ver> with the installer, notes from the card
-//   release-asset <ver> --yes      replace the installer of an existing release
+//   release [<ver>] [--file <exe>] --yes
+//                                  finalize the local card, set the site version, publish the site,
+//                                  create GitHub release v<ver> with the installer, notes from the card.
+//                                  Never builds. Installer: --file if given; else the one built for <ver>;
+//                                  else the newest one in the bundle folder (version from its file name)
+//   release-asset [<ver>] [--file <exe>] --yes
+//                                  replace the installer of an existing release (same installer choice)
 //   undo-changelog [--to <commit>] --yes
 //                                  restore site/changelog.json to its previous published version
 //                                  (online AND locally), as a new commit
@@ -23,10 +27,10 @@
 // Without --yes, code / release / undo-* / revert only print what they would do.
 // Items with "publish": false are removed from every upload and from release notes.
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { basename, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const REPO_URL = 'https://github.com/lspsemi/YSMTools.git';
@@ -184,10 +188,48 @@ async function selectItems(card, only) {
 const canAsk = flags => process.stdin.isTTY && !flags.has('--no-select');
 
 /* ---------------- release helpers ---------------- */
-function installerPath(version) {
-  const p = join(root, INSTALLER_DIR, `YSM模型工具_${version}_x64-setup.exe`);
-  if (!existsSync(p)) fail(`Installer not found: ${p}\nBuild it first (npm run package).`);
-  return p;
+/** Installers already built in the bundle folder, newest first. This script never builds anything. */
+function builtInstallers() {
+  const dir = join(root, INSTALLER_DIR);
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .map(name => ({ name, m: name.match(/^YSM模型工具_(\d+\.\d+\.\d+)_x64-setup\.exe$/) }))
+    .filter(x => x.m)
+    .map(x => { const path = join(dir, x.name); return { path, version: x.m[1], mtime: statSync(path).mtime }; })
+    .sort((a, b) => b.mtime - a.mtime);
+}
+const versionInName = p => basename(p).match(/(\d+\.\d+\.\d+)/)?.[1];
+const fmtTime = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+/**
+ * Picks the installer to upload:
+ *   --file <path>   the file you chose (any folder);
+ *   <version>       the installer built for that version;
+ *   neither         the newest installer in the bundle folder (its version comes from the file name).
+ */
+function resolveInstaller(version, file) {
+  let src;
+  if (file) {
+    src = resolve(root, file);
+    if (!existsSync(src) || !statSync(src).isFile()) fail(`Installer not found: ${src}`);
+    if (!/\.exe$/i.test(src)) fail(`Not an .exe installer: ${src}`);
+    const named = versionInName(src);
+    if (version && named && named !== version) fail(`The file name says ${named}, but you asked for ${version}. Check the file.`);
+    version ||= named;
+    if (!version) fail('Cannot tell the version from the file name; give it too, e.g. release 1.1.14 --file <path>.');
+  } else if (version) {
+    src = join(root, INSTALLER_DIR, `YSM模型工具_${version}_x64-setup.exe`);
+    if (!existsSync(src)) fail(`Installer not found: ${src}\nBuild it first, or choose a file with --file <path>.`);
+  } else {
+    const newest = builtInstallers()[0];
+    if (!newest) fail(`No installer in ${join(root, INSTALLER_DIR)}. Build it first, or choose a file with --file <path>.`);
+    ({ path: src, version } = newest);
+    console.log(`No version given: using the newest built installer (V${version}).`);
+  }
+  const st = statSync(src);
+  console.log(`Installer: ${src}\n  version ${version}, built ${fmtTime(st.mtime)}, ${st.size} bytes, sha256 ${sha256(src)}`);
+  const newer = builtInstallers().find(x => x.mtime > st.mtime && x.path !== src);
+  if (newer) console.log(`  Note: a newer installer exists: ${basename(newer.path)} (built ${fmtTime(newer.mtime)}).`);
+  return { src, version };
 }
 const sha256 = p => createHash('sha256').update(readFileSync(p)).digest('hex');
 function releaseExists(version) {
@@ -206,8 +248,8 @@ function releaseNotes(card) {
     + `以 GPL-3.0-or-later 许可证发布。/ Released under GPL-3.0-or-later.\n`;
 }
 /** Copies the installer to an ASCII file name (GitHub rewrites non-ASCII asset names). */
-function stageInstaller(version) {
-  const src = installerPath(version), dir = mkdtempSync(join(tmpdir(), 'ysmtools-'));
+function stageInstaller(version, src) {
+  const dir = mkdtempSync(join(tmpdir(), 'ysmtools-'));
   const dst = join(dir, `YSMModelTool_${version}_x64-setup.exe`);
   copyFileSync(src, dst);
   return { src, dst, dir, label: `YSM模型工具 ${version} 安装包 (x64)` };
@@ -265,11 +307,10 @@ const commands = {
     commitAndPush(parent, codeTree(parent), message || 'Update source', yes);
   },
 
-  async release({ args, yes, flags }) {
-    const version = args[0];
-    if (!VERSION_RE.test(version || '')) fail('Usage: release <version> --yes   (e.g. release 1.1.14 --yes)');
+  async release({ args, yes, flags, file }) {
+    if (args[0] && !VERSION_RE.test(args[0])) fail('Usage: release [<version>] [--file <installer.exe>] --yes   (e.g. release 1.1.14 --yes)');
+    const { src, version } = resolveInstaller(args[0], file);
     if (releaseExists(version)) fail(`Release v${version} already exists. Use "release-asset ${version}" to replace the installer, or "undo-release ${version}" first.`);
-    const src = installerPath(version);
     const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version;
     if (pkg !== version) console.log(`Warning: package.json version is ${pkg}, not ${version}.`);
     const data = readChangelog();
@@ -278,7 +319,7 @@ const commands = {
     // Choose the public items in the preview run; the --yes run uses the saved choice.
     if (!yes && canAsk(flags)) { await selectItems(card); writeChangelog(data); }
     const finalize = card.status === 'dev';
-    console.log(`Release v${version}\n  installer: ${src}\n  size ${statSync(src).size} bytes, sha256 ${sha256(src)}`);
+    console.log(`\nRelease v${version} (installer above)`);
     console.log(finalize ? `  card V${version}: in development -> released, date ${today()}` : `  card V${version}: already released (${card.date || 'no date'})`);
     console.log('  site version label -> V' + version + '\n\nRelease notes:\n' + releaseNotes(card));
     console.log('Note: the release points at YSMTools main. Run "code --yes" first if the source there should match this version.');
@@ -287,7 +328,7 @@ const commands = {
     setSiteVersion(version);
     const parent = fetchMain();
     commitAndPush(parent, siteTree(parent), `Release ${version}: changelog and site version`, true);
-    const st = stageInstaller(version), notes = join(st.dir, 'notes.md');
+    const st = stageInstaller(version, src), notes = join(st.dir, 'notes.md');
     writeFileSync(notes, releaseNotes(card));
     try {
       gh(['release', 'create', `v${version}`, `${st.dst}#${st.label}`, '-R', GH_REPO, '--target', 'main',
@@ -297,14 +338,13 @@ const commands = {
     console.log(`Released: https://github.com/${GH_REPO}/releases/tag/v${version}`);
   },
 
-  'release-asset'({ args, yes }) {
-    const version = args[0];
-    if (!VERSION_RE.test(version || '')) fail('Usage: release-asset <version> --yes');
+  'release-asset'({ args, yes, file }) {
+    if (args[0] && !VERSION_RE.test(args[0])) fail('Usage: release-asset [<version>] [--file <installer.exe>] --yes');
+    const { src, version } = resolveInstaller(args[0], file);
     if (!releaseExists(version)) fail(`Release v${version} does not exist.`);
-    const src = installerPath(version);
-    console.log(`Replace the installer of v${version} with\n  ${src}\n  size ${statSync(src).size} bytes, sha256 ${sha256(src)}`);
+    console.log(`\nReplace the installer of release v${version} with the file above.`);
     if (!yes) { console.log('\nDry run: nothing was changed. Add --yes to replace.'); return; }
-    const st = stageInstaller(version);
+    const st = stageInstaller(version, src);
     try { gh(['release', 'upload', `v${version}`, `${st.dst}#${st.label}`, '-R', GH_REPO, '--clobber'], { quiet: true }); }
     finally { rmSync(st.dir, { recursive: true, force: true }); }
     checkUploadedAsset(version, src);
@@ -385,9 +425,10 @@ const [cmd, ...rest] = process.argv.slice(2);
 const flags = new Set(rest.filter(a => a.startsWith('--')));
 const toIdx = rest.indexOf('--to');
 const to = toIdx >= 0 ? rest[toIdx + 1] : undefined;
-const valueOf = new Set(['--to', '--only'].map(f => rest.indexOf(f)).filter(i => i >= 0).map(i => i + 1));
+const valueOf = new Set(['--to', '--only', '--file'].map(f => rest.indexOf(f)).filter(i => i >= 0).map(i => i + 1));
 const args = rest.filter((a, i) => !a.startsWith('--') && !valueOf.has(i));
-const ctx = { args, flags, to, rest, yes: flags.has('--yes'), message: ['changelog', 'site', 'code'].includes(cmd) ? args[0] : undefined };
+const fileIdx = rest.indexOf('--file');
+const ctx = { args, flags, to, rest, file: fileIdx >= 0 ? rest[fileIdx + 1] : undefined, yes: flags.has('--yes'), message: ['changelog', 'site', 'code'].includes(cmd) ? args[0] : undefined };
 if (!commands[cmd]) {
   const src = readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n');
   console.log(src.slice(0, src.findIndex(l => !l.startsWith('//'))).map(l => l.slice(3)).join('\n'));
