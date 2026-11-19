@@ -7,6 +7,11 @@
       "date": "2026-11-19",
       "items": [
         {
+          "type": "improve",
+          "zh": "轮盘搜索定位时的扇区闪烁更明显：改为快速闪烁两下，颜色按自动取色的主色调整到与轮盘背景有足够对比度，文字同时切换为黑或白以保持清晰。",
+          "en": "The sector flash when Wheel Search jumps to a result is now much easier to see: two quick blinks in the theme's primary colour, adjusted for enough contrast with the wheel, with the label switching to black or white so it stays readable."
+        },
+        {
           "type": "new",
           "zh": "新增轮盘搜索：在设置的“搜索”中打开后弹出一个独立窗口，按名称搜索轮盘里的动作、子分类和设置面板，并显示所在的轮盘路径和页码；点击结果会自动打开轮盘、翻到那一页并闪烁对应分区。窗口可调节透明度。",
           "en": "New Wheel Search: turn it on under Settings → Search to open a separate window that finds actions, sub-categories and settings panels in the action wheel by name, showing each one's wheel path and page. Clicking a result opens the wheel on that page and flashes the sector. The window's opacity is adjustable."
