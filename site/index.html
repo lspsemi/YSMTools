@@ -337,7 +337,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <section class="hero">
   <div class="wrap">
     <div>
-      <span class="eyebrow"><b data-version>V1.1.14</b><span data-en="Windows desktop · Free &amp;amp; open source">Windows 桌面版 · 开源免费</span></span>
+      <span class="eyebrow"><b data-version>V1.1.15</b><span data-en="Windows desktop · Free &amp;amp; open source">Windows 桌面版 · 开源免费</span></span>
       <h1><span data-en="See every frame&lt;br&gt;&lt;span class=&quot;accent&quot;&gt;of your YSM model&lt;/span&gt;">看清每一帧<br><span class="accent">YSM 模型</span></span></h1>
       <p class="lead"><span data-en="YSM Model Tool helps you view and debug models. Open Yes Steve Model packs on your PC and preview the model, animations, action-wheel actions, sounds and cover exactly as they appear in the game — and manage your local model library.">YSM模型工具，一个让你更好查看和调试模型的助手。在电脑上打开 Yes Steve Model 模型包，按游戏里的表现预览模型、动画、轮盘动作、声音与封面，还能管理本地模型库。</span></p>
       <div class="cta">
@@ -556,7 +556,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
         <span class="sec-label"><span class="icon">download</span><span data-en="Download">下载</span></span>
         <h2 style="margin-top:10px"><span data-en="Get YSM Model Tool">获取 YSM模型工具</span></h2>
         <svg class="wavy" viewBox="0 0 360 14" preserveAspectRatio="none" aria-hidden="true"><path class="track" d="M250 7 H356"/><path class="wave" id="wave"/></svg>
-        <p class="lead"><span data-en="Current version &lt;strong data-version&gt;V1.1.14&lt;/strong&gt;. The installer and all past releases are on GitHub; download and run &lt;code&gt;YSMModelTool_&amp;lt;version&amp;gt;_x64-setup.exe&lt;/code&gt;.">当前版本 <strong data-version>V1.1.14</strong>。安装包与历次版本发布在 GitHub 上，下载后运行 <code>YSMModelTool_&lt;版本&gt;_x64-setup.exe</code>。</span></p>
+        <p class="lead"><span data-en="Current version &lt;strong data-version&gt;V1.1.15&lt;/strong&gt;. The installer and all past releases are on GitHub; download and run &lt;code&gt;YSMModelTool_&amp;lt;version&amp;gt;_x64-setup.exe&lt;/code&gt;.">当前版本 <strong data-version>V1.1.15</strong>。安装包与历次版本发布在 GitHub 上，下载后运行 <code>YSMModelTool_&lt;版本&gt;_x64-setup.exe</code>。</span></p>
         <div class="cta">
           <a class="btn filled lg" href="https://github.com/lspsemi/YSMTools/releases/latest" target="_blank" rel="noopener"><span class="icon">install_desktop</span><span data-en="Download installer">下载安装包</span></a>
           <a class="btn text" href="https://github.com/lspsemi/YSMTools/releases" target="_blank" rel="noopener"><span class="icon">history</span><span data-en="All releases">全部版本</span></a>
@@ -661,7 +661,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
         + `<span class="cl-ver">V${esc(e.version)}</span>`
         + (dev ? `<span class="cl-badge dev">${icon('construction')}${esc(msg('dev'))}</span>`
                : isLatest ? `<span class="cl-badge">${icon('new_releases')}${esc(msg('latest'))}</span>` : '')
-        + (e.date ? `<time class="cl-date" datetime="${esc(e.date)}">${esc(e.date)}</time>` : '')
+        + (e.date ? `<time class="cl-date" datetime="${esc(String(e.date).slice(0, 10))}">${esc(String(e.date).slice(0, 10))}</time>` : '') // local file may carry HH:MM; show the day only
         + (dev ? '' : `<a class="btn text cl-link" href="https://github.com/lspsemi/YSMTools/releases/tag/v${encodeURIComponent(e.version)}" target="_blank" rel="noopener">${icon('download')}${esc(msg('release'))}</a>`)
         + `</div>`;
       const body = items.length

@@ -55,6 +55,10 @@ const gh = (args, opts) => run('gh', args, opts);
 const fail = msg => { throw new Error(msg); };
 const short = sha => sha.slice(0, 7);
 const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+/** Local card dates carry the time ("2026-11-20 14:05"); the published file keeps only the day. */
+const nowMinute = () => { const d = new Date(); return `${today()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+const DATE_RE = /^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$/;
+const dayOnly = date => (date ? String(date).slice(0, 10) : date);
 const VERSION_RE = /^\d+\.\d+\.\d+$/;
 
 function fetchMain() { git(['fetch', '--quiet', REPO_URL, 'main']); return git(['rev-parse', 'FETCH_HEAD']); }
@@ -84,6 +88,7 @@ function readChangelog(text = readFileSync(join(root, CHANGELOG), 'utf8')) {
   const dev = e.filter(x => x.status === 'dev');
   if (dev.length > 1) fail(`${CHANGELOG}: ${dev.length} in-development entries; merge them into one`);
   if (dev.length && e[0] !== dev[0]) fail(`${CHANGELOG}: the in-development entry must be the first entry`);
+  for (const x of e) if ('date' in x && !DATE_RE.test(x.date || '')) fail(`${CHANGELOG}: V${x.version} date must be "YYYY-MM-DD" or "YYYY-MM-DD HH:MM"`);
   for (const x of e) for (const i of x.items || []) {
     if (!['new', 'improve', 'fix'].includes(i.type)) fail(`${CHANGELOG}: V${x.version} has an item with type "${i.type}"`);
     if (!i.zh && !i.en) fail(`${CHANGELOG}: V${x.version} has an item without text`);
@@ -96,7 +101,7 @@ const writeChangelog = data => writeFileSync(join(root, CHANGELOG), JSON.stringi
 const isPublic = i => i.publish !== false;
 function publicChangelogText(data = readChangelog()) {
   const pub = { ...data, entries: data.entries
-    .map(e => ({ ...e, items: (e.items || []).filter(isPublic).map(({ publish, ...i }) => i) }))
+    .map(e => ({ ...e, ...('date' in e ? { date: dayOnly(e.date) } : {}), items: (e.items || []).filter(isPublic).map(({ publish, ...i }) => i) }))
     // Development cards are NEVER published: the site only shows versions that have been released.
     .filter(e => e.status !== 'dev') };
   return JSON.stringify(pub, null, 2) + '\n';
@@ -320,11 +325,11 @@ const commands = {
     if (!yes && canAsk(flags)) { await selectItems(card); writeChangelog(data); }
     const finalize = card.status === 'dev';
     console.log(`\nRelease v${version} (installer above)`);
-    console.log(finalize ? `  card V${version}: in development -> released, date ${today()}` : `  card V${version}: already released (${card.date || 'no date'})`);
+    console.log(finalize ? `  card V${version}: in development -> released, date ${nowMinute()}` : `  card V${version}: already released (${card.date || 'no date'})`);
     console.log('  site version label -> V' + version + '\n\nRelease notes:\n' + releaseNotes(card));
     console.log('Note: the release points at YSMTools main. Run "code --yes" first if the source there should match this version.');
     if (!yes) { console.log('\nDry run: nothing was changed. Add --yes to release.'); return; }
-    if (finalize) { delete card.status; card.date = today(); writeChangelog(data); }
+    if (finalize) { delete card.status; card.date = nowMinute(); writeChangelog(data); }
     setSiteVersion(version);
     const parent = fetchMain();
     commitAndPush(parent, siteTree(parent), `Release ${version}: changelog and site version`, true);
