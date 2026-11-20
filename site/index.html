@@ -556,11 +556,9 @@ footer nav .icon{font-size:20px;color:var(--primary)}
         <span class="sec-label"><span class="icon">download</span><span data-en="Download">下载</span></span>
         <h2 style="margin-top:10px"><span data-en="Get YSM Model Tool">获取 YSM模型工具</span></h2>
         <svg class="wavy" viewBox="0 0 360 14" preserveAspectRatio="none" aria-hidden="true"><path class="track" d="M250 7 H356"/><path class="wave" id="wave"/></svg>
-        <p class="lead"><span data-en="Current version &lt;strong data-version&gt;V1.1.15&lt;/strong&gt;. The installer and all past releases are on GitHub; download and run &lt;code&gt;YSMModelTool_&amp;lt;version&amp;gt;_x64-setup.exe&lt;/code&gt;.">当前版本 <strong data-version>V1.1.15</strong>。安装包与历次版本发布在 GitHub 上，下载后运行 <code>YSMModelTool_&lt;版本&gt;_x64-setup.exe</code>。</span></p>
+        <p class="lead"><span data-en="Current version &lt;strong data-version&gt;V1.1.15&lt;/strong&gt;. The installer is on GitHub; download and run &lt;code&gt;YSMModelTool_&amp;lt;version&amp;gt;_x64-setup.exe&lt;/code&gt;.">当前版本 <strong data-version>V1.1.15</strong>。安装包发布在 GitHub 上，下载后运行 <code>YSMModelTool_&lt;版本&gt;_x64-setup.exe</code>。</span></p>
         <div class="cta">
-          <a class="btn filled lg" href="https://github.com/lspsemi/YSMTools/releases/latest" target="_blank" rel="noopener"><span class="icon">install_desktop</span><span data-en="Download installer">下载安装包</span></a>
-          <a class="btn text" href="https://github.com/lspsemi/YSMTools/releases" target="_blank" rel="noopener"><span class="icon">history</span><span data-en="All releases">全部版本</span></a>
-        </div>
+          <a class="btn filled lg" href="https://github.com/lspsemi/YSMTools/releases/latest" target="_blank" rel="noopener"><span class="icon">install_desktop</span><span data-en="Download installer">下载安装包</span></a>        </div>
         <div class="src">
           <small><span data-en="Or run it from source in your browser (Node.js 20.19+):">也可以从源码在浏览器中运行（需要 Node.js 20.19+）：</span></small>
           <div class="cmd"><ol id="cmd"><li><code>git clone https://github.com/lspsemi/YSMTools.git</code></li><li><code>cd YSMTools</code></li><li><code>npm ci</code></li><li><code>npm run browser</code></li></ol><button class="btn icon-btn" id="copy" type="button" aria-label="复制命令" data-en-aria-label="Copy command"><span class="icon outlined">content_copy</span></button></div>
@@ -623,7 +621,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
       <nav aria-label="外部链接" data-en-aria-label="External links">
         <a href="https://github.com/lspsemi/YSMTools" target="_blank" rel="noopener"><span class="icon outlined">code</span><span data-en="Source on GitHub">GitHub 源代码</span></a>
         <a href="https://codeberg.org/MioNext/YesSteveModelTestTools" target="_blank" rel="noopener"><span class="icon outlined">code</span><span data-en="Source on Codeberg">Codeberg 源代码</span></a>
-        <a href="https://github.com/lspsemi/YSMTools/releases" target="_blank" rel="noopener"><span class="icon outlined">deployed_code</span><span data-en="Releases">版本发布</span></a>
+        <a href="https://github.com/lspsemi/YSMTools/releases/latest" target="_blank" rel="noopener"><span class="icon outlined">deployed_code</span><span data-en="Latest release">最新版本</span></a>
         <a href="https://github.com/lspsemi/YSMTools/issues" target="_blank" rel="noopener"><span class="icon outlined">bug_report</span><span data-en="Report an issue">反馈问题</span></a>
       </nav>
     </div>
@@ -662,7 +660,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
         + (dev ? `<span class="cl-badge dev">${icon('construction')}${esc(msg('dev'))}</span>`
                : isLatest ? `<span class="cl-badge">${icon('new_releases')}${esc(msg('latest'))}</span>` : '')
         + (e.date ? `<time class="cl-date" datetime="${esc(String(e.date).slice(0, 10))}">${esc(String(e.date).slice(0, 10))}</time>` : '') // local file may carry HH:MM; show the day only
-        + (dev ? '' : `<a class="btn text cl-link" href="https://github.com/lspsemi/YSMTools/releases/tag/v${encodeURIComponent(e.version)}" target="_blank" rel="noopener">${icon('download')}${esc(msg('release'))}</a>`)
+        + (!isLatest ? '' : `<a class="btn text cl-link" href="https://github.com/lspsemi/YSMTools/releases/tag/v${encodeURIComponent(e.version)}" target="_blank" rel="noopener">${icon('download')}${esc(msg('release'))}</a>`)
         + `</div>`;
       const body = items.length
         ? `<ul class="cl-items">` + items.map(i =>
