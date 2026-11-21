@@ -40,6 +40,13 @@ const SITE_HTML = 'site/index.html';
 const EXCLUDE = ['AGENTS.md', 'CLAUDE.md', 'docs', '.claude', 'output', '介绍视频', '打包软件.bat', '发布到GitHub.bat', 'public/__test__'];
 const SITE_PATHS = ['site', '.github/workflows/pages.yml', 'tools/update-site-icons.mjs', 'tools/ysmtools.mjs', 'tools/publish-site-changelog.mjs'];
 const INSTALLER_DIR = 'src-tauri/target/release/bundle/nsis';
+// Installer names (docs §83): Tauri names the local file after productName ("YSM工具" from
+// 1.1.16, "YSM模型工具" before); GitHub gets an ASCII copy (it rewrites non-ASCII asset names).
+const APP_NAME = 'YSM工具';
+const LOCAL_INSTALLER_RE = /^(?:YSM工具|YSM模型工具)_(\d+\.\d+\.\d+)_x64-setup\.exe$/;
+const localInstallerNames = v => [`YSM工具_${v}_x64-setup.exe`, `YSM模型工具_${v}_x64-setup.exe`];
+const assetName = v => `YSMTools_${v}_x64-setup.exe`;
+const oldAssetName = v => `YSMModelTool_${v}_x64-setup.exe`;
 const INDEX = '.git/index.ysmtools-script';
 const AUTHOR = { GIT_AUTHOR_NAME: 'MioNext', GIT_AUTHOR_EMAIL: 'mionext@noreply.codeberg.org',
                  GIT_COMMITTER_NAME: 'MioNext', GIT_COMMITTER_EMAIL: 'mionext@noreply.codeberg.org' };
@@ -198,7 +205,7 @@ function builtInstallers() {
   const dir = join(root, INSTALLER_DIR);
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
-    .map(name => ({ name, m: name.match(/^YSM模型工具_(\d+\.\d+\.\d+)_x64-setup\.exe$/) }))
+    .map(name => ({ name, m: name.match(LOCAL_INSTALLER_RE) }))
     .filter(x => x.m)
     .map(x => { const path = join(dir, x.name); return { path, version: x.m[1], mtime: statSync(path).mtime }; })
     .sort((a, b) => b.mtime - a.mtime);
@@ -222,7 +229,8 @@ function resolveInstaller(version, file) {
     version ||= named;
     if (!version) fail('Cannot tell the version from the file name; give it too, e.g. release 1.1.14 --file <path>.');
   } else if (version) {
-    src = join(root, INSTALLER_DIR, `YSM模型工具_${version}_x64-setup.exe`);
+    const tried = localInstallerNames(version).map(name => join(root, INSTALLER_DIR, name));
+    src = tried.find(p => existsSync(p)) || tried[0];
     if (!existsSync(src)) fail(`Installer not found: ${src}\nBuild it first, or choose a file with --file <path>.`);
   } else {
     const newest = builtInstallers()[0];
@@ -246,22 +254,22 @@ function releaseNotes(card) {
   const items = (card.items || []).filter(isPublic);
   const zh = items.length ? items.map(i => `- ${label[i.type][0]}：${i.zh || i.en}`).join('\n') : '本版本暂无更新说明。';
   const en = items.length ? items.map(i => `- ${label[i.type][1]}: ${i.en || i.zh}`).join('\n') : 'No release notes for this version.';
-  return `YSM模型工具 ${card.version}（Windows 10 / 11 x64）\n\n## 更新内容\n\n${zh}\n\n## What's new\n\n${en}\n\n`
-    + `## 安装 / Install\n\n- 下载 \`YSMModelTool_${card.version}_x64-setup.exe\` 运行安装，按当前用户安装，无需管理员权限\n`
-    + `- Run \`YSMModelTool_${card.version}_x64-setup.exe\`; installs per user, no administrator rights needed\n`
+  return `${APP_NAME} ${card.version}（Windows 10 / 11 x64）\n\n## 更新内容\n\n${zh}\n\n## What's new\n\n${en}\n\n`
+    + `## 安装 / Install\n\n- 下载 \`${assetName(card.version)}\` 运行安装，按当前用户安装，无需管理员权限\n`
+    + `- Run \`${assetName(card.version)}\`; installs per user, no administrator rights needed\n`
     + `- 需要 WebView2 运行时（Windows 10 / 11 已自带）/ Requires WebView2 (included in Windows 10 / 11)\n\n`
     + `以 GPL-3.0-or-later 许可证发布。/ Released under GPL-3.0-or-later.\n`;
 }
 /** Copies the installer to an ASCII file name (GitHub rewrites non-ASCII asset names). */
 function stageInstaller(version, src) {
   const dir = mkdtempSync(join(tmpdir(), 'ysmtools-'));
-  const dst = join(dir, `YSMModelTool_${version}_x64-setup.exe`);
+  const dst = join(dir, assetName(version));
   copyFileSync(src, dst);
-  return { src, dst, dir, label: `YSM模型工具 ${version} 安装包 (x64)` };
+  return { src, dst, dir, label: `${APP_NAME} ${version} 安装包 (x64)` };
 }
 function checkUploadedAsset(version, src) {
   const assets = JSON.parse(gh(['release', 'view', `v${version}`, '-R', GH_REPO, '--json', 'assets'], { quiet: true })).assets;
-  const a = assets.find(x => x.name === `YSMModelTool_${version}_x64-setup.exe`);
+  const a = assets.find(x => x.name === assetName(version));
   if (!a || a.size !== statSync(src).size) fail(`Uploaded installer size does not match the local file. Check the release page.`);
   console.log(`Installer on GitHub: ${a.name}, ${a.size} bytes (matches the local file).`);
 }
@@ -337,7 +345,7 @@ const commands = {
     writeFileSync(notes, releaseNotes(card));
     try {
       gh(['release', 'create', `v${version}`, `${st.dst}#${st.label}`, '-R', GH_REPO, '--target', 'main',
-          '--title', `YSM模型工具 ${version}`, '--notes-file', notes, '--latest'], { quiet: true });
+          '--title', `${APP_NAME} ${version}`, '--notes-file', notes, '--latest'], { quiet: true });
     } finally { rmSync(st.dir, { recursive: true, force: true }); }
     checkUploadedAsset(version, src);
     console.log(`Released: https://github.com/${GH_REPO}/releases/tag/v${version}`);
@@ -353,6 +361,12 @@ const commands = {
     try { gh(['release', 'upload', `v${version}`, `${st.dst}#${st.label}`, '-R', GH_REPO, '--clobber'], { quiet: true }); }
     finally { rmSync(st.dir, { recursive: true, force: true }); }
     checkUploadedAsset(version, src);
+    // A release made before the rename still lists the old ASCII asset; drop it so only one installer remains.
+    const assets = JSON.parse(gh(['release', 'view', `v${version}`, '-R', GH_REPO, '--json', 'assets'], { quiet: true })).assets;
+    if (assets.some(x => x.name === oldAssetName(version))) {
+      gh(['release', 'delete-asset', `v${version}`, oldAssetName(version), '-R', GH_REPO, '-y'], { quiet: true });
+      console.log(`Removed the old-named asset ${oldAssetName(version)}.`);
+    }
   },
 
   'undo-changelog'({ yes, to }) {

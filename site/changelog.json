@@ -2,6 +2,11 @@
   "_format": "entries newest first; every entry has a version. status \"dev\" = in development (at most one, first); no status = released. date: \"YYYY-MM-DD HH:MM\" locally, published as \"YYYY-MM-DD\". item type: new | improve | fix. zh/en text; `backticks` become <code>.",
   "entries": [
     {
+      "version": "1.1.16",
+      "date": "2026-11-22",
+      "items": []
+    },
+    {
       "version": "1.1.15",
       "date": "2026-11-21",
       "items": []
