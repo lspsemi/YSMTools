@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>YSM模型工具 · 下载</title>
-<meta name="description" content="YSM模型工具：在电脑上打开 Yes Steve Model 模型包，按游戏中的表现预览模型、动画、轮盘动作、声音与封面，并管理本地模型库。">
+<title>YSM工具 · 下载</title>
+<meta name="description" content="YSM工具：在电脑上打开 Yes Steve Model 模型包，按游戏中的表现预览模型、动画、轮盘动作、声音与封面，并管理本地模型库。">
 <meta name="theme-color" content="#fff7fb">
 <link rel="icon" href="assets/app-logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,7 +76,9 @@ img{display:block;max-width:100%}
 .appbar.scrolled{background:color-mix(in srgb,var(--surface-container) 88%,transparent);box-shadow:0 1px 0 var(--outline-variant)}
 .appbar .wrap{display:flex;align-items:center;gap:12px;height:72px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;font-size:19px;font-variation-settings:"wdth" 110}
-.brand img{width:36px;height:36px}
+.brand-mark{width:44px;height:44px;flex:none}
+/* App logo on a random M3 Expressive shape, picked on every page load (like the app, 第 83 节). */
+.brand-mark img{width:62%;height:62%}
 .nav{display:none;margin-left:auto;gap:4px}
 .nav a{padding:10px 16px;border-radius:var(--r-full);text-decoration:none;color:var(--on-surface-variant);font-weight:500;font-size:15px;transition:background-color .2s,color .2s}
 .nav a:hover{background:var(--surface-container-high);color:var(--on-surface)}
@@ -318,7 +320,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 
 <header class="appbar" id="appbar">
   <div class="wrap">
-    <a class="brand" href="#top"><img src="assets/app-logo.svg" alt="" width="36" height="36"><span data-en="YSM Model Tool">YSM模型工具</span></a>
+    <a class="brand" href="#top"><span class="shape brand-mark" data-shape="random"><img src="assets/app-logo.svg" alt="" width="28" height="28"></span><span data-en="YSM Tools">YSM工具</span></a>
     <nav class="nav" aria-label="页面导航" data-en-aria-label="Page navigation">
       <a href="#features"><span data-en="Features">特性</span></a>
       <a href="#play"><span data-en="Play mode">操控模式</span></a>
@@ -339,7 +341,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
     <div>
       <span class="eyebrow"><b data-version>V1.1.15</b><span data-en="Windows desktop · Free &amp;amp; open source">Windows 桌面版 · 开源免费</span></span>
       <h1><span data-en="See every frame&lt;br&gt;&lt;span class=&quot;accent&quot;&gt;of your YSM model&lt;/span&gt;">看清每一帧<br><span class="accent">YSM 模型</span></span></h1>
-      <p class="lead"><span data-en="YSM Model Tool helps you view and debug models. Open Yes Steve Model packs on your PC and preview the model, animations, action-wheel actions, sounds and cover exactly as they appear in the game — and manage your local model library.">YSM模型工具，一个让你更好查看和调试模型的助手。在电脑上打开 Yes Steve Model 模型包，按游戏里的表现预览模型、动画、轮盘动作、声音与封面，还能管理本地模型库。</span></p>
+      <p class="lead"><span data-en="YSM Tools helps you view and debug models. Open Yes Steve Model packs on your PC and preview the model, animations, action-wheel actions, sounds and cover exactly as they appear in the game — and manage your local model library.">YSM工具，一个让你更好查看和调试模型的助手。在电脑上打开 Yes Steve Model 模型包，按游戏里的表现预览模型、动画、轮盘动作、声音与封面，还能管理本地模型库。</span></p>
       <div class="cta">
         <a class="btn filled lg" href="#download"><span class="icon">download</span><span data-en="Download for Windows">下载 Windows 版</span></a>
         <a class="btn outlined lg" href="https://github.com/lspsemi/YSMTools" target="_blank" rel="noopener"><span class="icon outlined">code</span><span data-en="Source code">源代码</span></a>
@@ -554,7 +556,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
       <div class="shape deco" data-shape="cookie12" aria-hidden="true"></div>
       <div style="position:relative">
         <span class="sec-label"><span class="icon">download</span><span data-en="Download">下载</span></span>
-        <h2 style="margin-top:10px"><span data-en="Get YSM Model Tool">获取 YSM模型工具</span></h2>
+        <h2 style="margin-top:10px"><span data-en="Get YSM Tools">获取 YSM工具</span></h2>
         <svg class="wavy" viewBox="0 0 360 14" preserveAspectRatio="none" aria-hidden="true"><path class="track" d="M250 7 H356"/><path class="wave" id="wave"/></svg>
         <p class="lead"><span data-en="Current version &lt;strong data-version&gt;V1.1.15&lt;/strong&gt;. The installer is on GitHub; download and run &lt;code&gt;YSMModelTool_&amp;lt;version&amp;gt;_x64-setup.exe&lt;/code&gt;.">当前版本 <strong data-version>V1.1.15</strong>。安装包发布在 GitHub 上，下载后运行 <code>YSMModelTool_&lt;版本&gt;_x64-setup.exe</code>。</span></p>
         <div class="cta">
@@ -603,7 +605,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
       <details class="reveal"><summary><span class="icon">translate</span><span data-en="How do I add an interface language?">怎样添加新的界面语言？</span><span class="icon chev">expand_more</span></summary>
         <div class="ans"><p><span data-en="Copy &lt;code&gt;lang/en.lang&lt;/code&gt; from the program folder, edit its language info, translate the entries, put it back in the &lt;code&gt;lang&lt;/code&gt; folder, then switch with the language button in the top bar.">复制程序目录下的 <code>lang/en.lang</code>，修改其中的语言信息并翻译各条目，放回 <code>lang</code> 文件夹，然后在顶栏的语言按钮中切换。</span></p></div></details>
       <details class="reveal"><summary><span class="icon">gavel</span><span data-en="Is it free to use and modify?">可以免费使用和修改吗？</span><span class="icon chev">expand_more</span></summary>
-        <div class="ans"><p><span data-en="Yes. YSM Model Tool is open source under GPL-3.0-or-later, hosted on GitHub and Codeberg. It is a community project, not an official Yes Steve Model product.">可以。YSM模型工具以 GPL-3.0-or-later 许可证开源，源代码托管在 GitHub 与 Codeberg。本工具是社区项目，并非 Yes Steve Model 官方出品。</span></p></div></details>
+        <div class="ans"><p><span data-en="Yes. YSM Tools is open source under GPL-3.0-or-later, hosted on GitHub and Codeberg. It is a community project, not an official Yes Steve Model product.">可以。YSM工具以 GPL-3.0-or-later 许可证开源，源代码托管在 GitHub 与 Codeberg。本工具是社区项目，并非 Yes Steve Model 官方出品。</span></p></div></details>
     </div>
   </div>
 </section>
@@ -613,7 +615,7 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 <footer>
   <div class="wrap">
     <div>
-      <a class="brand" href="#top"><img src="assets/app-logo.svg" alt="" width="36" height="36"><span data-en="YSM Model Tool">YSM模型工具</span></a>
+      <a class="brand" href="#top"><span class="shape brand-mark" data-shape="random"><img src="assets/app-logo.svg" alt="" width="28" height="28"></span><span data-en="YSM Tools">YSM工具</span></a>
       <p><span data-en="A helper for viewing and debugging models. Rendered with Vite + Three.js, packaged for Windows with Tauri 2.">一个让你更好查看和调试模型的助手。Vite + Three.js 渲染，Tauri 2 打包为 Windows 桌面应用。</span></p>
     </div>
     <div>
@@ -678,10 +680,10 @@ footer nav .icon{font-size:20px;color:var(--primary)}
 
   /* ---- Language: Chinese is in the markup, English sits next to it in data-en / data-en-<attr> ---- */
   const TEXT = {
-    zh: { title: 'YSM模型工具 · 下载', desc: document.querySelector('meta[name=description]').content,
+    zh: { title: 'YSM工具 · 下载', desc: document.querySelector('meta[name=description]').content,
           copied: '已复制到剪贴板', selected: '已选中，按 Ctrl+C 复制', dev: '开发中', latest: '最新版本', noNotes: '本版本暂无更新说明', clError: '更新日志暂时无法加载', clEmpty: '还没有更新日志', release: '下载此版本', types: { new: '新功能', improve: '改进', fix: '修复' }, other: 'EN', otherLabel: 'Switch to English', otherLang: 'en' },
-    en: { title: 'YSM Model Tool · Download',
-          desc: 'YSM Model Tool: open Yes Steve Model packs on your PC and preview the model, animations, action-wheel actions, sounds and cover as they appear in the game, and manage your local model library.',
+    en: { title: 'YSM Tools · Download',
+          desc: 'YSM Tools: open Yes Steve Model packs on your PC and preview the model, animations, action-wheel actions, sounds and cover as they appear in the game, and manage your local model library.',
           copied: 'Copied to clipboard', selected: 'Selected — press Ctrl+C to copy', dev: 'In development', latest: 'Latest', noNotes: 'No release notes for this version.', clError: 'The changelog could not be loaded.', clEmpty: 'No changelog entries yet.', release: 'Download', types: { new: 'New', improve: 'Improved', fix: 'Fixed' }, other: '中文', otherLabel: '切换到中文', otherLang: 'zh-CN' }
   };
   let lang = 'zh';
@@ -738,13 +740,20 @@ footer nav .icon{font-size:20px;color:var(--primary)}
     }
     return 'M' + out.join('L') + 'Z';
   }
+  /* Brand logos sit on a random shape and pastel color every page load (第 83 节). */
+  document.querySelectorAll('[data-shape=random]').forEach(el => {
+    const names = Object.keys(SHAPES);
+    el.dataset.shape = names[Math.floor(Math.random() * names.length)];
+    el.style.setProperty('--shape-fill', 'oklch(0.9 0.075 ' + Math.round(Math.random() * 360) + ')');
+    el._randomRot = Math.random() * Math.PI * 2;
+  });
   const NS = 'http://www.w3.org/2000/svg';
   document.querySelectorAll('[data-shape]').forEach(el => {
     const spec = SHAPES[el.dataset.shape] || SHAPES.circle;
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('class', 'bg'); svg.setAttribute('viewBox', '0 0 100 100'); svg.setAttribute('aria-hidden', 'true');
     const p = document.createElementNS(NS, 'path');
-    p.setAttribute('d', shapePath(spec));
+    p.setAttribute('d', shapePath(spec, el._randomRot || 0));
     svg.appendChild(p); el.prepend(svg);
     el._shape = { spec, path: p, amp: spec.a, rot: 0 };
   });
