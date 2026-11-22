@@ -2,6 +2,22 @@
   "_format": "entries newest first; every entry has a version. status \"dev\" = in development (at most one, first); no status = released. date: \"YYYY-MM-DD HH:MM\" locally, published as \"YYYY-MM-DD\". item type: new | improve | fix. zh/en text; `backticks` become <code>.",
   "entries": [
     {
+      "version": "1.1.18",
+      "date": "2026-11-22",
+      "items": [
+        {
+          "type": "new",
+          "zh": "工具栏新增“模型配置”按钮（可在设置中关闭）：侧边面板从根目录按轮盘路径查看每个设置面板的当前值，可保存、导入、导出、重置整个模型的配置，并能把每个设置面板导出为一张横版配置图，方便给别人查看。轮盘齿轮的配置界面不再带保存/导入/导出按钮。",
+          "en": "New “Model configuration” toolbar button (can be turned off in Settings): a side panel browses the wheel from the root and shows the current values of every settings panel, saves, imports, exports or resets the whole model's configuration, and exports each settings panel as a landscape image to share. The wheel gear's settings panel no longer has the save/import/export buttons."
+        },
+        {
+          "type": "fix",
+          "zh": "修复轮盘设置里只有一个选项的单选（如“一键重置微调参数”）点击后没有效果：现在和游戏一样，每次点击都会执行该选项。",
+          "en": "Fixed one-option choices in wheel settings (such as “reset fine-tuning”) doing nothing when clicked: like in the game, every click now runs the option."
+        }
+      ]
+    },
+    {
       "version": "1.1.17",
       "date": "2026-11-22",
       "items": [
