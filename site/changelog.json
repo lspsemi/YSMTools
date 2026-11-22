@@ -2,6 +2,62 @@
   "_format": "entries newest first; every entry has a version. status \"dev\" = in development (at most one, first); no status = released. date: \"YYYY-MM-DD HH:MM\" locally, published as \"YYYY-MM-DD\". item type: new | improve | fix. zh/en text; `backticks` become <code>.",
   "entries": [
     {
+      "version": "1.1.17",
+      "date": "2026-11-22",
+      "items": [
+        {
+          "type": "new",
+          "zh": "详情、设置面板、轮盘齿轮打开的配置界面，以及工具栏菜单（光照、角色状态、手持物品、贴图）、语言菜单和对话框都加入过冲效果：弹出时冲过头再回弹，关闭时先向反方向蓄力再收起。可在设置 → 外观 → “弹出窗口过冲”中关闭，并用“滑入过冲量”“滑出过冲量”两个滑条调节幅度。",
+          "en": "The Details and Settings panels, the wheel gear's settings panel, toolbar menus (lighting, player status, held items, textures), the language menu and dialogs now overshoot: they pass their place slightly and settle back when opening, and pull back the other way before closing. Turn it off in Settings → Appearance → \"Panel overshoot\", and adjust the amount with the \"Open overshoot\" and \"Close overshoot\" sliders."
+        },
+        {
+          "type": "improve",
+          "zh": "工具栏移到 3D 视图外的右下角，改为横向一排并去掉阴影，菜单从工具栏上方打开；3D 视图全屏时不显示工具栏。",
+          "en": "The toolbar moved out of the 3D view to below its bottom-right corner, as a single row without a shadow; its menus open above it. It is not shown in the 3D view's fullscreen."
+        },
+        {
+          "type": "improve",
+          "zh": "F11 现在只进入/退出 3D 视图全屏，不再让整个软件窗口全屏；整个窗口全屏请用顶栏的全屏按钮。",
+          "en": "F11 now enters and leaves fullscreen for the 3D view only, not the whole window; use the header's fullscreen button for the whole window."
+        },
+        {
+          "type": "improve",
+          "zh": "删除设置“自动隐藏工具栏”：工具栏已移到 3D 视图外，不再挡住画面。",
+          "en": "Removed the \"Auto-hide toolbar\" setting: the toolbar now sits outside the 3D view and no longer covers it."
+        },
+        {
+          "type": "improve",
+          "zh": "3D 视图铺满窗口：去掉页面最大宽度并缩小四周留白，视图高度随窗口变化。",
+          "en": "The 3D view now fills the window: no maximum page width, smaller margins, and its height follows the window."
+        },
+        {
+          "type": "new",
+          "zh": "设置 → 外观新增“3D 视图浮层无阴影”（默认开启）：3D 视图中的状态标签、菜单、面板、轮盘等弹出内容不再有阴影，改用更深的底色区分前景和背景。",
+          "en": "New setting in Settings → Appearance, on by default: \"Flat 3D view overlays\". Status chips, menus, panels, the wheel and other pop-ups in the 3D view drop their shadows and stand out from the background with a deeper fill instead."
+        },
+        {
+          "type": "improve",
+          "zh": "删除右上角的渲染模式切换：YSM 模型一律使用与游戏一致的原始面渲染，不再提供工程还原渲染。",
+          "en": "Removed the render mode switch in the top-right corner: YSM models now always use raw-face rendering, which matches the game; the project-restore rendering is gone."
+        },
+        {
+          "type": "improve",
+          "zh": "工具栏改用更深的底色；开启自动取色时显示与模型配色一致的渐变。",
+          "en": "The toolbar has a deeper fill; with Auto color on it shows a gradient in the model's colors."
+        },
+        {
+          "type": "fix",
+          "zh": "自动取色更贴近模型：不再把肤色计入取色（以前常被腮红、嘴唇的红色带偏成橙红），并改用模型主色调中最常见的颜色，而不是一小块最鲜艳的高光。",
+          "en": "Auto color matches the model better: skin no longer counts (blush and lip reds used to turn many interfaces orange-red), and the seed is the most common color of the model's main hue instead of a small, very saturated highlight."
+        },
+        {
+          "type": "improve",
+          "zh": "自动取色改用 Material 3 Expressive 的配色方案：菜单和面板饱和度更低；按钮、开关、滑条使用更浅的模型色并配深色文字。",
+          "en": "Auto color now uses the Material 3 Expressive color scheme: menus and panels are less saturated, and buttons, switches and sliders use a lighter shade of the model color with dark text."
+        }
+      ]
+    },
+    {
       "version": "1.1.16",
       "date": "2026-11-22",
       "items": []
