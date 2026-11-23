@@ -67,6 +67,7 @@ const nowMinute = () => { const d = new Date(); return `${today()} ${String(d.ge
 const DATE_RE = /^\d{4}-\d{2}-\d{2}( \d{2}:\d{2})?$/;
 const dayOnly = date => (date ? String(date).slice(0, 10) : date);
 const VERSION_RE = /^\d+\.\d+\.\d+$/;
+const cmpVersion = (a, b) => { const x = a.split('.').map(Number), y = b.split('.').map(Number); return x[0] - y[0] || x[1] - y[1] || x[2] - y[2]; };
 
 function fetchMain() { git(['fetch', '--quiet', REPO_URL, 'main']); return git(['rev-parse', 'FETCH_HEAD']); }
 function withIndex(fn) {
@@ -327,10 +328,15 @@ const commands = {
     const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version;
     if (pkg !== version) console.log(`Warning: package.json version is ${pkg}, not ${version}.`);
     const data = readChangelog();
-    const card = data.entries.find(e => e.version === version);
-    if (!card) fail(`No changelog card for V${version} in ${CHANGELOG}. Add one first (it may be the dev card).`);
+    // A custom (non-consecutive) version has no card of its own: the dev card is the one being released, renamed on release.
+    const card = data.entries.find(e => e.version === version) || data.entries.find(e => e.status === 'dev');
+    if (!card) fail(`No changelog card for V${version} in ${CHANGELOG}, and no dev card to use. Add one first.`);
+    const renameFrom = card.version !== version ? card.version : null;
+    if (renameFrom && data.entries.some(e => e.status !== 'dev' && cmpVersion(e.version, version) >= 0))
+      fail(`V${version} is not newer than an already released card; check the installer version.`);
     // Choose the public items in the preview run; the --yes run uses the saved choice.
     if (!yes && canAsk(flags)) { await selectItems(card); writeChangelog(data); }
+    if (renameFrom) { console.log(`\nNo card for V${version}: the dev card V${renameFrom} will be released as V${version}.`); card.version = version; }
     const finalize = card.status === 'dev';
     console.log(`\nRelease v${version} (installer above)`);
     console.log(finalize ? `  card V${version}: in development -> released, date ${nowMinute()}` : `  card V${version}: already released (${card.date || 'no date'})`);

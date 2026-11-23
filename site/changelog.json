@@ -2,6 +2,27 @@
   "_format": "entries newest first; every entry has a version. status \"dev\" = in development (at most one, first); no status = released. date: \"YYYY-MM-DD HH:MM\" locally, published as \"YYYY-MM-DD\". item type: new | improve | fix. zh/en text; `backticks` become <code>.",
   "entries": [
     {
+      "version": "1.1.20",
+      "date": "2026-11-23",
+      "items": [
+        {
+          "type": "fix",
+          "zh": "修复部分模型（如粉白蛔虫娘）所有动作都不动、轮盘点“挥手”等没有动画：现在能播放 `{\"vector\": [...]}` 写法的关键帧，并在导入时提示：这种写法在 ModernYSM 中会导致模型加载失败、游戏中无法使用。",
+          "en": "Fixed models (such as 粉白蛔虫娘) whose animations did not move at all, e.g. “wave” in the action wheel did nothing: keyframes written as `{\"vector\": [...]}` now play, and importing such a model warns that ModernYSM fails to load it, so it cannot be used in game."
+        },
+        {
+          "type": "fix",
+          "zh": "修复导入模型后底部提示横幅文字偏暗：提示横幅（以及 3D 视图里的全屏提示、操控模式键位提示）不再跟随自动取色变色，始终使用默认配色。",
+          "en": "Fixed the dim text of the bottom notification bar after importing a model: the notification bar (and the fullscreen notice and play-mode key hints in the 3D view) no longer follows the automatic interface colors and always uses the default colors."
+        },
+        {
+          "type": "new",
+          "zh": "记住窗口大小和位置：关闭软件后再打开，主窗口恢复到上次窗口化时的大小和位置（最大化状态不记住，显示器拔掉后会自动移回屏幕内）。",
+          "en": "The main window now remembers its size and position: after closing and reopening, it comes back at the last windowed size and position (the maximized state is not remembered; a window left on an unplugged monitor is moved back on screen)."
+        }
+      ]
+    },
+    {
       "version": "1.1.18",
       "date": "2026-11-22",
       "items": [
