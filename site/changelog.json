@@ -2,6 +2,17 @@
   "_format": "entries newest first; every entry has a version. status \"dev\" = in development (at most one, first); no status = released. date: \"YYYY-MM-DD HH:MM\" locally, published as \"YYYY-MM-DD\". item type: new | improve | fix. zh/en text; `backticks` become <code>.",
   "entries": [
     {
+      "version": "1.1.21",
+      "date": "2026-11-24",
+      "items": [
+        {
+          "type": "new",
+          "zh": "动作轮盘、模型名、简介和作者信息跟随界面语言：模型自带语言文件（`lang/en_us.json` 等）时，轮盘扇区名称、子分类路径、设置面板的标题、说明和选项，以及详情页、封面和模型库中的模型名、简介、作者都显示为界面所选语言；与游戏相同，模型没有该语言时使用英文，连英文也没有时显示模型原文。",
+          "en": "The action wheel, model name, description and authors follow the interface language: when a model ships language files (`lang/en_us.json` etc.), wheel sector names, the sub-wheel path, settings panel titles, descriptions and options, and the model name, description and authors on the Details page, the cover and in the model library are shown in the selected interface language; as in the game, a model without that language uses English, and the model’s own text when it has no English either."
+        }
+      ]
+    },
+    {
       "version": "1.1.20",
       "date": "2026-11-23",
       "items": [
