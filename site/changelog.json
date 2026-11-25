@@ -2,6 +2,47 @@
   "_format": "entries newest first; every entry has a version. status \"dev\" = in development (at most one, first); no status = released. date: \"YYYY-MM-DD HH:MM\" locally, published as \"YYYY-MM-DD\". item type: new | improve | fix. zh/en text; `backticks` become <code>.",
   "entries": [
     {
+      "version": "1.1.22",
+      "date": "2026-11-25",
+      "items": [
+        {
+          "type": "fix",
+          "zh": "修复部分加密 `.ysm` 模型（如芙兰朵露）导入失败、报“Buffer overflow while reading string”：格式版本 18 的模型包现在按它实际使用的旧版结构解析，模型、动画、贴图、音效和作者头像都能正常读出。",
+          "en": "Fixed some encrypted `.ysm` models (such as 芙兰朵露) failing to import with \"Buffer overflow while reading string\": packs with format version 18 are now read using the older layout they actually use, so models, animations, textures, sounds and author avatars all load."
+        },
+        {
+          "type": "new",
+          "zh": "动作轮盘左上角新增拖动手柄（鼠标悬停在轮盘上时显示），可把轮盘拖到 3D 视图中的任意位置，双击回到中间；可在 设置 → 外观 →“轮盘拖动手柄”中关闭。",
+          "en": "The action wheel has a drag handle at its top left (shown while the pointer is over the wheel): drag it to move the wheel anywhere in the 3D view, double-click to centre it. Turn it off in Settings → Appearance → Wheel drag handle."
+        },
+        {
+          "type": "new",
+          "zh": "动作轮盘中心新增锁定按钮（与游戏一致，快捷键 Alt+L）：锁定后在操控模式中走、跑、跳、潜行和飞行不会打断正在播放的轮盘动作。",
+          "en": "New lock button in the centre of the action wheel (as in the game, shortcut Alt+L): while locked, walking, running, jumping, sneaking and flying in play mode no longer interrupt the wheel action."
+        },
+        {
+          "type": "fix",
+          "zh": "修复依赖帧间隔的模型动画不动：新增 `ysm.time_delta` 和 `q.delta_time`（与游戏一致，为上一帧到这一帧的秒数）。双马尾粉猫猫的“触手小黄油”小游戏里障碍物现在会移动。",
+          "en": "Fixed model animations that rely on the frame interval standing still: added `ysm.time_delta` and `q.delta_time` (seconds since the previous frame, as in the game). The obstacles in 双马尾粉猫猫's 触手小黄油 minigame now move."
+        },
+        {
+          "type": "improve",
+          "zh": "界面文字不再能被鼠标选中，拖动视图、双击、拖滑条时不会误选文字；输入框仍可正常选中和复制。",
+          "en": "Interface text can no longer be selected with the mouse, so dragging the view, double-clicking or dragging sliders no longer highlights text by accident; text fields can still be selected and copied."
+        },
+        {
+          "type": "fix",
+          "zh": "修复动画脚本中 `条件 ? { … }` 代码块从不执行的问题，并支持模型函数（`functions/*.molang`，`fn.名称(…)`）。双马尾粉猫猫“触手小黄油”等动画的声音现在会播放，其他使用条件代码块的模型（如飘带物理）也与游戏一致。",
+          "en": "Fixed `condition ? { … }` blocks in animation scripts never running, and added model functions (`functions/*.molang`, `fn.name(…)`). Sounds in animations such as 双马尾粉猫猫's 触手小黄油 now play, and other models that use conditional blocks (for example ribbon physics) now behave as in the game."
+        },
+        {
+          "type": "new",
+          "zh": "支持模型的 Molang 事件函数（`functions/名称@事件.molang`），按游戏的时机执行：`player_init`（模型载入时一次）、`player_update`（每帧动画前）、`<前缀>_ctrl_<槽位>`（创建并驱动对应控制器）、`ysm.sync` 与 `ysm.defer` 触发的 `sync` / `defer`。同时修复模型函数文件中的 `//` 和 `/* */` 注释导致整个函数不执行的问题。标枪等模型的飞行物跟随计算现在会运行。",
+          "en": "Added model Molang event functions (`functions/name@event.molang`), run at the same moments as in the game: `player_init` (once when the model loads), `player_update` (every frame before the animations), `<prefix>_ctrl_<slot>` (creates and drives that controller), and `sync` / `defer` triggered by `ysm.sync` and `ysm.defer`. Also fixed `//` and `/* */` comments in function files stopping the whole function from running. The flying-companion follow logic of models such as 标枪 now runs."
+        }
+      ]
+    },
+    {
       "version": "1.1.21",
       "date": "2026-11-24",
       "items": [
